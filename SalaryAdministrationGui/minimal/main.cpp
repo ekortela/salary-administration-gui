@@ -4,6 +4,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QFormLayout>
+#include "main.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
@@ -12,11 +13,39 @@ int main(int argc, char *argv[]) {
     window->setWindowTitle("Salary Admin");
 
     //RIGHT SIDE
-    QVBoxLayout *rightLayout = new QVBoxLayout;
 
     // - Tree
-    QTreeWidget *treeWidget = new QTreeWidget();
+    QTreeWidget *treeWidget = new QTreeWidget;
+    createTreeWidget(treeWidget);
+
+
+    //LEFT SIDE
+
+    QVBoxLayout *leftLayout = new QVBoxLayout;
+    createEemployeeInformationView(leftLayout);
+
+
+    //FINISH
+
+    QHBoxLayout *mainLayout = new QHBoxLayout;
+    mainLayout->addLayout(leftLayout);
+    mainLayout->addWidget(treeWidget);
+
+    window->setLayout(mainLayout);
+
+    window->setBaseSize(1043, 600);
+
+    window->show();
+
+    return app.exec();
+}
+
+void createTreeWidget(QTreeWidget *treeWidget) {
     treeWidget->setColumnCount(3);
+
+    QStringList labels;
+    labels << "Last name" << "First name" << "Pay type";
+    treeWidget->setHeaderLabels(labels);
 
     QList<QString> lastName;
     lastName << "Virtanen" << "Nieminen" << "Korhonen" << "Kantola" << "Holappa";
@@ -34,26 +63,19 @@ int main(int argc, char *argv[]) {
         employee->setText(2, payType[i]);
         items.append(employee);
     }
+}
 
-    rightLayout->addWidget(treeWidget);
-
-    // - Description
-    QScrollArea *itemDescription = new QScrollArea;
-    rightLayout->addWidget(itemDescription);
-
-
-    //LEFT SIDE
-
+void createEemployeeInformationView(QVBoxLayout *leftLayout) {
     QLineEdit *lastNameEdit = new QLineEdit;
     QLineEdit *firstNameEdit = new QLineEdit;
     QLineEdit *hoursDoneEdit = new QLineEdit;
     QLineEdit *salaryEdit = new QLineEdit;
 
-    QFormLayout *employeeDetailsForm = new QFormLayout;
-    employeeDetailsForm->addRow("Last name", lastNameEdit);
-    employeeDetailsForm->addRow("First name:", firstNameEdit);
-    employeeDetailsForm->addRow("Hours done:", hoursDoneEdit);
-    employeeDetailsForm->addRow("Salary:", salaryEdit);
+    QFormLayout *employeeInformationForm = new QFormLayout;
+    employeeInformationForm->addRow("Last name", lastNameEdit);
+    employeeInformationForm->addRow("First name:", firstNameEdit);
+    employeeInformationForm->addRow("Hours done:", hoursDoneEdit);
+    employeeInformationForm->addRow("Salary:", salaryEdit);
 
     //QDialogButtonBox *detailsButtonBox = new QDialogButtonBox;
     //detailsButtonBox->addButton("Save", QDialogButtonBox::InvalidRole);
@@ -68,21 +90,6 @@ int main(int argc, char *argv[]) {
     detailsButtonBox->addWidget(calculateSalary);
     detailsButtonBox->addWidget(clear);
 
-    QVBoxLayout *leftLayout = new QVBoxLayout;
-    leftLayout->addLayout(employeeDetailsForm);
+    leftLayout->addLayout(employeeInformationForm);
     leftLayout->addLayout(detailsButtonBox);
-
-
-    QHBoxLayout *mainLayout = new QHBoxLayout;
-    mainLayout->addLayout(leftLayout);
-    mainLayout->addLayout(rightLayout);
-
-
-    //FINISH
-    window->setLayout(mainLayout);
-    window->setBaseSize(800, 600);
-
-    window->show();
-
-    return app.exec();
 }
