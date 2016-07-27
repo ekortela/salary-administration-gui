@@ -1,7 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-void createTreeWidget(QTreeWidget *treeWidget);
-void createEemployeeInformationView(QVBoxLayout *leftLayout);
+void createTreeWidget(QHBoxLayout *mainLayout);
+void createEemployeeInformationView(QHBoxLayout *mainLayout);
 
 #endif // MAIN_H
