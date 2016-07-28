@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 
     window->setLayout(mainLayout);
     //window->resize(QDesktopWidget().availableGeometry().size() * 0.3);
-    window->resize(600,250);
+    window->resize(600,300);
 
     window->show();
 
@@ -61,7 +61,9 @@ void createTreeWidget(QHBoxLayout *mainLayout) {
 
 void createEemployeeInformationView(QHBoxLayout *mainLayout) {
     QScrollArea *scrollArea = new QScrollArea;
-    QWidget *container = new QWidget(scrollArea);
+    scrollArea->setWidgetResizable(true);
+    QWidget *container = new QWidget;
+    scrollArea->setWidget(container);
     QGridLayout *employeeInformationForm = new QGridLayout;
 
     // Employee information feed
@@ -82,6 +84,10 @@ void createEemployeeInformationView(QHBoxLayout *mainLayout) {
     QLineEdit *hoursDoneEdit = new QLineEdit;
     QLabel *salaryLabel = new QLabel("Salary:");
     QLineEdit *salaryEdit = new QLineEdit;
+    QLabel *realizedIncomeLabel = new QLabel("Realized income:");
+    QLineEdit *realizedIncomeEdit = new QLineEdit;
+    QLabel *outcomeClaimLabel = new QLabel("Outcome claim:");
+    QLineEdit *outcomeClaimEdit = new QLineEdit;
 
     // Buttons
     QPushButton *saveButton = new QPushButton("Save");
@@ -100,10 +106,17 @@ void createEemployeeInformationView(QHBoxLayout *mainLayout) {
     employeeInformationForm->addWidget(hoursDoneEdit,4,1);
     employeeInformationForm->addWidget(salaryLabel,5,0);
     employeeInformationForm->addWidget(salaryEdit,5,1);
-    employeeInformationForm->addWidget(saveButton,6,0);
-    employeeInformationForm->addWidget(deleteButton,6,1);
-    employeeInformationForm->addWidget(calculateSalaryButton,7,0,1,2);
 
+    employeeInformationForm->addWidget(realizedIncomeLabel,6,0);
+    employeeInformationForm->addWidget(realizedIncomeEdit,6,1);
+    employeeInformationForm->addWidget(outcomeClaimLabel,7,0);
+    employeeInformationForm->addWidget(outcomeClaimEdit,7,1);
+
+    employeeInformationForm->addWidget(saveButton,8,0);
+    employeeInformationForm->addWidget(deleteButton,8,1);
+    employeeInformationForm->addWidget(calculateSalaryButton,9,0,1,2);
+
+    employeeInformationForm->setColumnStretch(0,1);
     container->setLayout(employeeInformationForm);
     mainLayout->addWidget(scrollArea);
 }
