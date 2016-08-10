@@ -25,8 +25,8 @@ string Employee::getName() {
 }
 
 
-void Employee::setSocialSecurityNumber(string newSocialSecurityNumber) {
-	socialSecurityNumber = newSocialSecurityNumber;
+void Employee::setSocialSecurityNumber(string newSsn) {
+	socialSecurityNumber = newSsn;
 }
 
 

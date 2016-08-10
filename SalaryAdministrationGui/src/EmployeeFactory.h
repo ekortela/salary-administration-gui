@@ -14,7 +14,12 @@ enum employee_types { MONTHLY_PAID_EMPLOYEE = 0, HOURLY_PAID_EMPLOYEE = 1, SALES
 
 class EmployeeFactory {
 	public:
-		static Employee *getEmployee(employee_types type);
+		static Employee *getMonthlyPaidEmployee(string newName, string newSsn,
+	    		double newMonthlySalary);
+		static Employee *getHourlyPaidEmployee(string newName, string newSsn,
+	    		double newHourlySalary, double doneHours);
+		static Employee *getSalesmanEmployee(string newName, string newSsn,
+				double newMonthlySalary, double newBonus, bool newOutcomeClaim);
 };
 
 #endif /* EMPLOYEEFACTORY_H_ */

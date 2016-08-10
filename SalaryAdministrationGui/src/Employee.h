@@ -23,7 +23,7 @@ class Employee
   public:
     void setName(string newName);
     string getName();
-  	void setSocialSecurityNumber(string newSocialSecurityNumber);
+  	void setSocialSecurityNumber(string newSsn);
   	string getSocialSecurityNumber();
     virtual double getSalary() = 0;
 	virtual void printInfo() = 0;
