@@ -28,8 +28,10 @@ class SalesmanEmployee: public Employee
     void setBonus(double newBonus);
     double getBonus();
     void setOutcomeClaim(bool newOutcomeClaim);
+    bool getOutcomeClaim();
     void setRealizedOutcome();
     double getSalary();
+    void printInfo();
 };
 
 

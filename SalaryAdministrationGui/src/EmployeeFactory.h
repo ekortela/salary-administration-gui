@@ -14,6 +14,7 @@
 class EmployeeFactory {
 	public:
 		static Employee *getEmployee(int employeeType);
+		static Employee *getEmployee(string employeeType);
 };
 
 #endif /* EMPLOYEEFACTORY_H_ */

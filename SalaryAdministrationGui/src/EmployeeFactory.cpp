@@ -26,7 +26,21 @@ Employee *EmployeeFactory::getEmployee(int employeeType)
 			cout << "Invalid employee type: " << employeeType << "\n";
 		return NULL;
 	}
-};
+}
+
+Employee *EmployeeFactory::getEmployee(string employeeType)
+{
+	if(employeeType == "MonthlyPaidEmployee")
+		return new MonthlyPaidEmployee("Pertti Kanasielu", "12345678-123", 3000.50);
+	else if(employeeType == "HourlyPaidEmployee")
+		return new HourlyPaidEmployee("Pallas Athenes", "12345678-123", 20.00, 180.00);
+	else if( employeeType == "SalesmanEmployee")
+		return new SalesmanEmployee("Paavo Pesusieni", "12345678-123", 2500.00, 30, true);
+	else {
+		cout << "Invalid employee type: " << employeeType << "\n";
+		return NULL;
+	}
+}
 
 
 

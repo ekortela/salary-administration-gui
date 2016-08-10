@@ -44,6 +44,9 @@ void SalesmanEmployee::setOutcomeClaim(bool newOutcomeClaim) {
 	setRealizedOutcome();
 }
 
+bool SalesmanEmployee::getOutcomeClaim() {
+	return outcomeClaim;
+}
 
 void SalesmanEmployee::setRealizedOutcome() {
 	if (outcomeClaim)
@@ -56,6 +59,17 @@ void SalesmanEmployee::setRealizedOutcome() {
 double SalesmanEmployee::getSalary()
 {
   return realizedOutcome;
+}
+
+void SalesmanEmployee::printInfo()
+{
+  cout <<
+  "Name: " << this->getName() <<
+  ", SSN: " << this->getSocialSecurityNumber() <<
+  ", Name: " << this->getMonthlySalary() <<
+  ", Bonus: " << this->getBonus() <<
+  ", Outcomeclaim: " << this->getOutcomeClaim() <<
+  "\n";
 }
 
 
