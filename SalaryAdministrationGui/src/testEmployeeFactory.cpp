@@ -5,30 +5,27 @@
  *      Author: keskimol
  */
 
-
 #include <vector>
 #include <iostream>
 #include "EmployeeFactory.h"
-#include "SalesmanEmployee.h"
 
 using namespace std;
 
 
-
-int main()
+int main(void)
 {
-  cout << " Started\n";
-
   vector<Employee*> EmployeeList;
 
-  EmployeeList.push_back( EmployeeFactory::getEmployee(1));
+  EmployeeList.push_back(EmployeeFactory::getEmployee(employee_types::MONTHLY_PAID_EMPLOYEE) );
+  EmployeeList.push_back(EmployeeFactory::getEmployee(employee_types::HOURLY_PAID_EMPLOYEE) );
+  EmployeeList.push_back(EmployeeFactory::getEmployee(employee_types::SALESMAN_EMPLOYEE) );
 
-  SalesmanEmployee *pSalesman = (SalesmanEmployee *) &EmployeeList[0]; // downcast
-
-    for (int i = 0; i < EmployeeList.size(); i++)
-      EmployeeList[i]->getName();
-    for (int i = 0; i < EmployeeList.size(); i++)
-      delete EmployeeList[i];
+  for (unsigned int i = 0; i < EmployeeList.size(); i++) {
+	  EmployeeList[i]->printInfo();
+	  cout << "\n";
+  }
+	for (unsigned int i = 0; i < EmployeeList.size(); i++)
+		delete EmployeeList[i];
 
 //  EmployeeList.push_back( EmployeeFactory::getEmployee("Salesman"));
 //

@@ -26,6 +26,7 @@ class Employee
   	void setSocialSecurityNumber(string newSocialSecurityNumber);
   	string getSocialSecurityNumber();
     virtual double getSalary() = 0;
+	virtual void printInfo() = 0;
     virtual ~Employee();
 };
 

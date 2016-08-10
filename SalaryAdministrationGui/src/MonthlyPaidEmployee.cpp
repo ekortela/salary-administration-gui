@@ -37,4 +37,14 @@ double MonthlyPaidEmployee::getSalary()
 	return monthlySalary;
 }
 
+void MonthlyPaidEmployee::printInfo()
+{
+	cout << "Employee type: " << "MonthlyPaidEmployee" << "\n";
+	cout << "Name: " << Employee::getName() << "\n";
+	cout << "SSN: " << Employee::getSocialSecurityNumber() << "\n";
+	cout << "Salary: " << this->getSalary() << "\n";
+	cout << ">Monthly salary: " << this->getMonthlySalary() << "\n";
+}
+
+
 

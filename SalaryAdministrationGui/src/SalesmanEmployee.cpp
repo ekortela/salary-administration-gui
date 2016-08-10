@@ -63,13 +63,13 @@ double SalesmanEmployee::getSalary()
 
 void SalesmanEmployee::printInfo()
 {
-  cout <<
-  "Name: " << this->getName() <<
-  ", SSN: " << this->getSocialSecurityNumber() <<
-  ", Name: " << this->getMonthlySalary() <<
-  ", Bonus: " << this->getBonus() <<
-  ", Outcomeclaim: " << this->getOutcomeClaim() <<
-  "\n";
+	cout << "Employee type: " << "SalesmanEmployee" << "\n";
+	cout << "Name: " << Employee::getName() << "\n";
+	cout << "SSN: " << Employee::getSocialSecurityNumber() << "\n";
+	cout << "Salary: " << this->getSalary() << "\n";
+	cout << ">Monthly salary: " << this->getMonthlySalary() << "\n";
+	cout << ">Bonus: " << this->getBonus() << "\n";
+	cout << ">Outcome claim: " << this->getOutcomeClaim() << "\n";
 }
 
 

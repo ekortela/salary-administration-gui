@@ -28,3 +28,14 @@
 *.out
 *.app
 /Default
+/Debug
+/.vs/salary-administration-gui/v14
+/salary-administration-gui.vcxproj.user
+/salary-administration-gui.vcxproj.filters
+/salary-administration-gui.vcxproj
+/salary-administration-gui.VC.VC.opendb
+/salary-administration-gui.VC.db
+/salary-administration-gui.sln
+/salary-administration-gui.rc
+/salary-administration-gui.aps
+/resource.h

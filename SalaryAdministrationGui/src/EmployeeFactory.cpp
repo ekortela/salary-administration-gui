@@ -12,35 +12,21 @@
 
 using namespace std;
 
-
-Employee *EmployeeFactory::getEmployee(int employeeType)
+Employee *EmployeeFactory::getEmployee(employee_types type)
 {
-	switch(employeeType) {
-		case 1:
-			return new MonthlyPaidEmployee("Pertti Kanasielu", "12345678-123", 3000.50);
-		case 2:
-			return new HourlyPaidEmployee("Pallas Athenes", "12345678-123", 20.00, 180.00);
-		case 3:
-			return new SalesmanEmployee("Paavo Pesusieni", "12345678-123", 2500.00, 30, true);
-		default:
-			cout << "Invalid employee type: " << employeeType << "\n";
-		return NULL;
+	switch (type)
+	{
+	case employee_types::MONTHLY_PAID_EMPLOYEE:
+		return new MonthlyPaidEmployee("", "12345678-123", 0.0);
+	case employee_types::HOURLY_PAID_EMPLOYEE:
+		return new HourlyPaidEmployee("", "12345678-123", 0.0, 0.0);
+	case employee_types::SALESMAN_EMPLOYEE:
+		return new SalesmanEmployee("", "12345678-123", 0.0, 0.0, false);
+	default:
+		throw ("Unrecognized employee type: %d", type);
 	}
 }
 
-Employee *EmployeeFactory::getEmployee(string employeeType)
-{
-	if(employeeType == "MonthlyPaidEmployee")
-		return new MonthlyPaidEmployee("Pertti Kanasielu", "12345678-123", 3000.50);
-	else if(employeeType == "HourlyPaidEmployee")
-		return new HourlyPaidEmployee("Pallas Athenes", "12345678-123", 20.00, 180.00);
-	else if( employeeType == "SalesmanEmployee")
-		return new SalesmanEmployee("Paavo Pesusieni", "12345678-123", 2500.00, 30, true);
-	else {
-		cout << "Invalid employee type: " << employeeType << "\n";
-		return NULL;
-	}
-}
 
 
 

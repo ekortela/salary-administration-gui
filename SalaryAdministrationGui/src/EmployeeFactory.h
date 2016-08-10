@@ -8,13 +8,13 @@
 #ifndef EMPLOYEEFACTORY_H_
 #define EMPLOYEEFACTORY_H_
 
-#include "Employee.h"
+enum employee_types { MONTHLY_PAID_EMPLOYEE = 0, HOURLY_PAID_EMPLOYEE = 1, SALESMAN_EMPLOYEE = 2 };
 
+#include "Employee.h"
 
 class EmployeeFactory {
 	public:
-		static Employee *getEmployee(int employeeType);
-		static Employee *getEmployee(string employeeType);
+		static Employee *getEmployee(employee_types type);
 };
 
 #endif /* EMPLOYEEFACTORY_H_ */

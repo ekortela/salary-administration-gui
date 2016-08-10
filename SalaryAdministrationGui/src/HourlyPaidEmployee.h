@@ -26,6 +26,7 @@ class HourlyPaidEmployee: public Employee
     void setDoneHours(double newDoneHours);
     double getDoneHours();
 	double getSalary();
+	void printInfo();
 };
 
 

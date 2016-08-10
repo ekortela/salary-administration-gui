@@ -22,6 +22,7 @@ class MonthlyPaidEmployee: public Employee
     void setMonthlySalary(double newMonthlySalary);
     double getMonthlySalary();
     double getSalary();
+	void printInfo();
 };
 
 
