@@ -8,17 +8,30 @@
 
 #include <vector>
 #include "EmployeeView.h"
-#include "EmployeeModel.h"
 #include "Employee.h"
+#include "EmployeeFactory.h"
 
 class EmployeeController {
 private:
-	EmployeeModel model;
+	vector<Employee*> model;;
 	EmployeeView view;
 public:
-	EmployeeController(EmployeeModel model, EmployeeView view);
-	void addEmployee();
-	void removeEmployee();
+	EmployeeController(EmployeeView view);
+
+	void addMonthlyPaidEmployee(string newName, string newSsn,
+		double newMonthlySalary);
+	void addHourlyPaidEmployee(string newName, string newSsn,
+		double newHourlySalary, double newDoneHours);
+	void addSalesmanEmployee(string newName, string newSsn,
+		double newMonthlySalary, double newBonus, bool newOutcomeClaim);
+	void removeEmployeeBySsn(string ssn);
+	int getEmployeeIndexBySsn(string ssn);
+	Employee* getEmployeeBySsn(string ssn);
+	void printEmployeeInfoAll();
+
+	//	void loadModelFromFile(string filename);
+	//	void saveModelToFile(string filename);
+
 	void setEmployeeName();
 	void getEmployeeName();
 	void setEmployeeSsn();
