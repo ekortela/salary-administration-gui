@@ -1,6 +1,10 @@
 /*
 * EmployeeController.cpp
 *
+* The Controller part of MVC design pattern. The Controller contains
+* methods for modifying the Model properties and updates the View 
+* whenever the Model changes.
+*
 *  Created on: 10.8.2016
 *      Author: keskimol
 */
@@ -13,11 +17,12 @@
 
 class EmployeeController {
 private:
-	vector<Employee*> model;;
+	vector<Employee*> model;
 	EmployeeView view;
 public:
 	EmployeeController(EmployeeView view);
 
+	// For adding, removing and inspecting the Model objects 
 	void addMonthlyPaidEmployee(string newName, string newSsn,
 		double newMonthlySalary);
 	void addHourlyPaidEmployee(string newName, string newSsn,
@@ -27,11 +32,8 @@ public:
 	void removeEmployeeBySsn(string ssn);
 	int getEmployeeIndexBySsn(string ssn);
 	Employee* getEmployeeBySsn(string ssn);
-	void printEmployeeInfoAll();
 
-	//	void loadModelFromFile(string filename);
-	//	void saveModelToFile(string filename);
-
+	// Getting/setting the Model properties
 	void setEmployeeName();
 	void getEmployeeName();
 	void setEmployeeSsn();
@@ -44,6 +46,12 @@ public:
 	void getEmployeeBonus();
 	void setEmployeeOutcomeclaim();
 	void getEmployeeOutcomeclaim();
+
+	// Load/Save the Model state in local file
+	void loadModelFromFile(string filename);
+	void saveModelToFile(string filename);
+
+	// Display the Model in the View 
 	void updateView();
 };
 

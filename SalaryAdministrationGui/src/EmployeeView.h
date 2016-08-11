@@ -4,5 +4,5 @@
 
 class EmployeeView {
 public:
-	void printEmployeeInfo(vector<Employee *> model);
+	void printEmployeeInfoAll(vector<Employee *> model);
 };

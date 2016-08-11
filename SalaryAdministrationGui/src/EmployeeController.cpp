@@ -59,9 +59,6 @@ int EmployeeController::getEmployeeIndexBySsn(string ssn) {
 }
 
 
-void EmployeeController::printEmployeeInfoAll() {
-	for (unsigned int i = 0; model.size() > i; i++) {
-		model[i]->printInfo();
-		cout << "\n";
-	}
+void EmployeeController::updateView() {
+	view.printEmployeeInfoAll(model);
 }
