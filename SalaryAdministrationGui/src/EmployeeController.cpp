@@ -45,7 +45,7 @@ void EmployeeController::removeEmployeeBySsn(string ssn) {
 	if (idx != -1)
 		model.erase(model.begin() + idx);
 	else
-		cout << "Index " << idx << " was not found!\n";
+		cout << "Employee with SSN " << ssn << " was not found!\n";
 }
 
 
