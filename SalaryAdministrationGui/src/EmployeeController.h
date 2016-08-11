@@ -16,10 +16,21 @@ private:
 	EmployeeModel model;
 	EmployeeView view;
 public:
-	EmployeeController();
-	void addEmployee(Employee* p);
-	void removeEmployee(Employee* p);
+	EmployeeController(EmployeeModel model, EmployeeView view);
+	void addEmployee();
+	void removeEmployee();
 	void setEmployeeName();
+	void getEmployeeName();
 	void setEmployeeSsn();
+	void getEmployeeSsn();
+	void setEmployeeHourlySalary();
+	void getEmployeeHourlySalary();
+	void setEmployeeMonthlySalary();
+	void getEmployeeMonthlySalary();
+	void setEmployeeBonus();
+	void getEmployeeBonus();
+	void setEmployeeOutcomeclaim();
+	void getEmployeeOutcomeclaim();
+	void updateView();
 };
 
