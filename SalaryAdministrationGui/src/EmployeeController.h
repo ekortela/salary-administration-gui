@@ -30,22 +30,23 @@ public:
 	void addSalesmanEmployee(string newName, string newSsn,
 		double newMonthlySalary, double newBonus, bool newOutcomeClaim);
 	void removeEmployeeBySsn(string ssn);
-	int getEmployeeIndexBySsn(string ssn);
-	Employee* getEmployeeBySsn(string ssn);
+	int getEmployeeIndex(string ssn);
+	Employee* getEmployee(string ssn);
+	int getEmployeeCount();
 
 	// Getting/setting the Model properties
-	void setEmployeeName();
-	void getEmployeeName();
-	void setEmployeeSsn();
-	void getEmployeeSsn();
-	void setEmployeeHourlySalary();
-	void getEmployeeHourlySalary();
-	void setEmployeeMonthlySalary();
-	void getEmployeeMonthlySalary();
-	void setEmployeeBonus();
-	void getEmployeeBonus();
-	void setEmployeeOutcomeclaim();
-	void getEmployeeOutcomeclaim();
+	void setEmployeeName(string ssn, string newName);
+	string getEmployeeName(string ssn);
+	void setEmployeeSsn(string ssn, string newSsn);
+	string getEmployeeSsn(string ssn);
+	void setEmployeeHourlySalary(string ssn, double newSalary);
+	double getEmployeeHourlySalary(string ssn, double newSalary);
+	void setEmployeeMonthlySalary(string ssn, double newMonthlySalary);
+	double getEmployeeMonthlySalary(string ssn);
+	void setEmployeeBonus(string ssn, double newBonus);
+	double getEmployeeBonus(string ssn);
+	void setEmployeeOutcomeclaim(string ssn, bool newOutcomeClaim);
+	bool getEmployeeOutcomeclaim(string ssn);
 
 	// Load/Save the Model state in local file
 	void loadModelFromFile(string filename);

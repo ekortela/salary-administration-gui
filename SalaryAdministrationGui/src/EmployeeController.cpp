@@ -1,4 +1,5 @@
 #include "EmployeeController.h"
+#include <algorithm>
 
 // TODO Add classes for exceptions
 
@@ -11,7 +12,7 @@ EmployeeController::EmployeeController(EmployeeView view)
 void EmployeeController::addMonthlyPaidEmployee(string newName, string newSsn,
 	double newMonthlySalary)
 {
-	if (getEmployeeIndexBySsn(newSsn) == -1)
+	if (getEmployeeIndex(newSsn) == -1)
 		model.push_back(EmployeeFactory::getMonthlyPaidEmployee(
 			newName, newSsn, newMonthlySalary));
 	else
@@ -21,7 +22,7 @@ void EmployeeController::addMonthlyPaidEmployee(string newName, string newSsn,
 void EmployeeController::addHourlyPaidEmployee(string newName, string newSsn,
 	double newHourlySalary, double newDoneHours) {
 
-	if (getEmployeeIndexBySsn(newSsn) == -1)
+	if (getEmployeeIndex(newSsn) == -1)
 		model.push_back(EmployeeFactory::getHourlyPaidEmployee(
 			newName, newSsn, newHourlySalary, newDoneHours));
 	else
@@ -31,7 +32,7 @@ void EmployeeController::addHourlyPaidEmployee(string newName, string newSsn,
 void EmployeeController::addSalesmanEmployee(string newName, string newSsn,
 	double newMonthlySalary, double newBonus, bool newOutcomeClaim) {
 
-	if (getEmployeeIndexBySsn(newSsn) == -1)
+	if (getEmployeeIndex(newSsn) == -1)
 		model.push_back(EmployeeFactory::getSalesmanEmployee(
 			newName, newSsn, newMonthlySalary, newBonus, newOutcomeClaim));
 	else
@@ -40,15 +41,15 @@ void EmployeeController::addSalesmanEmployee(string newName, string newSsn,
 
 void EmployeeController::removeEmployeeBySsn(string ssn) {
 
-	int idx = getEmployeeIndexBySsn(ssn);
+	int idx = getEmployeeIndex(ssn);
 	if (idx != -1)
-		delete model[idx];
+		model.erase(model.begin() + idx);
 	else
-		cout << "Unable to remove: Employee not found with SSN: " << ssn << "\n";
+		cout << "Index " << idx << " was not found!\n";
 }
 
 
-int EmployeeController::getEmployeeIndexBySsn(string ssn) {
+int EmployeeController::getEmployeeIndex(string ssn) {
 
 	for (unsigned int i = 0; i < model.size(); i++) {
 		if (model[i]->getSocialSecurityNumber() == ssn) {
@@ -56,6 +57,32 @@ int EmployeeController::getEmployeeIndexBySsn(string ssn) {
 		}
 	}
 	return -1;
+}
+
+Employee * EmployeeController::getEmployee(string ssn)
+{
+	int idx = getEmployeeIndex(ssn);
+	if (idx != -1)
+		return model[idx];
+	else
+		return nullptr;
+}
+
+int EmployeeController::getEmployeeCount()
+{
+	return model.size();
+}
+
+void EmployeeController::setEmployeeName(string ssn, string newName)
+{
+	Employee* p = getEmployee(ssn);
+	p->setName(newName);
+}
+
+string EmployeeController::getEmployeeName(string ssn)
+{
+	Employee* p = getEmployee(ssn);
+	return p->getName();
 }
 
 
