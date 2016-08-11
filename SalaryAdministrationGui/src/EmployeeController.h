@@ -18,9 +18,9 @@
 class EmployeeController {
 private:
 	vector<Employee*> model;
-	EmployeeView view;
+	EmployeeView *pView;
 public:
-	EmployeeController(EmployeeView view);
+	EmployeeController(EmployeeView* pView);
 
 	// For adding, removing and inspecting the Model objects 
 	void addMonthlyPaidEmployee(string newName, string newSsn,

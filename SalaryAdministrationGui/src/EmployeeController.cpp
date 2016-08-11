@@ -3,9 +3,9 @@
 
 // TODO Add classes for exceptions
 
-EmployeeController::EmployeeController(EmployeeView view)
+EmployeeController::EmployeeController(EmployeeView* pView)
 {
-	this->view = view;
+	this->pView = pView;
 }
 
 
@@ -87,5 +87,5 @@ string EmployeeController::getEmployeeName(string ssn)
 
 
 void EmployeeController::updateView() {
-	view.printEmployeeInfoAll(model);
+	pView->printEmployeeInfoAll(model);
 }
