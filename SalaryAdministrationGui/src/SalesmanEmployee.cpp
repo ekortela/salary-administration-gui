@@ -8,10 +8,10 @@
 #include "SalesmanEmployee.h"
 
 
-SalesmanEmployee::SalesmanEmployee(string newName, string newSocialSecurityNumber, double newMonthlySalary, double newBonus, bool newOutcomeClaim)
+SalesmanEmployee::SalesmanEmployee(string newName, string newSsn, double newMonthlySalary, double newBonus, bool newOutcomeClaim)
 {
 	Employee::setName(newName);
-	Employee::setSocialSecurityNumber(newSocialSecurityNumber);
+	Employee::setSocialSecurityNumber(newSsn);
 	setMonthlySalary(newMonthlySalary);
 	setBonus(newBonus);
 	setOutcomeClaim(newOutcomeClaim);
@@ -63,7 +63,7 @@ double SalesmanEmployee::getSalary()
 
 void SalesmanEmployee::printInfo()
 {
-	cout << "Employee type: " << "SalesmanEmployee" << "\n";
+	cout << "Type: " << "SalesmanEmployee" << "\n";
 	cout << "Name: " << Employee::getName() << "\n";
 	cout << "SSN: " << Employee::getSocialSecurityNumber() << "\n";
 	cout << "Salary: " << this->getSalary() << "\n";

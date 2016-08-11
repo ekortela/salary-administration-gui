@@ -8,55 +8,25 @@
 #include <vector>
 #include <iostream>
 #include "EmployeeFactory.h"
+#include "EmployeeModel.h"
 
 using namespace std;
 
 
 int main(void)
 {
-  vector<Employee*> EmployeeList;
+	EmployeeModel model = EmployeeModel();
 
-  EmployeeList.push_back(EmployeeFactory::getEmployee(employee_types::MONTHLY_PAID_EMPLOYEE) );
-  EmployeeList.push_back(EmployeeFactory::getEmployee(employee_types::HOURLY_PAID_EMPLOYEE) );
-  EmployeeList.push_back(EmployeeFactory::getEmployee(employee_types::SALESMAN_EMPLOYEE) );
+	model.addHourlyPaidEmployee("Paavo Narkas", "123456-123", 20.0, 180.0);
+	model.addMonthlyPaidEmployee("Teuvo Maantienkuningas", "123456-1244", 3000.0);
 
-  for (unsigned int i = 0; i < EmployeeList.size(); i++) {
-	  EmployeeList[i]->printInfo();
-	  cout << "\n";
-  }
-	for (unsigned int i = 0; i < EmployeeList.size(); i++)
-		delete EmployeeList[i];
+	string ssn = "383838-11919";
+	model.addSalesmanEmployee("Risto Varakas", ssn, 1500.50, 30.0, true);
 
-//  EmployeeList.push_back( EmployeeFactory::getEmployee("Salesman"));
-//
-//  cout << EmployeeList[0]->getSalary() << endl;
-//  cout << EmployeeList[0]->getName() << endl;
-//
-//
-//  MonthlyPaidEmployee *pEmployee0 = (MonthlyPaidEmployee *) &EmployeeList[0]; // downcast
-//  cout << "Name " << pEmployee0->getName() << "\n";
-//
-//
-//  MonthlyPaidEmployee tuomo("Tuomo Laitakulkija", "12345678-123", 3000.00);
-//  cout << "Name " << tuomo.getName() << "\n";
-//
-//  MonthlyPaidEmployee *pMonthlyPaidEmployee = (MonthlyPaidEmployee *) &EmployeeList[0]; // downcast
-////  pMonthlyPaidEmployee->setName("Termo");
-//  cout << "Name " << pMonthlyPaidEmployee->getName() << "\n";
-////  EmployeeList[0]->getSalary();
-//
-//
-//  EmployeeList.push_back(EmployeeFactory::getEmployee("HourlyPaidEmployee"));
-////  EmployeeList[1]->setHourlySalary(3000.00);
-////  EmployeeList[1]->setDoneHours(180.00);
-//
-//  EmployeeList.push_back(EmployeeFactory::getEmployee("SalesmanEmployee"));
-////  EmployeeList[2]->setMonthlySalary(2500.00);
-////  EmployeeList[2]->setBonus(0.50);
-////  EmployeeList[2]->setOutcomeClaim(true);
-//
-//  for (int i = 0; i < EmployeeList.size(); i++)
-//    cout << EmployeeList[i]->getSalary() << "\n";
-//  for (int i = 0; i < EmployeeList.size(); i++)
-//    delete EmployeeList[i];
+	model.printEmployeeInfoAll();
+
+	// try to add employee with same SSN
+	model.addSalesmanEmployee("Risto Varakas", ssn, 1500.50, 30.0, true);
+
+
 }

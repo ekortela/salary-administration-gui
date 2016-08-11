@@ -12,22 +12,23 @@
 
 using namespace std;
 
-Employee *EmployeeFactory::getEmployee(employee_types type)
+Employee *EmployeeFactory::getMonthlyPaidEmployee(string newName,
+		string newSsn, double newMonthlySalary)
 {
-	switch (type)
-	{
-	case employee_types::MONTHLY_PAID_EMPLOYEE:
-		return new MonthlyPaidEmployee("", "12345678-123", 0.0);
-	case employee_types::HOURLY_PAID_EMPLOYEE:
-		return new HourlyPaidEmployee("", "12345678-123", 0.0, 0.0);
-	case employee_types::SALESMAN_EMPLOYEE:
-		return new SalesmanEmployee("", "12345678-123", 0.0, 0.0, false);
-	default:
-		throw ("Unrecognized employee type: %d", type);
-	}
+	return new MonthlyPaidEmployee(newName, newSsn, newMonthlySalary);
 }
 
+Employee *EmployeeFactory::getHourlyPaidEmployee(string newName,
+		string newSsn, double newHourlySalary, double newDoneHours)
+{
+	return new HourlyPaidEmployee(newName, newSsn, newHourlySalary, newDoneHours);
+}
 
+Employee *EmployeeFactory::getSalesmanEmployee(string newName, string newSsn,
+		double newMonthlySalary, double newBonus, bool newOutcomeClaim)
+{
+	return new SalesmanEmployee(newName, newSsn, newMonthlySalary, newBonus, newOutcomeClaim);
+}
 
 
 ////============================================================================

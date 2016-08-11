@@ -18,7 +18,7 @@ class HourlyPaidEmployee: public Employee
     double doneHours;
   public:
     HourlyPaidEmployee(string newName,
-    		string newSocialSecurityNumber,
+    		string newSsn,
     		double newHourlySalary, double newDoneHours);
     virtual ~HourlyPaidEmployee();
     void setHourlySalary(double newHourlySalary);

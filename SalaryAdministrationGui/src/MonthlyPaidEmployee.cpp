@@ -9,10 +9,10 @@
 #include "MonthlyPaidEmployee.h"
 
 
-MonthlyPaidEmployee::MonthlyPaidEmployee(string newName, string newSocialSecurityNumber, double newMonthlySalary)
+MonthlyPaidEmployee::MonthlyPaidEmployee(string newName, string newSsn, double newMonthlySalary)
 {
 	Employee::setName(newName);
-	Employee::setSocialSecurityNumber(newSocialSecurityNumber);
+	Employee::setSocialSecurityNumber(newSsn);
 	setMonthlySalary(newMonthlySalary);
 };
 
@@ -39,7 +39,7 @@ double MonthlyPaidEmployee::getSalary()
 
 void MonthlyPaidEmployee::printInfo()
 {
-	cout << "Employee type: " << "MonthlyPaidEmployee" << "\n";
+	cout << "Type: " << "MonthlyPaidEmployee" << "\n";
 	cout << "Name: " << Employee::getName() << "\n";
 	cout << "SSN: " << Employee::getSocialSecurityNumber() << "\n";
 	cout << "Salary: " << this->getSalary() << "\n";
