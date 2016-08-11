@@ -3,9 +3,9 @@
 
 // TODO Add classes for exceptions
 
-EmployeeController::EmployeeController(EmployeeView* pView)
+EmployeeController::EmployeeController(EmployeeView view)
 {
-	this->pView = pView;
+	this->view = view;
 }
 
 
@@ -42,8 +42,10 @@ void EmployeeController::addSalesmanEmployee(string newName, string newSsn,
 void EmployeeController::removeEmployeeBySsn(string ssn) {
 
 	int idx = getEmployeeIndex(ssn);
-	if (idx != -1)
+	if (idx != -1) {
 		model.erase(model.begin() + idx);
+		vector<Employee*>(model).swap(model);
+	}
 	else
 		cout << "Employee with SSN " << ssn << " was not found!\n";
 }
@@ -87,5 +89,5 @@ string EmployeeController::getEmployeeName(string ssn)
 
 
 void EmployeeController::updateView() {
-	pView->printEmployeeInfoAll(model);
+	view.printEmployeeInfoAll(model);
 }
