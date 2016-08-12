@@ -19,6 +19,8 @@ class EmployeeController {
 private:
 	vector<Employee*> model;
 	EmployeeView view;
+	Employee* getEmployee(string ssn);
+	int getEmployeeIndex(string ssn);
 public:
 	EmployeeController(EmployeeView view);
 
@@ -29,10 +31,9 @@ public:
 		double newHourlySalary, double newDoneHours);
 	void addSalesmanEmployee(string newName, string newSsn,
 		double newMonthlySalary, double newBonus, bool newOutcomeClaim);
-	void removeEmployeeBySsn(string ssn);
-	int getEmployeeIndex(string ssn);
-	Employee* getEmployee(string ssn);
+	void removeEmployee(string ssn);
 	int getEmployeeCount();
+	void removeEmployeesAll();
 
 	// Getting/setting the Model properties
 	void setEmployeeName(string ssn, string newName);

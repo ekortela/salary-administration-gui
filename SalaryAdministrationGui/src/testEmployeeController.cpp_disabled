@@ -7,12 +7,15 @@
 
 #include <vector>
 #include <iostream>
+#include <stdexcept>
 #include "assert.h"
 #include "EmployeeFactory.h"
 #include "EmployeeView.h"
 #include "EmployeeController.h"
 
 using namespace std;
+
+
 
 
 int main(void)
@@ -34,47 +37,82 @@ int main(void)
 
 	controller.addHourlyPaidEmployee("Paavo Narkas", "123456-123", 20.0, 180.0);
 	controller.addMonthlyPaidEmployee("Teuvo Maantienkuningas", "123456-1244", 3000.0);
-
-	string ssn = "383838-11919";
-	controller.addSalesmanEmployee("Risto Varakas", ssn, 1500.50, 30.0, true);
+	controller.addSalesmanEmployee("Risto Varakas", "383838-11919", 1500.50, 30.0, true);
 
 	// Display employees with dummy View 
 	cout << "\n *** TEST *** Display all employee information by using dummy view... \n";
 	controller.updateView();
 
-	// Test
+
+	// Test variables
+	int count = 0;
+	string newName = "";
+	string newSsn = "";
+
+
 	cout << "\n *** TEST *** Try to add employee with pre-existing SSN... \n";
-	int nEmployees = controller.getEmployeeCount();
-	controller.addSalesmanEmployee("Risto Varakas", ssn, 1500.50, 30.0, true);
-	assert(nEmployees == controller.getEmployeeCount());
+	newName = "Risto Varakas";
+	newSsn = "123456-789";
+	controller.addSalesmanEmployee(newName, newSsn, 1500.50, 30.0, true);
+	count = controller.getEmployeeCount();
+	controller.addSalesmanEmployee(newName, newSsn, 1500.50, 30.0, true);
+	assert(count == controller.getEmployeeCount());
 
-	// Test
-	cout << "\n *** TEST *** Try to remove employee that does not exist... \n";
-	nEmployees = controller.getEmployeeCount();
-	controller.removeEmployeeBySsn("absdjdjd");
-	assert(nEmployees == controller.getEmployeeCount());
 
-	// Test
 	cout << "\n *** TEST *** Change existing employee name... \n";
-	string newName = "Risto Uusisukunimi";
-	controller.setEmployeeName(ssn, newName);
-	assert(controller.getEmployeeName(ssn) == newName);
-
-	// Test
-	cout << "\n *** TEST *** Remove employee... \n";
-	ssn = "This SSN will be removed";
-	//nEmployees = controller.getEmployeeCount();
-	//cout << controller.getEmployeeCount() << "\n";
-	controller.updateView();
-	controller.addSalesmanEmployee("", ssn, 0.0, 0.0, true);
-	controller.removeEmployeeBySsn(ssn);
-	assert(controller.getEmployeeIndex(ssn) == -1);
-	//cout << controller.getEmployeeCount() << "\n";
-	//assert(controller.getEmployeeCount() == (nEmployees-1));
+	newName = "new_name";
+	newSsn = "111111-111";
+	controller.addSalesmanEmployee(newName, newSsn, 1500.50, 30.0, true);
+	controller.setEmployeeName(newSsn, newName);
+	assert(controller.getEmployeeName(newSsn) == newName);
 
 
-	// Display employees
-	cout << "\nFinal employee list:\n";
-	controller.updateView();
+	cout << "\n *** TEST *** Add and remove employee... \n";
+	newSsn = "ssn_to_be_removed";
+	count = controller.getEmployeeCount();
+	controller.addSalesmanEmployee("", newSsn, 0.0, 0.0, true);
+	controller.removeEmployee(newSsn);
+	assert(controller.getEmployeeCount() == count);
+
+
+	cout << "\n *** TEST *** Remove all employees... \n";
+	controller.removeEmployeesAll();
+	assert(controller.getEmployeeCount() == 0);
+
+
+	cout << "\n *** TEST *** Try to REMOVE non-existent employee... \n";
+	newSsn = "ssn_that_does_not_exist";
+	try {
+		controller.removeEmployee(newSsn);
+		assert(false);
+	} catch (out_of_range e1) {
+		// do nothing
+	} catch (...) {
+		assert(false);
+	}
+
+
+	cout << "\n *** TEST *** Try to SET name of non-existent employee... \n";
+	newSsn = "ssn_that_does_not_exist";
+	try {
+		controller.setEmployeeName(newSsn, "");
+		assert(false);
+	} catch (invalid_argument e1) {
+		// do nothing
+	} catch (...) {
+		assert(false);
+	}
+
+
+	cout << "\n *** TEST *** Try to GET name of non-existent employee... \n";
+	newSsn = "ssn_that_does_not_exist";
+	try {
+		assert(controller.getEmployeeName(newSsn) == "");
+		assert(false);
+	} catch (invalid_argument e1) {
+		// do nothing
+	} catch (...) {
+		assert(false);
+	}
 
 }

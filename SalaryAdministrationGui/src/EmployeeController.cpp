@@ -1,5 +1,7 @@
 #include "EmployeeController.h"
 #include <algorithm>
+#include <stdexcept>
+#include <stdio.h>
 
 // TODO Add classes for exceptions
 
@@ -16,7 +18,7 @@ void EmployeeController::addMonthlyPaidEmployee(string newName, string newSsn,
 		model.push_back(EmployeeFactory::getMonthlyPaidEmployee(
 			newName, newSsn, newMonthlySalary));
 	else
-		cout << "Unable to add: Employee already found with SSN: " << newSsn << "\n";
+		cerr << "Unable to add: Employee already found with SSN: " << newSsn << "\n";
 }
 
 void EmployeeController::addHourlyPaidEmployee(string newName, string newSsn,
@@ -26,7 +28,7 @@ void EmployeeController::addHourlyPaidEmployee(string newName, string newSsn,
 		model.push_back(EmployeeFactory::getHourlyPaidEmployee(
 			newName, newSsn, newHourlySalary, newDoneHours));
 	else
-		cout << "Unable to add: Employee already found with SSN: " << newSsn << "\n";
+		cerr << "Unable to add: Employee already found with SSN: " << newSsn << "\n";
 }
 
 void EmployeeController::addSalesmanEmployee(string newName, string newSsn,
@@ -36,16 +38,18 @@ void EmployeeController::addSalesmanEmployee(string newName, string newSsn,
 		model.push_back(EmployeeFactory::getSalesmanEmployee(
 			newName, newSsn, newMonthlySalary, newBonus, newOutcomeClaim));
 	else
-		cout << "Unable to add: Employee already found with SSN: " << newSsn << "\n";
+		cerr << "Unable to add: Employee already found with SSN: " << newSsn << "\n";
 }
 
-void EmployeeController::removeEmployeeBySsn(string ssn) {
+void EmployeeController::removeEmployee(string ssn) {
 
 	int idx = getEmployeeIndex(ssn);
-	if (idx != -1)
+	if (idx != -1) {
 		model.erase(model.begin() + idx);
+//		vector<Employee*>(model).swap(model);
+	}
 	else
-		cout << "Index " << idx << " was not found!\n";
+		throw out_of_range(ssn);
 }
 
 
@@ -64,8 +68,7 @@ Employee * EmployeeController::getEmployee(string ssn)
 	int idx = getEmployeeIndex(ssn);
 	if (idx != -1)
 		return model[idx];
-	else
-		return nullptr;
+	return nullptr;
 }
 
 int EmployeeController::getEmployeeCount()
@@ -76,13 +79,23 @@ int EmployeeController::getEmployeeCount()
 void EmployeeController::setEmployeeName(string ssn, string newName)
 {
 	Employee* p = getEmployee(ssn);
-	p->setName(newName);
+	if (p != nullptr)
+		p->setName(newName);
+	else
+		throw invalid_argument(ssn);
 }
 
 string EmployeeController::getEmployeeName(string ssn)
 {
 	Employee* p = getEmployee(ssn);
-	return p->getName();
+	if (p != nullptr)
+		return p->getName();
+	else
+		throw invalid_argument(ssn);;
+}
+
+void EmployeeController::removeEmployeesAll() {
+	model.clear();
 }
 
 
