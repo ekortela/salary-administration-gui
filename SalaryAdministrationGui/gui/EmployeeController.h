@@ -20,6 +20,7 @@ class EmployeeController {
 private:
 	vector<Employee*> model;
     QWidget *view;
+    EmployeeView *empView;
 public:
     EmployeeController(QWidget *view);
 

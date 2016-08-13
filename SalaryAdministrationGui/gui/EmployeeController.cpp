@@ -5,6 +5,7 @@
 EmployeeController::EmployeeController(QWidget *view)
 {
 	this->view = view;
+    this->empView = new EmployeeView(view);
 }
 
 

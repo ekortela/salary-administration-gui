@@ -1,7 +1,9 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-void createTreeWidget(QHBoxLayout *mainLayout);
-void createEemployeeInformationView(QHBoxLayout *mainLayout);
+#include <QApplication>
+#include <QtWidgets>
+#include <QtCore>
+#include "EmployeeController.h"
 
 #endif // MAIN_H
