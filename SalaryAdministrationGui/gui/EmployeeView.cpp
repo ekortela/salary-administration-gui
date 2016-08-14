@@ -21,7 +21,8 @@ void EmployeeView::initialize()
     view->show();
 }
 
-void EmployeeView::printEmployeeInfoAll(vector<Employee*> model) {
+void EmployeeView::printEmployeeInfoAll(vector<Employee*> model)
+{
     for (unsigned int i = 0; model.size() > i; i++) {
         model[i]->printInfo();
         cout << "\n";
@@ -30,7 +31,10 @@ void EmployeeView::printEmployeeInfoAll(vector<Employee*> model) {
 
 void EmployeeView::createTreeWidget(QHBoxLayout *mainLayout)
 {
-    QTreeWidget *treeWidget = new QTreeWidget;
+    this->rightLayout = new QVBoxLayout;
+
+    // Employee list tree
+    this->treeWidget = new QTreeWidget;
     treeWidget->setColumnCount(3);
     treeWidget->setSortingEnabled(true);
 
@@ -59,46 +63,52 @@ void EmployeeView::createTreeWidget(QHBoxLayout *mainLayout)
         employee->setText(2, payType[i]);
         items.append(employee);
     }
-    // muuta leveys
+    // muuta leveys??
 
-    mainLayout->addWidget(treeWidget);
+    // "Add new employee" button
+    this->addNewEmployeeButton = new QPushButton("Add new employee");
+
+    rightLayout->addWidget(treeWidget);
+    rightLayout->addWidget(addNewEmployeeButton);
+
+    mainLayout->addLayout(rightLayout);
 }
 
 void EmployeeView::createEemployeeInformationView(QHBoxLayout *mainLayout)
 {
-    QScrollArea *scrollArea = new QScrollArea;
+    this->scrollArea = new QScrollArea;
     scrollArea->setWidgetResizable(true);
-    QWidget *container = new QWidget;
+    this->container = new QWidget;
     scrollArea->setWidget(container);
-    QGridLayout *employeeInformationForm = new QGridLayout;
+    this->employeeInformationForm = new QGridLayout;
 
     // Employee information feed
     QLabel *lastNameLabel = new QLabel("Last name:");
-    QLineEdit *lastNameEdit = new QLineEdit;
+    this->lastNameEdit = new QLineEdit;
     QLabel *firstNameLabel = new QLabel("First name(s):");
-    QLineEdit *firstNameEdit = new QLineEdit;
+    this->firstNameEdit = new QLineEdit;
     QLabel *SSNLabel = new QLabel("SSN:");
-    QLineEdit *SSNEdit = new QLineEdit;
+    this->SSNEdit = new QLineEdit;
 
     QLabel *payTypeLabel = new QLabel("Pay type:");
-    QComboBox *payTypeMenu = new QComboBox;
+    this->payTypeMenu = new QComboBox;
     QStringList payTypes;
-    payTypes << "Hourly" << "Monthly" << "Sales";
+    payTypes << "" << "Hourly" << "Monthly" << "Sales";
     payTypeMenu->insertItems(0, payTypes);
 
     QLabel *hoursDoneLabel = new QLabel("Hours done:");
-    QLineEdit *hoursDoneEdit = new QLineEdit;
+    this->hoursDoneEdit = new QLineEdit;
     QLabel *salaryLabel = new QLabel("Salary:");
-    QLineEdit *salaryEdit = new QLineEdit;
+    this->salaryEdit = new QLineEdit;
     QLabel *realizedIncomeLabel = new QLabel("Realized income:");
-    QLineEdit *realizedIncomeEdit = new QLineEdit;
+    this->realizedIncomeEdit = new QLineEdit;
     QLabel *outcomeClaimLabel = new QLabel("Outcome claim:");
-    QLineEdit *outcomeClaimEdit = new QLineEdit;
+    this->outcomeClaimEdit = new QLineEdit;
 
     // Buttons
-    QPushButton *saveButton = new QPushButton("Save");
-    QPushButton *calculateSalaryButton = new QPushButton("Calculate salary");
-    QPushButton *deleteButton = new QPushButton("Delete");
+    this->saveButton = new QPushButton("Save");
+    this->calculateSalaryButton = new QPushButton("Calculate salary");
+    this->deleteButton = new QPushButton("Delete");
 
     // Validators
     QIntValidator *intValidator = new QIntValidator(0,999999999,hoursDoneEdit);
