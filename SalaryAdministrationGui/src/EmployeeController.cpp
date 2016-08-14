@@ -1,58 +1,55 @@
 #include "EmployeeController.h"
 
-// TODO Add classes for exceptions
-
-EmployeeController::EmployeeController(QWidget *view)
+EmployeeController::EmployeeController(EmployeeView *view)
 {
-	this->view = view;
-    this->empView = new EmployeeView(view);
+    this->m_view = view;
 }
 
 
 void EmployeeController::addMonthlyPaidEmployee(string newName, string newSsn,
 	double newMonthlySalary)
 {
-	if (getEmployeeIndexBySsn(newSsn) == -1)
-		model.push_back(EmployeeFactory::getMonthlyPaidEmployee(
+    if (getEmployeeIndex(newSsn) == -1)
+        model.push_back(EmployeeFactory::getMonthlyPaidEmployee(
 			newName, newSsn, newMonthlySalary));
 	else
-		cout << "Unable to add: Employee already found with SSN: " << newSsn << "\n";
+        qCritical() << "Unable to add: Employee already exists! SSN: " << QString::fromStdString(newSsn);
 }
 
 void EmployeeController::addHourlyPaidEmployee(string newName, string newSsn,
 	double newHourlySalary, double newDoneHours) {
 
-	if (getEmployeeIndexBySsn(newSsn) == -1)
-		model.push_back(EmployeeFactory::getHourlyPaidEmployee(
+    if (getEmployeeIndex(newSsn) == -1)
+        model.push_back(EmployeeFactory::getHourlyPaidEmployee(
 			newName, newSsn, newHourlySalary, newDoneHours));
 	else
-		cout << "Unable to add: Employee already found with SSN: " << newSsn << "\n";
+        qCritical() << "Unable to add: Employee already exists! SSN: " << QString::fromStdString(newSsn);
 }
 
 void EmployeeController::addSalesmanEmployee(string newName, string newSsn,
 	double newMonthlySalary, double newBonus, bool newOutcomeClaim) {
 
-	if (getEmployeeIndexBySsn(newSsn) == -1)
-		model.push_back(EmployeeFactory::getSalesmanEmployee(
+    if (getEmployeeIndex(newSsn) == -1)
+        model.push_back(EmployeeFactory::getSalesmanEmployee(
 			newName, newSsn, newMonthlySalary, newBonus, newOutcomeClaim));
 	else
-		cout << "Unable to add: Employee already found with SSN: " << newSsn << "\n";
+        qCritical() << "Unable to add: Employee already exists! SSN: " << QString::fromStdString(newSsn);
 }
 
-void EmployeeController::removeEmployeeBySsn(string ssn) {
+void EmployeeController::removeEmployee(string ssn) {
 
-	int idx = getEmployeeIndexBySsn(ssn);
+    int idx = getEmployeeIndex(ssn);
 	if (idx != -1)
-		delete model[idx];
+        delete model[idx];
 	else
-		cout << "Unable to remove: Employee not found with SSN: " << ssn << "\n";
+        qCritical() << "Unable to remove: Employee does not exist! SSN: " << QString::fromStdString(ssn);
 }
 
 
-int EmployeeController::getEmployeeIndexBySsn(string ssn) {
+int EmployeeController::getEmployeeIndex(string ssn) {
 
-	for (unsigned int i = 0; i < model.size(); i++) {
-		if (model[i]->getSocialSecurityNumber() == ssn) {
+    for (unsigned int i = 0; i < model.size(); i++) {
+        if (model[i]->getSocialSecurityNumber() == ssn) {
 			return i;
 		}
 	}
@@ -60,7 +57,43 @@ int EmployeeController::getEmployeeIndexBySsn(string ssn) {
 }
 
 
+Employee * EmployeeController::getEmployee(string ssn)
+{
+    int idx = getEmployeeIndex(ssn);
+    if (idx != -1)
+        return model[idx];
+    return nullptr;
+}
+
+int EmployeeController::getEmployeeCount()
+{
+    return model.size();
+}
+
+void EmployeeController::setEmployeeName(string ssn, string newName)
+{
+    Employee* p = getEmployee(ssn);
+    if (p != nullptr)
+        p->setFirstName(newName);
+    else
+        qCritical() << "Unable to set employee name: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+}
+
+string EmployeeController::getEmployeeName(string ssn)
+{
+    Employee* p = getEmployee(ssn);
+    if (p != nullptr)
+        return p->getFirstName();
+    else
+        qCritical() << "Unable to get employee name: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+    return("");
+}
+
+void EmployeeController::clearEmployees() {
+    model.clear();
+}
+
 void EmployeeController::updateView() {
-    //view.printEmployeeInfoAll(model);
+//    view.printEmployeeInfoAll(model);
 
 }

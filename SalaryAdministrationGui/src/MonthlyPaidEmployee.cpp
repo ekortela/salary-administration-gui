@@ -11,7 +11,7 @@
 
 MonthlyPaidEmployee::MonthlyPaidEmployee(string newName, string newSsn, double newMonthlySalary)
 {
-	Employee::setName(newName);
+    Employee::setFirstName(newName);
 	Employee::setSocialSecurityNumber(newSsn);
 	setMonthlySalary(newMonthlySalary);
 };
@@ -40,7 +40,7 @@ double MonthlyPaidEmployee::getSalary()
 void MonthlyPaidEmployee::printInfo()
 {
 	cout << "Type: " << "MonthlyPaidEmployee" << "\n";
-	cout << "Name: " << Employee::getName() << "\n";
+    cout << "Name: " << Employee::getFirstName() << "\n";
 	cout << "SSN: " << Employee::getSocialSecurityNumber() << "\n";
 	cout << "Salary: " << this->getSalary() << "\n";
 	cout << ">Monthly salary: " << this->getMonthlySalary() << "\n";

@@ -11,23 +11,27 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
-
 
 class Employee
 {
   private:
-	string name;
-    string socialSecurityNumber;
+    string firstName, lastName, socialSecurityNumber;
+
   public:
-    void setName(string newName);
-    string getName();
+    virtual double getSalary() = 0;
+    virtual void printInfo() = 0;
+    virtual ~Employee();
+
+    void setFirstName(string newFirstName);
+    string getFirstName();
+    void setLastName(string newLastName);
+    string getLastName();
   	void setSocialSecurityNumber(string newSsn);
   	string getSocialSecurityNumber();
-    virtual double getSalary() = 0;
-	virtual void printInfo() = 0;
-    virtual ~Employee();
 };
 
 

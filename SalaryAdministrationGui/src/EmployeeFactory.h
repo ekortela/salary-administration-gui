@@ -8,11 +8,12 @@
 #ifndef EMPLOYEEFACTORY_H_
 #define EMPLOYEEFACTORY_H_
 
-enum employee_types { MONTHLY_PAID_EMPLOYEE = 0, HOURLY_PAID_EMPLOYEE = 1, SALESMAN_EMPLOYEE = 2 };
+enum employee_types { MONTHLY_PAID_EMPLOYEE, HOURLY_PAID_EMPLOYEE, SALESMAN_EMPLOYEE};
 
 #include "Employee.h"
 
 class EmployeeFactory {
+
 	public:
 		static Employee *getMonthlyPaidEmployee(string newName, string newSsn,
 	    		double newMonthlySalary);
@@ -20,6 +21,8 @@ class EmployeeFactory {
 	    		double newHourlySalary, double doneHours);
 		static Employee *getSalesmanEmployee(string newName, string newSsn,
 				double newMonthlySalary, double newBonus, bool newOutcomeClaim);
+    private:
+        EmployeeFactory() {}; // prevent creating an instance of this class
 };
 
 #endif /* EMPLOYEEFACTORY_H_ */

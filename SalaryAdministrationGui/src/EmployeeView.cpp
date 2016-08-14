@@ -1,40 +1,33 @@
 #include "EmployeeView.h"
+#include <QCoreApplication>
 
-EmployeeView::EmployeeView(QWidget *view)
-{
-    this->view = view;
-    initialize();
-}
 
-void EmployeeView::initialize()
-{
-    view->setWindowTitle("Salary Admin");
+EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
 
-    this->mainLayout = new QHBoxLayout;
-    createEemployeeInformationView(mainLayout);
-    createTreeWidget(mainLayout);
+    m_treeWidgetContainer = new QWidget;
+    m_treeWidgetContainer->setWindowTitle("Salary Admin");
 
-    view->setLayout(mainLayout);
+    this->m_mainLayout = new QHBoxLayout;
+    createEemployeeInformationView(m_mainLayout);
+    createTreeWidget(m_mainLayout);
+
+    m_treeWidgetContainer->setLayout(m_mainLayout);
     //window->resize(QDesktopWidget().availableGeometry().size() * 0.3);
-    view->resize(600,300);
-
-    view->show();
+    m_treeWidgetContainer->resize(600,300);
+    m_treeWidgetContainer->show();
 }
 
-void EmployeeView::printEmployeeInfoAll(vector<Employee*> model)
-{
-    for (unsigned int i = 0; model.size() > i; i++) {
-        model[i]->printInfo();
-        cout << "\n";
-    }
+void EmployeeView::printEmployeeInfoAll(vector<Employee*> model) {
+	for (unsigned int i = 0; model.size() > i; i++) {
+		model[i]->printInfo();
+		cout << "\n";
+	}
 }
+
 
 void EmployeeView::createTreeWidget(QHBoxLayout *mainLayout)
 {
-    this->rightLayout = new QVBoxLayout;
-
-    // Employee list tree
-    this->treeWidget = new QTreeWidget;
+    QTreeWidget *treeWidget = new QTreeWidget;
     treeWidget->setColumnCount(3);
     treeWidget->setSortingEnabled(true);
 
@@ -63,94 +56,110 @@ void EmployeeView::createTreeWidget(QHBoxLayout *mainLayout)
         employee->setText(2, payType[i]);
         items.append(employee);
     }
-    // muuta leveys??
+    // muuta leveys
 
-    // "Add new employee" button
-    this->addNewEmployeeButton = new QPushButton("Add new employee");
-
-    rightLayout->addWidget(treeWidget);
-    rightLayout->addWidget(addNewEmployeeButton);
-
-    mainLayout->addLayout(rightLayout);
+    mainLayout->addWidget(treeWidget);
 }
 
 void EmployeeView::createEemployeeInformationView(QHBoxLayout *mainLayout)
 {
-    this->scrollArea = new QScrollArea;
-    scrollArea->setWidgetResizable(true);
-    this->container = new QWidget;
-    scrollArea->setWidget(container);
-    this->employeeInformationForm = new QGridLayout;
+    m_scrollArea = new QScrollArea;
+    m_scrollArea->setWidgetResizable(true);
+    m_scrollAreaContainer = new QWidget;
+    m_scrollArea->setWidget(m_scrollAreaContainer);
+    m_leftLayout = new QGridLayout;
 
     // Employee information feed
-    QLabel *lastNameLabel = new QLabel("Last name:");
-    this->lastNameEdit = new QLineEdit;
-    QLabel *firstNameLabel = new QLabel("First name(s):");
-    this->firstNameEdit = new QLineEdit;
-    QLabel *SSNLabel = new QLabel("SSN:");
-    this->SSNEdit = new QLineEdit;
+    m_lastNameLabel = new QLabel("Last name:");
+    m_lastNameEdit = new QLineEdit();
+    m_firstNameLabel = new QLabel("First name(s):");
+    m_firstNameEdit = new QLineEdit;
+    m_SSNLabel = new QLabel("SSN:");
+    m_SSNEdit = new QLineEdit;
 
-    QLabel *payTypeLabel = new QLabel("Pay type:");
-    this->payTypeMenu = new QComboBox;
+    m_payTypeLabel = new QLabel("Pay type:");
+    m_payTypeMenu = new QComboBox;
+
     QStringList payTypes;
-    payTypes << "" << "Hourly" << "Monthly" << "Sales";
-    payTypeMenu->insertItems(0, payTypes);
+    payTypes << "Hourly" << "Monthly" << "Sales";
+    m_payTypeMenu->insertItems(0, payTypes);
 
-    QLabel *hoursDoneLabel = new QLabel("Hours done:");
-    this->hoursDoneEdit = new QLineEdit;
-    QLabel *salaryLabel = new QLabel("Salary:");
-    this->salaryEdit = new QLineEdit;
-    QLabel *realizedIncomeLabel = new QLabel("Realized income:");
-    this->realizedIncomeEdit = new QLineEdit;
-    QLabel *outcomeClaimLabel = new QLabel("Outcome claim:");
-    this->outcomeClaimEdit = new QLineEdit;
+    m_hoursDoneLabel = new QLabel("Hours done:");
+    m_hoursDoneEdit = new QLineEdit;
+    m_salaryLabel = new QLabel("Salary:");
+    m_salaryEdit = new QLineEdit;
+    m_realizedIncomeLabel = new QLabel("Realized income:");
+    m_realizedIncomeEdit = new QLineEdit;
+    m_outcomeClaimLabel = new QLabel("Outcome claim:");
+    m_outcomeClaimEdit = new QLineEdit;
 
     // Buttons
-    this->saveButton = new QPushButton("Save");
-    this->calculateSalaryButton = new QPushButton("Calculate salary");
-    this->deleteButton = new QPushButton("Delete");
+    m_saveButton = new QPushButton("Save");
+    connect(m_saveButton, SIGNAL (released()), this, SLOT (handleSaveButtonClick()) );
+    m_deleteButton = new QPushButton("Delete");
+    connect(m_deleteButton, SIGNAL (released()), this, SLOT (handleDeleteButtonClick()) );
 
     // Validators
-    QIntValidator *intValidator = new QIntValidator(0,999999999,hoursDoneEdit);
+    QIntValidator *intValidator = new QIntValidator(0,999999999,m_hoursDoneEdit);
     //QDoubleValidator *doubleValidator = new QDoubleValidator(0.0,999999999.9,salaryEdit);
-    hoursDoneEdit->setValidator(intValidator);
+    m_hoursDoneEdit->setValidator(intValidator);
     //salaryEdit->setValidator(doubleValidator);
     //realizedIncomeEdit->setValidator(doubleValidator);
     //outcomeClaimEdit->setValidator(doubleValidator);
 
     // Names
-    lastNameEdit->setAccessibleName("lastName");
-    firstNameEdit->setAccessibleName("firstName");
-    SSNEdit->setAccessibleName("ssn");
+    m_lastNameEdit->setAccessibleName("lastName");
+    m_firstNameEdit->setAccessibleName("firstName");
+    m_SSNEdit->setAccessibleName("ssn");
     //paytype??
-    hoursDoneEdit->setAccessibleName("hoursDone");
-    salaryEdit->setAccessibleName("salaryEdit");
-    realizedIncomeEdit->setAccessibleName("realizedIncome");
-    outcomeClaimEdit->setAccessibleName("outcomeClaim");
+    m_hoursDoneEdit->setAccessibleName("hoursDone");
+    m_salaryEdit->setAccessibleName("salaryEdit");
+    m_realizedIncomeEdit->setAccessibleName("realizedIncome");
+    m_outcomeClaimEdit->setAccessibleName("outcomeClaim");
 
-    employeeInformationForm->addWidget(lastNameLabel,0,0);
-    employeeInformationForm->addWidget(lastNameEdit,0,1);
-    employeeInformationForm->addWidget(firstNameLabel,1,0);
-    employeeInformationForm->addWidget(firstNameEdit,1,1);
-    employeeInformationForm->addWidget(SSNLabel,2,0);
-    employeeInformationForm->addWidget(SSNEdit,2,1);
-    employeeInformationForm->addWidget(payTypeLabel,3,0);
-    employeeInformationForm->addWidget(payTypeMenu,3,1);
-    employeeInformationForm->addWidget(hoursDoneLabel,4,0);
-    employeeInformationForm->addWidget(hoursDoneEdit,4,1);
-    employeeInformationForm->addWidget(salaryLabel,5,0);
-    employeeInformationForm->addWidget(salaryEdit,5,1);
+    m_leftLayout->addWidget(m_lastNameLabel,0,0);
+    m_leftLayout->addWidget(m_lastNameEdit,0,1);
+    m_leftLayout->addWidget(m_firstNameLabel,1,0);
+    m_leftLayout->addWidget(m_firstNameEdit,1,1);
+    m_leftLayout->addWidget(m_SSNLabel,2,0);
+    m_leftLayout->addWidget(m_SSNEdit,2,1);
+    m_leftLayout->addWidget(m_payTypeLabel,3,0);
+    m_leftLayout->addWidget(m_payTypeMenu,3,1);
+    m_leftLayout->addWidget(m_hoursDoneLabel,4,0);
+    m_leftLayout->addWidget(m_hoursDoneEdit,4,1);
+    m_leftLayout->addWidget(m_salaryLabel,5,0);
+    m_leftLayout->addWidget(m_salaryEdit,5,1);
 
-    employeeInformationForm->addWidget(realizedIncomeLabel,6,0);
-    employeeInformationForm->addWidget(realizedIncomeEdit,6,1);
-    employeeInformationForm->addWidget(outcomeClaimLabel,7,0);
-    employeeInformationForm->addWidget(outcomeClaimEdit,7,1);
+    m_leftLayout->addWidget(m_realizedIncomeLabel,6,0);
+    m_leftLayout->addWidget(m_realizedIncomeEdit,6,1);
+    m_leftLayout->addWidget(m_outcomeClaimLabel,7,0);
+    m_leftLayout->addWidget(m_outcomeClaimEdit,7,1);
 
-    employeeInformationForm->addWidget(saveButton,8,0);
-    employeeInformationForm->addWidget(deleteButton,8,1);
-    employeeInformationForm->addWidget(calculateSalaryButton,9,0,1,2);
+    m_leftLayout->addWidget(m_saveButton,8,0);
+    m_leftLayout->addWidget(m_deleteButton,8,1);
 
-    employeeInformationForm->setColumnStretch(0,1);
-    container->setLayout(employeeInformationForm);
-    mainLayout->addWidget(scrollArea);
+    m_displayInfo = new QLabel("info text");
+    m_leftLayout->addWidget(m_displayInfo,9,0,1,2);
+
+    m_leftLayout->setColumnStretch(0,1);
+    m_scrollAreaContainer->setLayout(m_leftLayout);
+    mainLayout->addWidget(m_scrollArea);
+}
+
+
+void EmployeeView::handleSaveButtonClick() {
+
+    qDebug() << "Save button was clicked!";
+
+    // get SSN number and set it to display button
+    QString qstr = this->m_SSNEdit->text();
+    m_displayInfo->setText(qstr);
+
+    // TODO AAPO Register EmployeeController as event listener for EmployeeView
+
+
+}
+
+void EmployeeView::handleDeleteButtonClick() {
+    qDebug() << "Delete button was clicked!";
 }

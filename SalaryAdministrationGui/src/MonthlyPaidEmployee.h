@@ -14,6 +14,7 @@ class MonthlyPaidEmployee: public Employee
 {
   private:
     double monthlySalary;
+
   public:
     MonthlyPaidEmployee(string newName,
     		string newSsn,

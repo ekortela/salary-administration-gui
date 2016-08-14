@@ -16,6 +16,7 @@ class HourlyPaidEmployee: public Employee
   private:
     double hourlySalary;
     double doneHours;
+
   public:
     HourlyPaidEmployee(string newName,
     		string newSsn,

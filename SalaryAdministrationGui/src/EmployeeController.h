@@ -9,7 +9,6 @@
 *      Author: keskimol
 */
 
-
 #include <vector>
 #include <QtWidgets>
 #include "EmployeeView.h"
@@ -17,12 +16,14 @@
 #include "EmployeeFactory.h"
 
 class EmployeeController {
+
 private:
-	vector<Employee*> model;
-    QWidget *view;
-    EmployeeView *empView;
+    vector<Employee*> model;
+
 public:
-    EmployeeController(QWidget *view);
+    EmployeeView *m_view;
+
+    EmployeeController(EmployeeView *view);
 
 	// For adding, removing and inspecting the Model objects 
 	void addMonthlyPaidEmployee(string newName, string newSsn,
@@ -31,27 +32,25 @@ public:
 		double newHourlySalary, double newDoneHours);
 	void addSalesmanEmployee(string newName, string newSsn,
 		double newMonthlySalary, double newBonus, bool newOutcomeClaim);
-	void removeEmployeeBySsn(string ssn);
-	int getEmployeeIndexBySsn(string ssn);
-	Employee* getEmployeeBySsn(string ssn);
+    void removeEmployee(string ssn);
+    int getEmployeeIndex(string ssn);
+    Employee* getEmployee(string ssn);
+    int getEmployeeCount();
+    void clearEmployees();
 
 	// Getting/setting the Model properties
-	void setEmployeeName();
-	void getEmployeeName();
-	void setEmployeeSsn();
-	void getEmployeeSsn();
-	void setEmployeeHourlySalary();
-	void getEmployeeHourlySalary();
-	void setEmployeeMonthlySalary();
-	void getEmployeeMonthlySalary();
-	void setEmployeeBonus();
-	void getEmployeeBonus();
-	void setEmployeeOutcomeclaim();
-	void getEmployeeOutcomeclaim();
-
-	// Load/Save the Model state in local file
-	void loadModelFromFile(string filename);
-	void saveModelToFile(string filename);
+    void setEmployeeName(string ssn, string newName);
+    string getEmployeeName(string ssn);
+    void setEmployeeSsn(string ssn, string newSsn);
+    string getEmployeeSsn(string ssn);
+    void setEmployeeHourlySalary(string ssn, double newHourlySalary);
+    double getEmployeeHourlySalary(string ssn);
+    void setEmployeeMonthlySalary(string ssn, double newMonthlySalary);
+    double getEmployeeMonthlySalary(string ssn);
+    void setEmployeeBonus(string ssn, double newBonus);
+    double getEmployeeBonus(string ssn);
+    void setEmployeeOutcomeclaim(string ssn, bool newOutcomeClaim);
+    bool getEmployeeOutcomeclaim(string ssn);
 
 	// Display the Model in the View 
 	void updateView();

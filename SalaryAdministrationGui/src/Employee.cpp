@@ -15,15 +15,23 @@ using namespace std;
 Employee::~Employee() {}
 
 
-void Employee::setName(string newName) {
-	name = newName;
+void Employee::setFirstName(string newFirstName) {
+    firstName = newFirstName;
 }
 
 
-string Employee::getName() {
-	return name;
+string Employee::getFirstName() {
+    return firstName;
 }
 
+void Employee::setLastName(string newLastName) {
+    lastName = newLastName;
+}
+
+
+string Employee::getLastName() {
+    return lastName;
+}
 
 void Employee::setSocialSecurityNumber(string newSsn) {
 	socialSecurityNumber = newSsn;

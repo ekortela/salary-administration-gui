@@ -2,25 +2,36 @@
 
 #include "Employee.h"
 #include <QtWidgets>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 
-class EmployeeView: public QWidget {
+class EmployeeView: public QMainWindow {
+
+    Q_OBJECT
+
 public:
-    EmployeeView(QWidget *view);
-	void printEmployeeInfoAll(vector<Employee *> model);
-    QLineEdit *lastNameEdit, *firstNameEdit, *SSNEdit, *hoursDoneEdit, *salaryEdit, *realizedIncomeEdit, *outcomeClaimEdit;
-    QComboBox *payTypeMenu;
-    QPushButton *addNewEmployeeButton, *saveButton, *calculateSalaryButton, *deleteButton;
-    QTreeWidget *treeWidget;
+    explicit EmployeeView(QWidget *parent = 0);
+
+    QLineEdit *m_lastNameEdit, *m_firstNameEdit, *m_SSNEdit, *m_hoursDoneEdit,
+                *m_salaryEdit, *m_realizedIncomeEdit, *m_outcomeClaimEdit;
+    QComboBox *m_payTypeMenu;
+    QPushButton *m_addNewEmployeeButton, *m_saveButton, *m_deleteButton;
+    QTreeWidget *m_treeWidget;
+
+    void printEmployeeInfoAll(vector<Employee *> model);
 
 private:
-    QWidget *view, *container;
-    QHBoxLayout *mainLayout;
-    QVBoxLayout *rightLayout;
-    QScrollArea *scrollArea;
-    QGridLayout *employeeInformationForm;
-    void initialize();
-    void createTreeWidget(QHBoxLayout *mainLayout);
-    void createEemployeeInformationView(QHBoxLayout *mainLayout);
+    QLabel *m_lastNameLabel, *m_firstNameLabel, *m_SSNLabel, *m_payTypeLabel,
+            *m_realizedIncomeLabel, *m_outcomeClaimLabel, *m_hoursDoneLabel,
+            *m_salaryLabel, *m_displayInfo;
+    QWidget *m_treeWidgetContainer, *m_scrollAreaContainer;
+    QHBoxLayout *m_mainLayout;
+    QVBoxLayout *m_rightLayout;
+    QScrollArea *m_scrollArea;
+    QGridLayout *m_leftLayout;
+
+    void createTreeWidget(QHBoxLayout *m_mainLayout);
+    void createEemployeeInformationView(QHBoxLayout *m_mainLayout);
+
+private slots:
+    void handleSaveButtonClick();
+    void handleDeleteButtonClick();
 };

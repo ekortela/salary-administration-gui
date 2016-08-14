@@ -10,7 +10,7 @@
 
 HourlyPaidEmployee::HourlyPaidEmployee(string newName, string newSsn, double newHourlySalary, double newDoneHours)
 {
-	setName(newName);
+    setFirstName(newName);
 	setSocialSecurityNumber(newSsn);
 	setHourlySalary(newHourlySalary);
 	setDoneHours(newDoneHours);
@@ -45,7 +45,7 @@ double HourlyPaidEmployee::getSalary() {
 
 void HourlyPaidEmployee::printInfo() {
 	cout << "Type: " << "HourlyPaidEmployee" << "\n";
-	cout << "Name: " << Employee::getName() << "\n";
+    cout << "Name: " << Employee::getFirstName() << "\n";
 	cout << "SSN: " << Employee::getSocialSecurityNumber() << "\n";
 	cout << "Salary: " << this->getSalary() << "\n";
 	cout << ">Done hours: " << this->getDoneHours() << "\n";

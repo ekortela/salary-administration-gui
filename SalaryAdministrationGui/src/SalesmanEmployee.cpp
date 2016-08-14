@@ -10,7 +10,7 @@
 
 SalesmanEmployee::SalesmanEmployee(string newName, string newSsn, double newMonthlySalary, double newBonus, bool newOutcomeClaim)
 {
-	Employee::setName(newName);
+    Employee::setFirstName(newName);
 	Employee::setSocialSecurityNumber(newSsn);
 	setMonthlySalary(newMonthlySalary);
 	setBonus(newBonus);
@@ -21,12 +21,12 @@ SalesmanEmployee::~SalesmanEmployee() {}
 
 void SalesmanEmployee::setMonthlySalary(double newMonthlySalary) {
 	monthlySalary = newMonthlySalary;
-};
+}
 
 
 double SalesmanEmployee::getMonthlySalary() {
 	return monthlySalary;
-};
+}
 
 
 void SalesmanEmployee::setBonus(double newBonus) {
@@ -64,7 +64,8 @@ double SalesmanEmployee::getSalary()
 void SalesmanEmployee::printInfo()
 {
 	cout << "Type: " << "SalesmanEmployee" << "\n";
-	cout << "Name: " << Employee::getName() << "\n";
+    cout << "Name: " << Employee::getFirstName() << "\n";
+    cout << "Name: " << Employee::getFirstName() << "\n";
 	cout << "SSN: " << Employee::getSocialSecurityNumber() << "\n";
 	cout << "Salary: " << this->getSalary() << "\n";
 	cout << ">Monthly salary: " << this->getMonthlySalary() << "\n";

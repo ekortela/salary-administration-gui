@@ -19,6 +19,7 @@ class SalesmanEmployee: public Employee
     double bonus;
     double realizedOutcome;
     bool outcomeClaim;
+
   public:
     SalesmanEmployee( string newName, string newSsn, double newMonthlySalary, double newBonus, bool newOutcomeClaim );
     virtual ~SalesmanEmployee();
