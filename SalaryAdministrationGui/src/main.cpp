@@ -1,4 +1,5 @@
-#include "main.h"
+#include <QApplication>
+#include "EmployeeController.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);

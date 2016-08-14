@@ -11,6 +11,7 @@
 
 
 #include <vector>
+#include <QtWidgets>
 #include "EmployeeView.h"
 #include "Employee.h"
 #include "EmployeeFactory.h"
@@ -18,11 +19,10 @@
 class EmployeeController {
 private:
 	vector<Employee*> model;
-	EmployeeView view;
-	Employee* getEmployee(string ssn);
-	int getEmployeeIndex(string ssn);
+    QWidget *view;
+    EmployeeView *empView;
 public:
-	EmployeeController(EmployeeView view);
+    EmployeeController(QWidget *view);
 
 	// For adding, removing and inspecting the Model objects 
 	void addMonthlyPaidEmployee(string newName, string newSsn,
@@ -31,23 +31,23 @@ public:
 		double newHourlySalary, double newDoneHours);
 	void addSalesmanEmployee(string newName, string newSsn,
 		double newMonthlySalary, double newBonus, bool newOutcomeClaim);
-	void removeEmployee(string ssn);
-	int getEmployeeCount();
-	void removeEmployeesAll();
+	void removeEmployeeBySsn(string ssn);
+	int getEmployeeIndexBySsn(string ssn);
+	Employee* getEmployeeBySsn(string ssn);
 
 	// Getting/setting the Model properties
-	void setEmployeeName(string ssn, string newName);
-	string getEmployeeName(string ssn);
-	void setEmployeeSsn(string ssn, string newSsn);
-	string getEmployeeSsn(string ssn);
-	void setEmployeeHourlySalary(string ssn, double newSalary);
-	double getEmployeeHourlySalary(string ssn, double newSalary);
-	void setEmployeeMonthlySalary(string ssn, double newMonthlySalary);
-	double getEmployeeMonthlySalary(string ssn);
-	void setEmployeeBonus(string ssn, double newBonus);
-	double getEmployeeBonus(string ssn);
-	void setEmployeeOutcomeclaim(string ssn, bool newOutcomeClaim);
-	bool getEmployeeOutcomeclaim(string ssn);
+	void setEmployeeName();
+	void getEmployeeName();
+	void setEmployeeSsn();
+	void getEmployeeSsn();
+	void setEmployeeHourlySalary();
+	void getEmployeeHourlySalary();
+	void setEmployeeMonthlySalary();
+	void getEmployeeMonthlySalary();
+	void setEmployeeBonus();
+	void getEmployeeBonus();
+	void setEmployeeOutcomeclaim();
+	void getEmployeeOutcomeclaim();
 
 	// Load/Save the Model state in local file
 	void loadModelFromFile(string filename);

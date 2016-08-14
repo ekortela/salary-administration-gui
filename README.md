@@ -20,19 +20,20 @@ print out all this information of all the saved workers at the same time (e.g. i
 form of a list).
 
 Monthly paid employee Hourly paid employee Salesman
-Name 						Name 							Name
-Social security number 		Social security number 			Social security number
-Monthly compensation 		Hourly Compensation 			Monthly compensation
-							Done hours Bonus %				Realized outcome
-															Outcome claim
+Name                            Name                                    Name
+Social security number          Social security number 			Social security number
+Monthly compensation            Hourly Compensation 			Monthly compensation
+                                Done hours                              Bonus % 
+                                                                        Realized outcome
+                                                                        Outcome claim
 
 The workers clearly differ from each other in the salary formation.
 
-Employee 					Salary Formation
-Monthly paid employee 		Monthly compensation
-Hourly paid employee 		Done hours*hourly compensation
-Salesman 					Monthly compensation raised by the bonus % if the
-							outcome claim comes true
+Employee                        Salary Formation
+Monthly paid employee           Monthly compensation
+Hourly paid employee            Done hours*hourly compensation
+Salesman                        Monthly compensation raised by the bonus % if the 
+                                outcome claim comes true
 
 Based on this information you should make a class hierarchy or a data structures
 for your company personnel management application. If you include extra
