@@ -14,16 +14,17 @@
 #include "EmployeeView.h"
 #include "Employee.h"
 #include "EmployeeFactory.h"
+#include "IObserver.h"
 
-class EmployeeController {
+class EmployeeController: public IObserver {
 
 private:
     vector<Employee*> model;
 
 public:
     EmployeeView *m_view;
-
     EmployeeController(EmployeeView *view);
+    ~EmployeeController() {};
 
 	// For adding, removing and inspecting the Model objects 
 	void addMonthlyPaidEmployee(string newName, string newSsn,
@@ -54,5 +55,7 @@ public:
 
 	// Display the Model in the View 
 	void updateView();
+
+    void handleEvent();
 };
 

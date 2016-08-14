@@ -3,6 +3,7 @@
 EmployeeController::EmployeeController(EmployeeView *view)
 {
     this->m_view = view;
+    this->m_view->registerObserver(this);
 }
 
 
@@ -96,4 +97,8 @@ void EmployeeController::clearEmployees() {
 void EmployeeController::updateView() {
 //    view.printEmployeeInfoAll(model);
 
+}
+
+void EmployeeController::handleEvent() {
+    qInfo("handleEvent() has been called!");
 }

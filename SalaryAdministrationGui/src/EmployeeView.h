@@ -2,6 +2,7 @@
 
 #include "Employee.h"
 #include <QtWidgets>
+#include "IObserver.h"
 
 class EmployeeView: public QMainWindow {
 
@@ -18,6 +19,8 @@ public:
 
     void printEmployeeInfoAll(vector<Employee *> model);
 
+    void registerObserver(IObserver *observer);
+
 private:
     QLabel *m_lastNameLabel, *m_firstNameLabel, *m_SSNLabel, *m_payTypeLabel,
             *m_realizedIncomeLabel, *m_outcomeClaimLabel, *m_hoursDoneLabel,
@@ -27,6 +30,8 @@ private:
     QVBoxLayout *m_rightLayout;
     QScrollArea *m_scrollArea;
     QGridLayout *m_leftLayout;
+
+    IObserver *observer;
 
     void createTreeWidget(QHBoxLayout *m_mainLayout);
     void createEemployeeInformationView(QHBoxLayout *m_mainLayout);

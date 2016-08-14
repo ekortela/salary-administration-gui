@@ -1,5 +1,6 @@
-#include "EmployeeView.h"
+
 #include <QCoreApplication>
+#include "EmployeeView.h"
 
 
 EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
@@ -146,6 +147,9 @@ void EmployeeView::createEemployeeInformationView(QHBoxLayout *mainLayout)
     mainLayout->addWidget(m_scrollArea);
 }
 
+void EmployeeView::registerObserver(IObserver* observer) {
+    this->observer = observer;
+}
 
 void EmployeeView::handleSaveButtonClick() {
 
@@ -155,9 +159,8 @@ void EmployeeView::handleSaveButtonClick() {
     QString qstr = this->m_SSNEdit->text();
     m_displayInfo->setText(qstr);
 
-    // TODO AAPO Register EmployeeController as event listener for EmployeeView
-
-
+    // TODO AAPO Add arguments for adding new employees
+    observer->handleEvent();
 }
 
 void EmployeeView::handleDeleteButtonClick() {
