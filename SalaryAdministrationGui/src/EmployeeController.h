@@ -27,18 +27,10 @@ public:
     ~EmployeeController() {};
 
 	// For adding, removing and inspecting the Model objects 
-    void addMonthlyPaidEmployee(string newFirstName, string newLastName,
-                                string newSsn, double newMonthlySalary);
-    void addHourlyPaidEmployee(string newFirstName, string newLastName,
-                               string newSsn, double newHourlySalary, double newDoneHours);
-    void addSalesmanEmployee(string newFirstName, string newLastName,
-                             string newSsn, double newMonthlySalary, double newBonus, bool newOutcomeClaim);
     bool addEmployee(employee_types::type typ,
                      string newFirstName, string newLastName, string newSsn,
                      double newMonthlySalary, double newHourlySalary,
                      double newDoneHours, double newBonus, bool newOutcomeClaim);
-
-
     void removeEmployee(string ssn);
     int getEmployeeIndex(string ssn);
     Employee* getEmployee(string ssn);
@@ -47,8 +39,10 @@ public:
     void printEmployeeInfoAll();
 
     // Getting/setting the employee properties by using unique social security number
-    void setEmployeeFirstName(string ssn, string newName);
+    void setEmployeeFirstName(string ssn, string newFirstName);
     string getEmployeeFirstName(string ssn);
+    void setEmployeeLastName(string ssn, string newLastName);
+    string getEmployeeLastName(string ssn);
     void setEmployeeSsn(string ssn, string newSsn);
     string getEmployeeSsn(string ssn);
     void setEmployeeHourlySalary(string ssn, double newHourlySalary);
