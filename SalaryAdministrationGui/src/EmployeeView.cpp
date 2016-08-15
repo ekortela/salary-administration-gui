@@ -9,7 +9,7 @@ EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
     m_treeWidgetContainer->setWindowTitle("Salary Admin");
 
     this->m_mainLayout = new QHBoxLayout;
-    createEemployeeInformationView(m_mainLayout);
+    createEmployeeInformationView(m_mainLayout);
     createTreeWidget(m_mainLayout);
 
     m_treeWidgetContainer->setLayout(m_mainLayout);
@@ -35,7 +35,7 @@ void EmployeeView::createTreeWidget(QHBoxLayout *mainLayout)
 
     // TODO ELISA Add double click signal to load employee type
     // m_treeWidget->itemDoubleClicked()
-    // connect(m_treeWidget, SIGNAL (released()), this, SLOT (handleEmployeeDoubleClick()) );
+     connect(m_treeWidget, SIGNAL (itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT (handleTreeWidgetDoubleClick()) );
 
     // NOTE: To have the Controller pass the information to the View-object, you need to use
     // the index of the Employee via the IObserver -interface. This will require adding virtual method
@@ -50,7 +50,7 @@ void EmployeeView::createTreeWidget(QHBoxLayout *mainLayout)
 
 
 
-void EmployeeView::createEemployeeInformationView(QHBoxLayout *mainLayout)
+void EmployeeView::createEmployeeInformationView(QHBoxLayout *mainLayout)
 {
     m_scrollArea = new QScrollArea;
     m_scrollArea->setWidgetResizable(true);
@@ -223,4 +223,8 @@ void EmployeeView::popBox(string message) {
         this,
         tr( QCoreApplication::applicationName().toStdString().c_str() ),
         tr(message.c_str()) );
+}
+
+void EmployeeView::handleTreeWidgetDoubleClick() {
+    popBox("Item double clicked!");
 }

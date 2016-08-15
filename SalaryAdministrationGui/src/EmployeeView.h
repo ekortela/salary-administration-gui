@@ -37,9 +37,10 @@ private:
     IObserver *observer;
 
     void createTreeWidget(QHBoxLayout *m_mainLayout);
-    void createEemployeeInformationView(QHBoxLayout *m_mainLayout);
+    void createEmployeeInformationView(QHBoxLayout *m_mainLayout);
 
 private slots:
     void handleSaveButtonClick();
     void handleDeleteButtonClick();
+    void handleTreeWidgetDoubleClick();
 };
