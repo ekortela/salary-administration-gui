@@ -1,4 +1,7 @@
 #include "EmployeeController.h"
+#include "HourlyPaidEmployee.h"
+#include "MonthlyPaidEmployee.h"
+#include "SalesmanEmployee.h"
 
 EmployeeController::EmployeeController(EmployeeView *view)
 {
@@ -81,6 +84,155 @@ string EmployeeController::getEmployeeFirstName(string ssn)
         qCritical() << "Unable to get employee name: Employee does not exist! SSN: " << QString::fromStdString(ssn);
     return("");
 }
+
+void EmployeeController::setEmployeeSsn(string ssn, string newSsn)
+{
+    Employee* p = getEmployee(ssn);
+    if (p != nullptr)
+        p->setSocialSecurityNumber(newSsn);
+    else
+        qCritical() << "Unable to set employee social security number: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+}
+
+string EmployeeController::getEmployeeSsn(string ssn)
+{
+    Employee* p = getEmployee(ssn);
+    if (p != nullptr)
+        return p->getSocialSecurityNumber();
+    else
+        qCritical() << "Unable to get employee social security number: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+    return("");
+}
+
+void EmployeeController::setEmployeeHourlySalary(string ssn, double newHourlySalary)
+{
+    Employee* p = getEmployee(ssn);
+    if (p != nullptr)
+        if (p->getType() == employee_types::HOURLY_PAID_EMPLOYEE) {
+            HourlyPaidEmployee *m = dynamic_cast<HourlyPaidEmployee *>(p);
+            m->setHourlySalary(newHourlySalary);
+        }
+        else
+            qCritical() << "Unable to set hourly salary: Invalid employee type: " << QString::number(static_cast<int>(p->getType()) );
+    else
+        qCritical() << "Unable to set hourly salary: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+}
+
+double EmployeeController::getEmployeeHourlySalary(string ssn)
+{
+    Employee* p = getEmployee(ssn);
+    if (p != nullptr)
+        if (p->getType() == employee_types::HOURLY_PAID_EMPLOYEE) {
+            HourlyPaidEmployee *m = dynamic_cast<HourlyPaidEmployee *>(p);
+            return m->getHourlySalary();
+        }
+        else
+            qCritical() << "Unable to get hourly salary: Invalid employee type: " << QString::number(static_cast<int>(p->getType()) );
+    else
+        qCritical() << "Unable to get hourly salary: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+    return 0.0;
+}
+
+void EmployeeController::setEmployeeMonthlySalary(string ssn, double newMonthlySalary)
+{
+    Employee* p = getEmployee(ssn);
+
+    if (p != nullptr) {
+        if (p->getType() == employee_types::MONTHLY_PAID_EMPLOYEE) {
+            MonthlyPaidEmployee *m = dynamic_cast<MonthlyPaidEmployee* >(p);
+            m->setMonthlySalary(newMonthlySalary);
+        }
+        else if (p->getType() == employee_types::SALESMAN_EMPLOYEE){
+            SalesmanEmployee *m = dynamic_cast<SalesmanEmployee* >(p);
+            m->setMonthlySalary(newMonthlySalary);
+        }
+        else {
+            qCritical() << "Unable to set monthly salary: Invalid employee type: " << QString::number(static_cast<int>(p->getType()) );
+        }
+    }
+    else
+        qCritical() << "Unable to set monthly salary: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+}
+
+double EmployeeController::getEmployeeMonthlySalary(string ssn)
+{
+    Employee* p = getEmployee(ssn);
+
+    if (p != nullptr) {
+        if (p->getType() == employee_types::MONTHLY_PAID_EMPLOYEE) {
+            MonthlyPaidEmployee *m = dynamic_cast<MonthlyPaidEmployee* >(p);
+            return m->getMonthlySalary();
+        }
+        else if (p->getType() == employee_types::SALESMAN_EMPLOYEE){
+            SalesmanEmployee *m = dynamic_cast<SalesmanEmployee* >(p);
+            return m->getMonthlySalary();
+        }
+        else {
+            qCritical() << "Unable to set monthly salary: Invalid employee type: " << QString::number(static_cast<int>(p->getType()) );
+        }
+    }
+    else
+        qCritical() << "Unable to set monthly salary: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+    return 0.0;
+}
+
+void EmployeeController::setEmployeeBonus(string ssn, double newBonus)
+{
+    Employee* p = getEmployee(ssn);
+    if (p != nullptr)
+        if (p->getType() == employee_types::SALESMAN_EMPLOYEE) {
+            SalesmanEmployee *m = dynamic_cast<SalesmanEmployee *>(p);
+            m->setBonus(newBonus);
+        }
+        else
+            qCritical() << "Unable to set bonus: Invalid employee type: " << QString::number(static_cast<int>(p->getType()) );
+    else
+        qCritical() << "Unable to set bonus: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+}
+
+double EmployeeController::getEmployeeBonus(string ssn)
+{
+    Employee* p = getEmployee(ssn);
+    if (p != nullptr)
+        if (p->getType() == employee_types::SALESMAN_EMPLOYEE) {
+            SalesmanEmployee *m = dynamic_cast<SalesmanEmployee *>(p);
+            return m->getBonus();
+        }
+        else
+            qCritical() << "Unable to get monthly salary: Invalid employee type: " << QString::number(static_cast<int>(p->getType()) );
+    else
+        qCritical() << "Unable to get monthly salary: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+    return 0.0;
+}
+
+void EmployeeController::setEmployeeOutcomeclaim(string ssn, bool newOutcomeClaim)
+{
+    Employee* p = getEmployee(ssn);
+    if (p != nullptr)
+        if (p->getType() == employee_types::SALESMAN_EMPLOYEE) {
+            SalesmanEmployee *m = dynamic_cast<SalesmanEmployee *>(p);
+            m->setOutcomeClaim(newOutcomeClaim);
+        }
+        else
+            qCritical() << "Unable to set outcome claim: Invalid employee type: " << QString::number(static_cast<int>(p->getType()) );
+    else
+        qCritical() << "Unable to set outcome claim: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+}
+
+bool EmployeeController::getEmployeeOutcomeclaim(string ssn) {
+    Employee* p = getEmployee(ssn);
+    if (p != nullptr)
+        if (p->getType() == employee_types::SALESMAN_EMPLOYEE) {
+            SalesmanEmployee *m = dynamic_cast<SalesmanEmployee *>(p);
+            return m->getOutcomeClaim();
+        }
+        else
+            qCritical() << "Unable to get outcome claim: Invalid employee type: " << QString::number(static_cast<int>(p->getType()) );
+    else
+        qCritical() << "Unable to get outcome claim: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+    return false;
+}
+
 
 void EmployeeController::clearEmployees() {
     model.clear();

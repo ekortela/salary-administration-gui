@@ -46,7 +46,7 @@ public:
     void clearEmployees();
     void printEmployeeInfoAll();
 
-	// Getting/setting the Model properties
+    // Getting/setting the employee properties by using unique social security number
     void setEmployeeFirstName(string ssn, string newName);
     string getEmployeeFirstName(string ssn);
     void setEmployeeSsn(string ssn, string newSsn);
