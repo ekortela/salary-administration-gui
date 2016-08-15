@@ -16,9 +16,8 @@ class MonthlyPaidEmployee: public Employee
     double monthlySalary;
 
   public:
-    MonthlyPaidEmployee(string newName,
-    		string newSsn,
-    		double newMonthlySalary);
+    MonthlyPaidEmployee(string newFirstName, string newLastName,
+                        string newSsn, double newMonthlySalary);
     virtual ~MonthlyPaidEmployee();
     void setMonthlySalary(double newMonthlySalary);
     double getMonthlySalary();

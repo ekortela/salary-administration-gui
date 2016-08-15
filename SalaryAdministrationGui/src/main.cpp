@@ -36,7 +36,5 @@ int main(int argc, char *argv[]) {
     EmployeeView view;
     EmployeeController controller = EmployeeController(&view);
 
-    controller.m_view->m_SSNEdit->setText(QString("12345-1234"));
-
     return app.exec();
 }

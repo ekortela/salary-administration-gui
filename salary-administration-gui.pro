@@ -16,7 +16,7 @@ HEADERS +=  SalaryAdministrationGui/src/Employee.h \
             SalaryAdministrationGui/src/HourlyPaidEmployee.h \
             SalaryAdministrationGui/src/MonthlyPaidEmployee.h \
             SalaryAdministrationGui/src/SalesmanEmployee.h \
-    SalaryAdministrationGui/src/IObserver.h
+            SalaryAdministrationGui/src/IObserver.h
 SOURCES +=  SalaryAdministrationGui/src/main.cpp \
             SalaryAdministrationGui/src/Employee.cpp \
             SalaryAdministrationGui/src/EmployeeController.cpp \

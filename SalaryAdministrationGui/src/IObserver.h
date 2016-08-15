@@ -6,7 +6,17 @@ class IObserver
 public:
   virtual ~IObserver() {}
 
-  virtual void handleEvent() = 0;
+  virtual void handleEventAddEmployee(employee_types::type typ,
+                           string newFirstName, string newLastName, string newSsn,
+                           double newMonthlySalary, double newHourlySalary,
+                           double newDoneHours, double newBonus, bool newOutcomeClaim) = 0;
+
+  virtual void handleEventPrintEmployeeInfo() = 0;
+
+//  virtual void handleEventSetActiveEmployee() = 0;
+
+
+
 };
 
 

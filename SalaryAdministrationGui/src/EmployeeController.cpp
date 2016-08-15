@@ -7,35 +7,27 @@ EmployeeController::EmployeeController(EmployeeView *view)
 }
 
 
-void EmployeeController::addMonthlyPaidEmployee(string newName, string newSsn,
-	double newMonthlySalary)
+bool EmployeeController::addEmployee(employee_types::type typ,
+                                     string newFirstName, string newLastName, string newSsn,
+                                     double newMonthlySalary = 0.0, double newHourlySalary = 0.0,
+                                     double newDoneHours = 0.0, double newBonus = 0.0,
+                                     bool newOutcomeClaim = false)
 {
-    if (getEmployeeIndex(newSsn) == -1)
-        model.push_back(EmployeeFactory::getMonthlyPaidEmployee(
-			newName, newSsn, newMonthlySalary));
-	else
+
+    if (getEmployeeIndex(newSsn) == -1) {
+        model.push_back(EmployeeFactory::getEmployee(typ, newFirstName, newLastName, newSsn,
+                                                     newMonthlySalary, newHourlySalary,
+                                                     newDoneHours, newBonus, newOutcomeClaim) );
+        qDebug() << "New employee was created with SSN: " << QString::fromStdString(newSsn);
+        return true;
+    }
+    else {
         qCritical() << "Unable to add: Employee already exists! SSN: " << QString::fromStdString(newSsn);
+    }
+    return false;
 }
 
-void EmployeeController::addHourlyPaidEmployee(string newName, string newSsn,
-	double newHourlySalary, double newDoneHours) {
 
-    if (getEmployeeIndex(newSsn) == -1)
-        model.push_back(EmployeeFactory::getHourlyPaidEmployee(
-			newName, newSsn, newHourlySalary, newDoneHours));
-	else
-        qCritical() << "Unable to add: Employee already exists! SSN: " << QString::fromStdString(newSsn);
-}
-
-void EmployeeController::addSalesmanEmployee(string newName, string newSsn,
-	double newMonthlySalary, double newBonus, bool newOutcomeClaim) {
-
-    if (getEmployeeIndex(newSsn) == -1)
-        model.push_back(EmployeeFactory::getSalesmanEmployee(
-			newName, newSsn, newMonthlySalary, newBonus, newOutcomeClaim));
-	else
-        qCritical() << "Unable to add: Employee already exists! SSN: " << QString::fromStdString(newSsn);
-}
 
 void EmployeeController::removeEmployee(string ssn) {
 
@@ -66,21 +58,21 @@ Employee * EmployeeController::getEmployee(string ssn)
     return nullptr;
 }
 
-int EmployeeController::getEmployeeCount()
+size_t EmployeeController::getEmployeeCount()
 {
     return model.size();
 }
 
-void EmployeeController::setEmployeeName(string ssn, string newName)
+void EmployeeController::setEmployeeFirstName(string ssn, string newFirstName)
 {
     Employee* p = getEmployee(ssn);
     if (p != nullptr)
-        p->setFirstName(newName);
+        p->setFirstName(newFirstName);
     else
         qCritical() << "Unable to set employee name: Employee does not exist! SSN: " << QString::fromStdString(ssn);
 }
 
-string EmployeeController::getEmployeeName(string ssn)
+string EmployeeController::getEmployeeFirstName(string ssn)
 {
     Employee* p = getEmployee(ssn);
     if (p != nullptr)
@@ -94,11 +86,33 @@ void EmployeeController::clearEmployees() {
     model.clear();
 }
 
+void EmployeeController::printEmployeeInfoAll() {
+    for (unsigned int i = 0; model.size() > i; i++) {
+        model[i]->printInfo();
+        cout << "\n";
+    }
+}
+
+
 void EmployeeController::updateView() {
-//    view.printEmployeeInfoAll(model);
+    printEmployeeInfoAll();
+    m_view->updateEmployeeList(model);
+}
+
+void EmployeeController::handleEventAddEmployee(employee_types::type typ,
+                                     string newFirstName, string newLastName, string newSsn,
+                                     double newMonthlySalary = 0.0, double newHourlySalary = 0.0,
+                                     double newDoneHours = 0.0, double newBonus = 0.0, bool newOutcomeClaim = false) {
+    if(addEmployee(typ, newFirstName, newLastName, newSsn,
+                newMonthlySalary, newHourlySalary, newDoneHours, newBonus, newOutcomeClaim) ) {
+        updateView();
+    }
+    else  {
+        m_view->popBox("SSN already exists!");
+    }
 
 }
 
-void EmployeeController::handleEvent() {
-    qInfo("handleEvent() has been called!");
+void EmployeeController::handleEventPrintEmployeeInfo() {
+    printEmployeeInfoAll();
 }

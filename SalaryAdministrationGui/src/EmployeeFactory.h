@@ -8,21 +8,18 @@
 #ifndef EMPLOYEEFACTORY_H_
 #define EMPLOYEEFACTORY_H_
 
-enum employee_types { MONTHLY_PAID_EMPLOYEE, HOURLY_PAID_EMPLOYEE, SALESMAN_EMPLOYEE};
 
 #include "Employee.h"
 
 class EmployeeFactory {
 
 	public:
-		static Employee *getMonthlyPaidEmployee(string newName, string newSsn,
-	    		double newMonthlySalary);
-		static Employee *getHourlyPaidEmployee(string newName, string newSsn,
-	    		double newHourlySalary, double doneHours);
-		static Employee *getSalesmanEmployee(string newName, string newSsn,
-				double newMonthlySalary, double newBonus, bool newOutcomeClaim);
+        static Employee *getEmployee(employee_types::type typ,
+                                     string newFirstName, string newLastName, string newSsn,
+                                     double newMonthlySalary, double newHourlySalary,
+                                     double newDoneHours, double newBonus, bool newOutcomeClaim);
     private:
-        EmployeeFactory() {}; // prevent creating an instance of this class
+        EmployeeFactory() {}; // prevent instantiation (~abstract class)
 };
 
 #endif /* EMPLOYEEFACTORY_H_ */

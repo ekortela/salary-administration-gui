@@ -21,7 +21,9 @@ class SalesmanEmployee: public Employee
     bool outcomeClaim;
 
   public:
-    SalesmanEmployee( string newName, string newSsn, double newMonthlySalary, double newBonus, bool newOutcomeClaim );
+    SalesmanEmployee( string newFirstName, string newLastName,
+                      string newSsn, double newMonthlySalary,
+                      double newBonus, bool newOutcomeClaim );
     virtual ~SalesmanEmployee();
 
     void setMonthlySalary(double newMonthlySalary);

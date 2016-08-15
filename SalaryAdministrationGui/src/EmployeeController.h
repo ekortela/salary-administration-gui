@@ -27,21 +27,28 @@ public:
     ~EmployeeController() {};
 
 	// For adding, removing and inspecting the Model objects 
-	void addMonthlyPaidEmployee(string newName, string newSsn,
-		double newMonthlySalary);
-	void addHourlyPaidEmployee(string newName, string newSsn,
-		double newHourlySalary, double newDoneHours);
-	void addSalesmanEmployee(string newName, string newSsn,
-		double newMonthlySalary, double newBonus, bool newOutcomeClaim);
+    void addMonthlyPaidEmployee(string newFirstName, string newLastName,
+                                string newSsn, double newMonthlySalary);
+    void addHourlyPaidEmployee(string newFirstName, string newLastName,
+                               string newSsn, double newHourlySalary, double newDoneHours);
+    void addSalesmanEmployee(string newFirstName, string newLastName,
+                             string newSsn, double newMonthlySalary, double newBonus, bool newOutcomeClaim);
+    bool addEmployee(employee_types::type typ,
+                     string newFirstName, string newLastName, string newSsn,
+                     double newMonthlySalary, double newHourlySalary,
+                     double newDoneHours, double newBonus, bool newOutcomeClaim);
+
+
     void removeEmployee(string ssn);
     int getEmployeeIndex(string ssn);
     Employee* getEmployee(string ssn);
-    int getEmployeeCount();
+    size_t getEmployeeCount();
     void clearEmployees();
+    void printEmployeeInfoAll();
 
 	// Getting/setting the Model properties
-    void setEmployeeName(string ssn, string newName);
-    string getEmployeeName(string ssn);
+    void setEmployeeFirstName(string ssn, string newName);
+    string getEmployeeFirstName(string ssn);
     void setEmployeeSsn(string ssn, string newSsn);
     string getEmployeeSsn(string ssn);
     void setEmployeeHourlySalary(string ssn, double newHourlySalary);
@@ -56,6 +63,11 @@ public:
 	// Display the Model in the View 
 	void updateView();
 
-    void handleEvent();
+    void handleEventAddEmployee(employee_types::type typ,
+                     string newFirstName, string newLastName, string newSsn,
+                     double newMonthlySalary, double newHourlySalary,
+                     double newDoneHours, double newBonus, bool newOutcomeClaim);
+
+    void handleEventPrintEmployeeInfo();
 };
 

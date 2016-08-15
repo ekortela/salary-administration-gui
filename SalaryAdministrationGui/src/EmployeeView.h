@@ -9,27 +9,30 @@ class EmployeeView: public QMainWindow {
     Q_OBJECT
 
 public:
+    QLineEdit *m_lastNameEdit, *m_firstNameEdit, *m_SSNEdit, *m_hoursDoneEdit,
+                *m_hourlySalaryEdit, *m_monthlySalaryEdit, *m_bonusEdit;
+    QList<QTreeWidgetItem *> employeeList;
+
     explicit EmployeeView(QWidget *parent = 0);
 
-    QLineEdit *m_lastNameEdit, *m_firstNameEdit, *m_SSNEdit, *m_hoursDoneEdit,
-                *m_salaryEdit, *m_realizedIncomeEdit, *m_outcomeClaimEdit;
-    QComboBox *m_payTypeMenu;
-    QPushButton *m_addNewEmployeeButton, *m_saveButton, *m_deleteButton;
-    QTreeWidget *m_treeWidget;
-
-    void printEmployeeInfoAll(vector<Employee *> model);
-
     void registerObserver(IObserver *observer);
+    void addToEmployeeList(string firstName, string lastName, string payType);
+    void updateEmployeeList(vector<Employee *> model);
+    void popBox(string message);
 
 private:
     QLabel *m_lastNameLabel, *m_firstNameLabel, *m_SSNLabel, *m_payTypeLabel,
-            *m_realizedIncomeLabel, *m_outcomeClaimLabel, *m_hoursDoneLabel,
-            *m_salaryLabel, *m_displayInfo;
+            *m_monthlySalaryLabel, *m_outcomeClaimLabel, *m_hoursDoneLabel,
+            *m_hourlySalaryLabel, *m_displayInfo, *m_bonusLabel;
+    QComboBox *m_payTypeMenu;
+    QPushButton *m_addNewEmployeeButton, *m_saveButton, *m_deleteButton;
+    QCheckBox *m_outcomeClaimCheckBox;
     QWidget *m_treeWidgetContainer, *m_scrollAreaContainer;
     QHBoxLayout *m_mainLayout;
     QVBoxLayout *m_rightLayout;
     QScrollArea *m_scrollArea;
     QGridLayout *m_leftLayout;
+    QTreeWidget *m_treeWidget;
 
     IObserver *observer;
 

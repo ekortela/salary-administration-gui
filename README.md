@@ -39,3 +39,28 @@ Based on this information you should make a class hierarchy or a data structures
 for your company personnel management application. If you include extra
 functionality in your application you should document them also.
 You can fill up all relevant information that is missing with reasonable assumption.
+
+
+
+TODO:
+
+Koodausta:
+() Lisää GUI:in delete -napin funktionaalisuus
+        Ohje:
+        1. Määritä klikattu indeksi QTreeWidget::doubleClicked
+        2. poista työntekijä employeeList-vektorista
+        3. poista työntekijä model-vektorista
+        4. päivitä View-objekti
+() Viimeistele Unit testerit ja TDD framework
+() Lisää GUI:in päätabi, jossa on File Save / Load ja Help ominaisuus. Saven täytyy tallentaa mallin parametrit!
+
+Infra:
+() Staattinen Qt buildi: Graafista liittymää pitäisi pystyä ajamaan standalonena
+    https://wiki.qt.io/Building_a_static_Qt_for_Windows_using_MinGW Windows ympäristössä
+() Staattinen CPPUTEST yksikkötestien ajamiseen deploymentissa
+
+Dokumentaatio:
+() Luo ohjelmistoarkkitehtuurin UML diagrammi
+() Luo Use Case diagrammi
+() GUI:n dokumentaatio
+() Backendin dokumentaatio

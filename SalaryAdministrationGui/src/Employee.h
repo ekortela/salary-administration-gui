@@ -16,16 +16,49 @@
 
 using namespace std;
 
+namespace employee_types
+{
+    enum type {
+        UNKNOWN = 0,
+        MONTHLY_PAID_EMPLOYEE = 1,
+        HOURLY_PAID_EMPLOYEE = 2,
+        SALESMAN_EMPLOYEE = 3
+    };
+}
+
+inline const char* toString(employee_types::type typ) {
+    switch (typ)
+    {
+    case employee_types::MONTHLY_PAID_EMPLOYEE:
+        return "Monthly";
+    case employee_types::HOURLY_PAID_EMPLOYEE:
+        return "Hourly";
+    case employee_types::SALESMAN_EMPLOYEE:
+        return "Salesman";
+    default:
+        return "";
+        }
+}
+
+
+
 class Employee
 {
   private:
     string firstName, lastName, socialSecurityNumber;
 
+  protected:
+    employee_types::type typ;
+
   public:
+
     virtual double getSalary() = 0;
     virtual void printInfo() = 0;
     virtual ~Employee();
 
+    inline static const char* toString(employee_types::type typ);
+
+    employee_types::type getType();
     void setFirstName(string newFirstName);
     string getFirstName();
     void setLastName(string newLastName);

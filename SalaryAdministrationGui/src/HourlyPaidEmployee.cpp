@@ -8,9 +8,12 @@
 #include "HourlyPaidEmployee.h"
 
 
-HourlyPaidEmployee::HourlyPaidEmployee(string newName, string newSsn, double newHourlySalary, double newDoneHours)
+HourlyPaidEmployee::HourlyPaidEmployee(string newFirstName, string newLastName,
+                                       string newSsn, double newHourlySalary, double newDoneHours)
 {
-    setFirstName(newName);
+    typ = employee_types::HOURLY_PAID_EMPLOYEE;
+    Employee::setFirstName(newFirstName);
+    Employee::setLastName(newLastName);
 	setSocialSecurityNumber(newSsn);
 	setHourlySalary(newHourlySalary);
 	setDoneHours(newDoneHours);
@@ -45,7 +48,8 @@ double HourlyPaidEmployee::getSalary() {
 
 void HourlyPaidEmployee::printInfo() {
 	cout << "Type: " << "HourlyPaidEmployee" << "\n";
-    cout << "Name: " << Employee::getFirstName() << "\n";
+    cout << "First Name: " << Employee::getFirstName() << "\n";
+    cout << "Last Name: " << Employee::getLastName() << "\n";
 	cout << "SSN: " << Employee::getSocialSecurityNumber() << "\n";
 	cout << "Salary: " << this->getSalary() << "\n";
 	cout << ">Done hours: " << this->getDoneHours() << "\n";

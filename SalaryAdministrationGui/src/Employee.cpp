@@ -41,3 +41,7 @@ void Employee::setSocialSecurityNumber(string newSsn) {
 string Employee::getSocialSecurityNumber() {
 	return socialSecurityNumber;
 }
+
+employee_types::type Employee::getType() {
+    return typ;
+}
