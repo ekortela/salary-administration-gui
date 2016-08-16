@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Employee.h"
+#include "MonthlyPaidEmployee.h"
+#include "HourlyPaidEmployee.h"
+#include "SalesmanEmployee.h"
 #include <QtWidgets>
 #include "IObserver.h"
 

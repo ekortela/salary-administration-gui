@@ -53,10 +53,6 @@ Koodausta:
             3. Poista tyontekija model-vektorista JA employeeList-vektorista
             4. Paivita tyontekijalista kutsumalla observerin handleEventRequestUpdate() metodia
             HUOM!! Vaatii IObserver -rajapinnalle kahden metodin implementoimista
-    (30%) GUI: Lisaa double click napin funktionaalisuus
-            Ohje:
-            1. Doubleclick palauttaa tyontekijan model-vektorin indeksin (varmaan katevin SSN-numerolla)
-            2. Aseta valitun tyontekijan tiedot editorin LineEdit -objektien kenttiin
     () GUI: Paatabi, jossa on vahintaan Save, Load, Help/About ja Exit valinnat. Save tallentaa
             mallin parametrit tekstitiedostoon, jotka ladataan automaattisesti GUI:n kaynnistyksessa!
     (20%) BACKEND: Unit testerit backendille QtTest frameworkilla
@@ -76,6 +72,7 @@ Dokumentaatio:
 
 Valmiit:
     (x) Luo ohjelmistoarkkitehtuurin UML class diagrammi
+	(100%) GUI: Lisaa double click napin funktionaalisuus
 
 Poistettu:
     (-) Staattinen CPPUTEST yksikkotestien ajamiseen meidan repositoryssa (kaytetaan QtTest frameworkkia)
