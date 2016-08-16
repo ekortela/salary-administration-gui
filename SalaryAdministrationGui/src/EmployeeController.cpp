@@ -18,11 +18,15 @@ bool EmployeeController::addEmployee(employee_types::type typ,
 {
 
     if (getEmployeeIndex(newSsn) == -1) {
-        model.push_back(EmployeeFactory::getEmployee(typ, newFirstName, newLastName, newSsn,
+        Employee* p = EmployeeFactory::getEmployee(typ, newFirstName, newLastName, newSsn,
                                                      newMonthlySalary, newHourlySalary,
-                                                     newDoneHours, newBonus, newOutcomeClaim) );
-        qDebug() << "New employee was created with SSN: " << QString::fromStdString(newSsn);
-        return true;
+                                                     newDoneHours, newBonus, newOutcomeClaim);
+        if(p != nullptr) {
+            qDebug() << "New employee was created with SSN: " << QString::fromStdString(newSsn);
+            return true;
+        }
+        else
+            qDebug() << "Employee type was not recognized: " << typ;
     }
     else {
         qCritical() << "Unable to add: Employee already exists! SSN: " << QString::fromStdString(newSsn);
