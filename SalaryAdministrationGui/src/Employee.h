@@ -26,7 +26,7 @@ namespace employee_types
     };
 }
 
-inline const char* toString(employee_types::type typ) {
+inline const char* employeeTypetoString(employee_types::type typ) {
     switch (typ)
     {
     case employee_types::MONTHLY_PAID_EMPLOYEE:
@@ -55,8 +55,6 @@ class Employee
     virtual double getSalary() = 0;
     virtual void printInfo() = 0;
     virtual ~Employee();
-
-    inline static const char* toString(employee_types::type typ);
 
     employee_types::type getType();
     void setFirstName(string newFirstName);

@@ -71,9 +71,9 @@ void EmployeeView::createEmployeeInformationView(QHBoxLayout *mainLayout)
 
     QStringList payTypes;
     payTypes << ""
-             << toString(employee_types::MONTHLY_PAID_EMPLOYEE)
-             << toString(employee_types::HOURLY_PAID_EMPLOYEE)
-             << toString(employee_types::SALESMAN_EMPLOYEE);
+             << employeeTypetoString(employee_types::MONTHLY_PAID_EMPLOYEE)
+             << employeeTypetoString(employee_types::HOURLY_PAID_EMPLOYEE)
+             << employeeTypetoString(employee_types::SALESMAN_EMPLOYEE);
     m_payTypeMenu->insertItems(0, payTypes);
 
     m_hoursDoneLabel = new QLabel("Hours done:");
