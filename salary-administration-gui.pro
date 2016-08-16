@@ -17,11 +17,12 @@ HEADERS +=  SalaryAdministrationGui/src/Employee.h \
             SalaryAdministrationGui/src/MonthlyPaidEmployee.h \
             SalaryAdministrationGui/src/SalesmanEmployee.h \
             SalaryAdministrationGui/src/IObserver.h
-SOURCES +=  SalaryAdministrationGui/src/main.cpp \
+SOURCES +=  \
             SalaryAdministrationGui/src/Employee.cpp \
             SalaryAdministrationGui/src/EmployeeController.cpp \
             SalaryAdministrationGui/src/EmployeeFactory.cpp \
             SalaryAdministrationGui/src/EmployeeView.cpp \
             SalaryAdministrationGui/src/HourlyPaidEmployee.cpp \
             SalaryAdministrationGui/src/MonthlyPaidEmployee.cpp \
-            SalaryAdministrationGui/src/SalesmanEmployee.cpp
+            SalaryAdministrationGui/src/SalesmanEmployee.cpp \
+    SalaryAdministrationGui/src/Main.cpp

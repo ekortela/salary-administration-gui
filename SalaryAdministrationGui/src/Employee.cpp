@@ -11,10 +11,6 @@
 
 using namespace std;
 
-
-Employee::~Employee() {}
-
-
 void Employee::setFirstName(string newFirstName) {
     firstName = newFirstName;
 }

@@ -45,12 +45,14 @@ You can fill up all relevant information that is missing with reasonable assumpt
 TODO-lista
 
 Koodausta:
+    () GUI: Jos tyontekijaa on klikattu listalla, tallennetaan View:n muuttujaan tyontekijan SSN numero.
     (30%) GUI: Lisaa delete -napin funktionaalisuus
             Ohje:
-            1. Maarita klikattu indeksi QTreeWidget::doubleClicked
-            2. poista tyontekija employeeList-vektorista
-            3. poista tyontekija model-vektorista
-            4. paivita View-objekti controllerin updateView() metodilla
+            1. Jos delete nappia on painettu JA listasta on valittu on aktiivinen tyontekija
+            2. Kysy kayttajalta varmistus poistetaanko tyontekija
+            3. Poista tyontekija model-vektorista JA employeeList-vektorista
+            4. Paivita tyontekijalista kutsumalla observerin handleEventRequestUpdate() metodia
+            HUOM!! Vaatii IObserver -rajapinnalle kahden metodin implementoimista
     (30%) GUI: Lisaa double click napin funktionaalisuus
             Ohje:
             1. Doubleclick palauttaa tyontekijan model-vektorin indeksin (varmaan katevin SSN-numerolla)
@@ -59,6 +61,7 @@ Koodausta:
             mallin parametrit tekstitiedostoon, jotka ladataan automaattisesti GUI:n kaynnistyksessa!
     (20%) BACKEND: Unit testerit backendille QtTest frameworkilla
     (70%) BACKEND: Implementoi metodit tyontekijoiden parametrien asettamiseen controllerissa
+    () BACKEND: Lisaa run-time lokitiedosto, johon kaikki qDebug/qCritical/qInfo viestit tallentuvat
 
 Infrastruktuuri:
     () Muuta hakemiston rakenne selkeammaksi (esim. src/model/, src/controller/, src/main/, ...)

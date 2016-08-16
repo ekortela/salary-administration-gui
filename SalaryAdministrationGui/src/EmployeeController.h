@@ -27,24 +27,18 @@ public:
     ~EmployeeController() {};
 
 	// For adding, removing and inspecting the Model objects 
-    void addMonthlyPaidEmployee(string newFirstName, string newLastName,
-                                string newSsn, double newMonthlySalary);
-    void addHourlyPaidEmployee(string newFirstName, string newLastName,
-                               string newSsn, double newHourlySalary, double newDoneHours);
-    void addSalesmanEmployee(string newFirstName, string newLastName,
-                             string newSsn, double newMonthlySalary, double newBonus, bool newOutcomeClaim);
     bool addEmployee(employee_types::type typ,
                      string newFirstName, string newLastName, string newSsn,
                      double newMonthlySalary, double newHourlySalary,
                      double newDoneHours, double newBonus, bool newOutcomeClaim);
 
 
-    void removeEmployee(string ssn);
+    bool removeEmployee(string ssn);
     int getEmployeeIndex(string ssn);
     Employee* getEmployee(string ssn);
     size_t getEmployeeCount();
     void clearEmployees();
-    void printEmployeeInfoAll();
+    void printEmployeeModel();
 
     // Getting/setting the employee properties by using unique social security number
     void setEmployeeFirstName(string ssn, string newName);
@@ -63,11 +57,14 @@ public:
 	// Display the Model in the View 
 	void updateView();
 
+    // Methods that handle messages from View to Controller
     void handleEventAddEmployee(employee_types::type typ,
                      string newFirstName, string newLastName, string newSsn,
                      double newMonthlySalary, double newHourlySalary,
                      double newDoneHours, double newBonus, bool newOutcomeClaim);
-
-    void handleEventPrintEmployeeInfo();
+    void handleEventRemoveEmployee(string ssn);
+    void handleEventPrintEmployees();
+    void handleEventRequestViewUpdate();
+    Employee* handleEventGetEmployee(string ssn);
 };
 

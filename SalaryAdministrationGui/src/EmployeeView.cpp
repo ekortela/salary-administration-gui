@@ -34,7 +34,6 @@ void EmployeeView::createTreeWidget(QHBoxLayout *mainLayout)
     m_treeWidget->resizeColumnToContents(3);
 
     // TODO ELISA Add double click signal to load employee type
-    // m_treeWidget->itemDoubleClicked()
      connect(m_treeWidget, SIGNAL (itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT (handleTreeWidgetDoubleClick()) );
 
     // NOTE: To have the Controller pass the information to the View-object, you need to use
@@ -45,10 +44,6 @@ void EmployeeView::createTreeWidget(QHBoxLayout *mainLayout)
 
     mainLayout->addWidget(m_treeWidget);
 }
-
-
-
-
 
 void EmployeeView::createEmployeeInformationView(QHBoxLayout *mainLayout)
 {
@@ -161,8 +156,27 @@ void EmployeeView::registerObserver(IObserver* observer) {
     this->observer = observer;
 }
 
-void EmployeeView::handleSaveButtonClick() {
+void EmployeeView::updateEmployeeList(vector<Employee *> model) {
+    employeeList.clear();
+    m_treeWidget->clear();
+    for (vector<Employee*>::iterator it = model.begin(); it != model.end(); ++it) {
+        QTreeWidgetItem *row = new QTreeWidgetItem(m_treeWidget);
+        row->setText(0, QString::fromStdString( (*it)->getFirstName() ));
+        row->setText(1, QString::fromStdString( (*it)->getLastName() ));
+        row->setText(2, QString::fromStdString( (*it)->getSocialSecurityNumber() ));
+        employeeList.append(row);
+    }
+}
 
+void EmployeeView::popBox(string message) {
+    qDebug() << "QmessageBox printing message: \"" << QString::fromStdString(message) << "\"";
+    QMessageBox::information(
+        this,
+        tr( QCoreApplication::applicationName().toStdString().c_str() ),
+        tr(message.c_str()) );
+}
+
+void EmployeeView::handleSaveButtonClick() {
     qDebug() << "Save button was clicked!";
 
     employee_types::type typ = static_cast<employee_types::type>(m_payTypeMenu->currentIndex());
@@ -202,29 +216,20 @@ void EmployeeView::handleSaveButtonClick() {
     }
 }
 
-void EmployeeView::updateEmployeeList(vector<Employee *> model) {
-    employeeList.clear();
-    m_treeWidget->clear();
-    for (vector<Employee*>::iterator it = model.begin(); it != model.end(); ++it) {
-        QTreeWidgetItem *row = new QTreeWidgetItem(m_treeWidget);
-        row->setText(0, QString::fromStdString( (*it)->getFirstName() ));
-        row->setText(1, QString::fromStdString( (*it)->getLastName() ));
-        row->setText(2, QString::fromStdString( (*it)->getSocialSecurityNumber() ));
-        employeeList.append(row);
-    }
-}
-
 void EmployeeView::handleDeleteButtonClick() {
     qDebug() << "Delete button was clicked!";
-}
-
-void EmployeeView::popBox(string message) {
-    QMessageBox::information(
-        this,
-        tr( QCoreApplication::applicationName().toStdString().c_str() ),
-        tr(message.c_str()) );
+    popBox("Delete button clicked!");
 }
 
 void EmployeeView::handleTreeWidgetDoubleClick() {
-    popBox("Item double clicked!");
+    unsigned int rowIdx = m_treeWidget->currentIndex().row();
+    qDebug() << "Item double clicked: " << QString::number(rowIdx);
+    popBox("Item double clicked: " + to_string(rowIdx) );
+
+    // TODO ELISA Tassa vahan vihjeita:
+    // 1. Ratkaise SSN kayttaen hyvaksi valittua employeeList:in indeksia
+    // 2. Pyyda controllerilta uusi tyontekija SSN:n avulla (observer->getEmployee(ssn))
+    // 3. Downcasti saatu Employee* tyypin objekti Salesman/Hourly/Monthly objektiksi (dynamic_cast)
+    // 4. Paivita editorin kentat m_firstNameEdit->setText(QString::fromStdString(firstName)) ... jne.
+
 }

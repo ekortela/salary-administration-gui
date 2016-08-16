@@ -21,6 +21,7 @@ public:
     void popBox(string message);
 
 private:
+    unsigned int *treeWidgetSelectedItem;
     QLabel *m_lastNameLabel, *m_firstNameLabel, *m_SSNLabel, *m_payTypeLabel,
             *m_monthlySalaryLabel, *m_outcomeClaimLabel, *m_hoursDoneLabel,
             *m_hourlySalaryLabel, *m_displayInfo, *m_bonusLabel;

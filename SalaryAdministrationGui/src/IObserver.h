@@ -11,11 +11,13 @@ public:
                            double newMonthlySalary, double newHourlySalary,
                            double newDoneHours, double newBonus, bool newOutcomeClaim) = 0;
 
-  virtual void handleEventPrintEmployeeInfo() = 0;
+  virtual void handleEventPrintEmployees() = 0;
 
-//  virtual void handleEventSetActiveEmployee() = 0;
+  virtual void handleEventRequestViewUpdate() = 0;
 
+  virtual void handleEventRemoveEmployee(string ssn) = 0;
 
+  virtual Employee* handleEventGetEmployee(string ssn) = 0;
 
 };
 
