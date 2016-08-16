@@ -103,17 +103,6 @@ void EmployeeView::createEmployeeInformationView(QHBoxLayout *mainLayout)
     //realizedIncomeEdit->setValidator(doubleValidator);
     //outcomeClaimEdit->setValidator(doubleValidator);
 
-    // Names
-    m_lastNameEdit->setAccessibleName("lastName");
-    m_firstNameEdit->setAccessibleName("firstName");
-    m_SSNEdit->setAccessibleName("ssn");
-    //paytype??
-    m_hoursDoneEdit->setAccessibleName("hoursDone");
-    m_hourlySalaryEdit->setAccessibleName("salaryEdit");
-    m_monthlySalaryEdit->setAccessibleName("realizedIncome");
-    m_outcomeClaimCheckBox->setAccessibleName("outcomeClaim");
-    m_bonusEdit->setAccessibleName("bonusEdit");
-
     m_leftLayout->addWidget(m_lastNameLabel,0,0);
     m_leftLayout->addWidget(m_lastNameEdit,0,1);
 
@@ -224,7 +213,49 @@ void EmployeeView::handleDeleteButtonClick() {
 void EmployeeView::handleTreeWidgetDoubleClick() {
     unsigned int rowIdx = m_treeWidget->currentIndex().row();
     qDebug() << "Item double clicked: " << QString::number(rowIdx);
-    popBox("Item double clicked: " + to_string(rowIdx) );
+
+    QTreeWidgetItem *empItem = m_treeWidget->currentItem();
+    QString ssn = empItem->text(2);
+    string ssnString = ssn.toStdString();
+    Employee *m_emp = observer->handleEventGetEmployee(ssnString);
+
+    QString firstName = QString::fromStdString(m_emp->getFirstName());
+    m_firstNameEdit->setText(firstName);
+
+    QString lastName = QString::fromStdString(m_emp->getLastName());
+    m_lastNameEdit->setText(lastName);
+
+    m_SSNEdit->setText(ssn);
+
+    employee_types::type type = m_emp->getType();
+
+    if (type == employee_types::MONTHLY_PAID_EMPLOYEE)
+    {
+        m_payTypeMenu->setCurrentIndex(1);
+        MonthlyPaidEmployee *m_monthlyEmp = dynamic_cast <MonthlyPaidEmployee*> (m_emp);
+
+        QString salary = QString::number(m_monthlyEmp->getSalary());
+        m_monthlySalaryEdit->setText(salary);
+    } else if (type == employee_types::HOURLY_PAID_EMPLOYEE)
+    {
+        m_payTypeMenu->setCurrentIndex(2);
+        HourlyPaidEmployee *m_hourlyEmp = dynamic_cast <HourlyPaidEmployee*> (m_emp);
+
+        QString hoursDone = QString::number(m_hourlyEmp->getDoneHours());
+        m_hoursDoneEdit->setText(hoursDone);
+
+        QString hourlySalary = QString::number(m_hourlyEmp->getHourlySalary());
+        m_hourlySalaryEdit->setText(hourlySalary);
+    } else
+    {
+        m_payTypeMenu->setCurrentIndex(3);
+        SalesmanEmployee* m_salesEmp = dynamic_cast <SalesmanEmployee*> (m_emp);
+
+        QString monthlySalary = QString::number(m_salesEmp->getMonthlySalary());
+        m_monthlySalaryEdit->setText(monthlySalary);
+        m_outcomeClaimCheckBox->setChecked(m_salesEmp->getOutcomeClaim());
+
+    }
 
     // TODO ELISA Tassa vahan vihjeita:
     // 1. Ratkaise SSN kayttaen hyvaksi valittua employeeList:in indeksia
