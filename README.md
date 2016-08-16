@@ -45,24 +45,24 @@ You can fill up all relevant information that is missing with reasonable assumpt
 TODO-lista
 
 Koodausta:
-    (30%) GUI: Lisää delete -napin funktionaalisuus
+    (30%) GUI: Lisaa delete -napin funktionaalisuus
             Ohje:
-            1. Määritä klikattu indeksi QTreeWidget::doubleClicked
-            2. poista työntekijä employeeList-vektorista
-            3. poista työntekijä model-vektorista
-            4. päivitä View-objekti controllerin updateView() metodilla
-    (30%) GUI: Lisää double click napin funktionaalisuus
+            1. Maarita klikattu indeksi QTreeWidget::doubleClicked
+            2. poista tyontekija employeeList-vektorista
+            3. poista tyontekija model-vektorista
+            4. paivita View-objekti controllerin updateView() metodilla
+    (30%) GUI: Lisaa double click napin funktionaalisuus
             Ohje:
-            1. Doubleclick palauttaa työntekijän model-vektorin indeksin (varmaan kätevin SSN-numerolla)
-            2. Aseta valitun työntekijän tiedot editorin LineEdit -objektien kenttiin
-    () GUI: Päätabi, jossa on vähintään Save, Load, Help/About ja Exit valinnat. Save tallentaa
-            mallin parametrit tekstitiedostoon, jotka ladataan automaattisesti GUI:n käynnistyksessä!
+            1. Doubleclick palauttaa tyontekijan model-vektorin indeksin (varmaan katevin SSN-numerolla)
+            2. Aseta valitun tyontekijan tiedot editorin LineEdit -objektien kenttiin
+    () GUI: Paatabi, jossa on vahintaan Save, Load, Help/About ja Exit valinnat. Save tallentaa
+            mallin parametrit tekstitiedostoon, jotka ladataan automaattisesti GUI:n kaynnistyksessa!
     (20%) BACKEND: Unit testerit backendille QtTest frameworkilla
-    (70%) BACKEND: Implementoi metodit työntekijöiden parametrien asettamiseen controllerissa
+    (70%) BACKEND: Implementoi metodit tyontekijoiden parametrien asettamiseen controllerissa
 
 Infrastruktuuri:
-    () Muuta hakemiston rakenne selkeämmäksi (esim. src/model/, src/controller/, src/main/, ...)
-    () QT:n staattinen buildi: Yleensä ottaen on hyvä, että liittymää voidaan ajaa standalonena. Tämä
+    () Muuta hakemiston rakenne selkeammaksi (esim. src/model/, src/controller/, src/main/, ...)
+    () QT:n staattinen buildi: Yleensa ottaen on hyva, etta liittymaa voidaan ajaa standalonena. Tama
         vaatii allaolevan ohjeen seuraamista
         https://wiki.qt.io/Building_a_static_Qt_for_Windows_using_MinGW
 
@@ -75,4 +75,4 @@ Valmiit:
     (x) Luo ohjelmistoarkkitehtuurin UML class diagrammi
 
 Poistettu:
-    (-) Staattinen CPPUTEST yksikkötestien ajamiseen meidän repositoryssa (käytetään QtTest frameworkkia)
+    (-) Staattinen CPPUTEST yksikkotestien ajamiseen meidan repositoryssa (kaytetaan QtTest frameworkkia)
