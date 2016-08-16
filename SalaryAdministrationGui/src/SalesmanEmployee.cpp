@@ -67,7 +67,7 @@ double SalesmanEmployee::getSalary()
 
 void SalesmanEmployee::printInfo()
 {
-	cout << "Type: " << "SalesmanEmployee" << "\n";
+    cout << "Type: " << employeeTypetoString(typ) << "\n";
     cout << "First Name: " << Employee::getFirstName() << "\n";
     cout << "Last Name: " << Employee::getLastName() << "\n";
 	cout << "SSN: " << Employee::getSocialSecurityNumber() << "\n";

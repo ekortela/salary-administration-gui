@@ -32,13 +32,16 @@ bool EmployeeController::addEmployee(employee_types::type typ,
 
 
 
-void EmployeeController::removeEmployee(string ssn) {
+bool EmployeeController::removeEmployee(string ssn) {
 
     int idx = getEmployeeIndex(ssn);
-	if (idx != -1)
+    if (idx != -1) {
         delete model[idx];
+        return true;
+    }
 	else
         qCritical() << "Unable to remove: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+    return false;
 }
 
 
@@ -257,23 +260,23 @@ void EmployeeController::clearEmployees() {
     model.clear();
 }
 
-void EmployeeController::printEmployeeInfoAll() {
+void EmployeeController::printEmployeeModel() {
     for (unsigned int i = 0; model.size() > i; i++) {
         model[i]->printInfo();
         cout << "\n";
     }
 }
 
-
 void EmployeeController::updateView() {
-    printEmployeeInfoAll();
     m_view->updateEmployeeList(model);
+    qDebug() << "Controller updated View";
 }
 
 void EmployeeController::handleEventAddEmployee(employee_types::type typ,
                                      string newFirstName, string newLastName, string newSsn,
-                                     double newMonthlySalary = 0.0, double newHourlySalary = 0.0,
-                                     double newDoneHours = 0.0, double newBonus = 0.0, bool newOutcomeClaim = false) {
+                                     double newMonthlySalary = 0.0,
+                                     double newHourlySalary = 0.0, double newDoneHours = 0.0,
+                                     double newBonus = 0.0, bool newOutcomeClaim = false) {
     if(addEmployee(typ, newFirstName, newLastName, newSsn,
                 newMonthlySalary, newHourlySalary, newDoneHours, newBonus, newOutcomeClaim) ) {
         updateView();
@@ -281,9 +284,25 @@ void EmployeeController::handleEventAddEmployee(employee_types::type typ,
     else  {
         m_view->popBox("SSN already exists!");
     }
-
 }
 
-void EmployeeController::handleEventPrintEmployeeInfo() {
-    printEmployeeInfoAll();
+void EmployeeController::handleEventRemoveEmployee(string ssn) {
+    if(removeEmployee(ssn) ) {
+        updateView();
+    }
+    else  {
+        m_view->popBox("Unable to remove employee!");
+    }
+}
+
+void EmployeeController::handleEventPrintEmployees() {
+    printEmployeeModel();
+}
+
+void EmployeeController::handleEventRequestViewUpdate() {
+    updateView();
+}
+
+Employee* EmployeeController::handleEventGetEmployee(string ssn) {
+    return getEmployee(ssn);
 }

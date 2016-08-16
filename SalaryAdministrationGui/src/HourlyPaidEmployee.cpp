@@ -47,7 +47,7 @@ double HourlyPaidEmployee::getSalary() {
 
 
 void HourlyPaidEmployee::printInfo() {
-	cout << "Type: " << "HourlyPaidEmployee" << "\n";
+    cout << "Type: " << employeeTypetoString(typ) << "\n";
     cout << "First Name: " << Employee::getFirstName() << "\n";
     cout << "Last Name: " << Employee::getLastName() << "\n";
 	cout << "SSN: " << Employee::getSocialSecurityNumber() << "\n";

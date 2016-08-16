@@ -42,7 +42,7 @@ double MonthlyPaidEmployee::getSalary()
 
 void MonthlyPaidEmployee::printInfo()
 {
-	cout << "Type: " << "MonthlyPaidEmployee" << "\n";
+    cout << "Type: " << employeeTypetoString(typ) << "\n";
     cout << "First Name: " << Employee::getFirstName() << "\n";
     cout << "Last Name: " << Employee::getLastName() << "\n";
 	cout << "SSN: " << Employee::getSocialSecurityNumber() << "\n";

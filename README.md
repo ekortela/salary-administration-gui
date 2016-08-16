@@ -42,25 +42,40 @@ You can fill up all relevant information that is missing with reasonable assumpt
 
 
 
-TODO:
+TODO-lista
 
 Koodausta:
-() Lisää GUI:in delete -napin funktionaalisuus
-        Ohje:
-        1. Määritä klikattu indeksi QTreeWidget::doubleClicked
-        2. poista työntekijä employeeList-vektorista
-        3. poista työntekijä model-vektorista
-        4. päivitä View-objekti
-() Viimeistele Unit testerit ja TDD framework
-() Lisää GUI:in päätabi, jossa on File Save / Load ja Help ominaisuus. Saven täytyy tallentaa mallin parametrit!
+    () GUI: Jos tyontekijaa on klikattu listalla, tallennetaan View:n muuttujaan tyontekijan SSN numero.
+    (30%) GUI: Lisaa delete -napin funktionaalisuus
+            Ohje:
+            1. Jos delete nappia on painettu JA listasta on valittu on aktiivinen tyontekija
+            2. Kysy kayttajalta varmistus poistetaanko tyontekija
+            3. Poista tyontekija model-vektorista JA employeeList-vektorista
+            4. Paivita tyontekijalista kutsumalla observerin handleEventRequestUpdate() metodia
+            HUOM!! Vaatii IObserver -rajapinnalle kahden metodin implementoimista
+    (30%) GUI: Lisaa double click napin funktionaalisuus
+            Ohje:
+            1. Doubleclick palauttaa tyontekijan model-vektorin indeksin (varmaan katevin SSN-numerolla)
+            2. Aseta valitun tyontekijan tiedot editorin LineEdit -objektien kenttiin
+    () GUI: Paatabi, jossa on vahintaan Save, Load, Help/About ja Exit valinnat. Save tallentaa
+            mallin parametrit tekstitiedostoon, jotka ladataan automaattisesti GUI:n kaynnistyksessa!
+    (20%) BACKEND: Unit testerit backendille QtTest frameworkilla
+    (70%) BACKEND: Implementoi metodit tyontekijoiden parametrien asettamiseen controllerissa
+    () BACKEND: Lisaa run-time lokitiedosto, johon kaikki qDebug/qCritical/qInfo viestit tallentuvat
 
-Infra:
-() Staattinen Qt buildi: Graafista liittymää pitäisi pystyä ajamaan standalonena
-    https://wiki.qt.io/Building_a_static_Qt_for_Windows_using_MinGW Windows ympäristössä
-() Staattinen CPPUTEST yksikkötestien ajamiseen deploymentissa
+Infrastruktuuri:
+    () Muuta hakemiston rakenne selkeammaksi (esim. src/model/, src/controller/, src/main/, ...)
+    () QT:n staattinen buildi: Yleensa ottaen on hyva, etta liittymaa voidaan ajaa standalonena. Tama
+        vaatii allaolevan ohjeen seuraamista
+        https://wiki.qt.io/Building_a_static_Qt_for_Windows_using_MinGW
 
 Dokumentaatio:
-() Luo ohjelmistoarkkitehtuurin UML diagrammi
-() Luo Use Case diagrammi
-() GUI:n dokumentaatio
-() Backendin dokumentaatio
+    () Luo Use Case diagrammi dokumenttia varten (esim. EAP)
+    () GUI:n dokumentaatio
+    () Backendin dokumentaatio
+
+Valmiit:
+    (x) Luo ohjelmistoarkkitehtuurin UML class diagrammi
+
+Poistettu:
+    (-) Staattinen CPPUTEST yksikkotestien ajamiseen meidan repositoryssa (kaytetaan QtTest frameworkkia)
