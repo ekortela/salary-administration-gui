@@ -42,25 +42,30 @@ You can fill up all relevant information that is missing with reasonable assumpt
 
 
 
-TODO:
+TODO-lista
 
 Koodausta:
-() Lisää GUI:in delete -napin funktionaalisuus
+(30%) GUI: Lisää delete -napin funktionaalisuus
         Ohje:
         1. Määritä klikattu indeksi QTreeWidget::doubleClicked
         2. poista työntekijä employeeList-vektorista
         3. poista työntekijä model-vektorista
-        4. päivitä View-objekti
-() Viimeistele Unit testerit ja TDD framework
-() Lisää GUI:in päätabi, jossa on File Save / Load ja Help ominaisuus. Saven täytyy tallentaa mallin parametrit!
+        4. päivitä View-objekti klikatun työntekijän tiedoilla
+() GUI: Päätabi, jossa on vähintään Save, Load, Help/About ja Exit valinnat. Save tallentaa
+    mallin parametrit tekstitiedostoon, jotka ladataan automaattisesti GUI:n käynnistyksessä!
+(50%) BACKEND: Viimeistele Unit testerit ja TDD framework
 
-Infra:
-() Staattinen Qt buildi: Graafista liittymää pitäisi pystyä ajamaan standalonena
-    https://wiki.qt.io/Building_a_static_Qt_for_Windows_using_MinGW Windows ympäristössä
-() Staattinen CPPUTEST yksikkötestien ajamiseen deploymentissa
+Infrastruktuuri:
+() QT:n staattinen buildi: Yleensä ottaen on hyvä, että liittymää voidaan ajaa standalonena. Tämä
+    vaatii allaolevan ohjeen seuraamista
+    https://wiki.qt.io/Building_a_static_Qt_for_Windows_using_MinGW
 
 Dokumentaatio:
-() Luo ohjelmistoarkkitehtuurin UML diagrammi
-() Luo Use Case diagrammi
+() Luo Use Case diagrammi dokumenttia varten (esim. EAP)
 () GUI:n dokumentaatio
 () Backendin dokumentaatio
+
+Valmiit:
+(x) Luo ohjelmistoarkkitehtuurin UML class diagrammi
+
+(-) Staattinen CPPUTEST yksikkötestien ajamiseen meidän repositoryssa (käytetään QtTest frameworkkia)
