@@ -45,7 +45,8 @@ You can fill up all relevant information that is missing with reasonable assumpt
 TODO-lista
 
 Koodausta:
-    () GUI: Jos tyontekijaa on klikattu listalla, tallennetaan View:n muuttujaan tyontekijan SSN numero.
+	() GUI: Tarvitaan uuden tyontekijan lisaamiseen oma nappi, jolla voidaan luoda uusi tyontekija (save vain 
+		tallentaa parametrit)
     (30%) GUI: Lisaa delete -napin funktionaalisuus
             Ohje:
             1. Jos delete nappia on painettu JA listasta on valittu on aktiivinen tyontekija
@@ -55,11 +56,12 @@ Koodausta:
             HUOM!! Vaatii IObserver -rajapinnalle kahden metodin implementoimista
     () GUI: Paatabi, jossa on vahintaan Save, Load, Help/About ja Exit valinnat. Save tallentaa
             mallin parametrit tekstitiedostoon, jotka ladataan automaattisesti GUI:n kaynnistyksessa!
-    (20%) BACKEND: Unit testerit backendille QtTest frameworkilla
-    (70%) BACKEND: Implementoi metodit tyontekijoiden parametrien asettamiseen controllerissa
+    (70%) BACKEND: Unit testerit backendille QtTest frameworkilla (controller ja model valmis, view puuttuu)
     () BACKEND: Lisaa run-time lokitiedosto, johon kaikki qDebug/qCritical/qInfo viestit tallentuvat
 	() BACKEND+GUI: Lue kaikki configuraatio-arvot tiedostosta!
-
+	(?) GUI: Jos tyontekijaa on klikattu listalla, tallennetaan View:n muuttujaan tyontekijan SSN numero
+	(?) GUI: Kaytettavyys paranisi, jos delete ja save nappi olisivat GUI:n vasemmalla laidalla?
+	
 Infrastruktuuri:
     () Muuta hakemiston rakenne selkeammaksi (esim. src/model/, src/controller/, src/main/, ...)
     () QT:n staattinen buildi: Yleensa ottaen on hyva, etta liittymaa voidaan ajaa standalonena. Tama
@@ -72,9 +74,10 @@ Dokumentaatio:
     () Backendin dokumentaatio
 
 Valmiit:
-    (x) Luo ohjelmistoarkkitehtuurin UML class diagrammi
+    (100%) Luo ohjelmistoarkkitehtuurin UML class diagrammi
 	(100%) GUI: Lisaa double click napin funktionaalisuus
-	(x) GUI: käyttöliittymä näyttää nyt vain työntekijätyypille oleelliset syöttökentät
+	(100%) GUI: kayttoliittyma nayttaa nyt vain tyontekijatyypille oleelliset syottokentat
+	(100%) BACKEND: Implementoi metodit tyontekijoiden parametrien asettamiseen controllerissa
 
 Poistettu:
     (-) Staattinen CPPUTEST yksikkotestien ajamiseen meidan repositoryssa (kaytetaan QtTest frameworkkia)
