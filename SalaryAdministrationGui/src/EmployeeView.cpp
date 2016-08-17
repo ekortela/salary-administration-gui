@@ -5,22 +5,24 @@
 
 EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
 
-    m_treeWidgetContainer = new QWidget;
-    m_treeWidgetContainer->setWindowTitle("Salary Admin");
+    m_layoutContainer = new QWidget;
+    m_layoutContainer->setWindowTitle("Salary Admin");
 
     this->m_mainLayout = new QHBoxLayout;
     createEmployeeInformationView(m_mainLayout);
     createTreeWidget(m_mainLayout);
 
-    m_treeWidgetContainer->setLayout(m_mainLayout);
+    m_layoutContainer->setLayout(m_mainLayout);
     //window->resize(QDesktopWidget().availableGeometry().size() * 0.3);
-    m_treeWidgetContainer->resize(600,350);
-    m_treeWidgetContainer->show();
+    m_layoutContainer->resize(600,350);
+    m_layoutContainer->setFixedSize(m_layoutContainer->size());
+    m_layoutContainer->show();
 }
 
 
 void EmployeeView::createTreeWidget(QHBoxLayout *mainLayout)
 {
+    m_rightLayout = new QVBoxLayout;
     m_treeWidget = new QTreeWidget;
     m_treeWidget->setColumnCount(3);
     m_treeWidget->setSortingEnabled(true);
@@ -42,16 +44,26 @@ void EmployeeView::createTreeWidget(QHBoxLayout *mainLayout)
     // with the required functionality. Remember to call the controller's updateView() -method when
     // model is changed.
 
-    mainLayout->addWidget(m_treeWidget);
+    // Add new employee button
+    m_addNewEmployeeButton = new QPushButton("Add new employee");
+
+    m_rightLayout->addWidget(m_treeWidget);
+    m_rightLayout->addWidget(m_addNewEmployeeButton);
+    mainLayout->addLayout(m_rightLayout);
 }
 
 void EmployeeView::createEmployeeInformationView(QHBoxLayout *mainLayout)
 {
+    // Create structure
+    m_leftLayout = new QVBoxLayout;
     m_scrollArea = new QScrollArea;
-    m_scrollArea->setWidgetResizable(true);
-    m_scrollAreaContainer = new QWidget;
-    m_scrollArea->setWidget(m_scrollAreaContainer);
-    m_leftLayout = new QGridLayout;
+    m_scrollArea->setMinimumHeight(300);
+    m_employeeInfoGrid = new QGridLayout;
+    m_buttonLayout = new QHBoxLayout;
+
+    QWidget *empty = new QWidget();
+    empty->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    m_employeeInfoGrid->addWidget(empty,7,0);
 
     // Employee information feed
     m_lastNameLabel = new QLabel("Last name:");
@@ -89,56 +101,67 @@ void EmployeeView::createEmployeeInformationView(QHBoxLayout *mainLayout)
     m_bonusLabel = new QLabel("Bonus:");
     m_bonusEdit = new QLineEdit;
 
+    m_employeeInfoGrid->addWidget(m_lastNameLabel,0,0);
+    m_employeeInfoGrid->addWidget(m_lastNameEdit,0,1);
+
+    m_employeeInfoGrid->addWidget(m_firstNameLabel,1,0);
+    m_employeeInfoGrid->addWidget(m_firstNameEdit,1,1);
+
+    m_employeeInfoGrid->addWidget(m_SSNLabel,2,0);
+    m_employeeInfoGrid->addWidget(m_SSNEdit,2,1);
+
+    m_employeeInfoGrid->addWidget(m_payTypeLabel,3,0);
+    m_employeeInfoGrid->addWidget(m_payTypeMenu,3,1);
+
+    // Monthly
+    m_employeeInfoGrid->addWidget(m_monthlySalaryLabel,4,0);
+    m_employeeInfoGrid->addWidget(m_monthlySalaryEdit,4,1);
+
+    // Hourly
+    m_employeeInfoGrid->addWidget(m_hoursDoneLabel,4,0);
+    m_employeeInfoGrid->addWidget(m_hoursDoneEdit,4,1);
+    m_employeeInfoGrid->addWidget(m_hourlySalaryLabel,5,0);
+    m_employeeInfoGrid->addWidget(m_hourlySalaryEdit,5,1);
+
+    // Salesman
+    m_employeeInfoGrid->addWidget(m_outcomeClaimLabel,5,0);
+    m_employeeInfoGrid->addWidget(m_outcomeClaimCheckBox,5,1);
+    m_employeeInfoGrid->addWidget(m_bonusLabel,6,0);
+    m_employeeInfoGrid->addWidget(m_bonusEdit,6,1);
+
+    // Hiding widgets
+    m_monthlySalaryLabel->hide();
+    m_monthlySalaryEdit->hide();
+    m_hoursDoneLabel->hide();
+    m_hoursDoneEdit->hide();
+    m_hourlySalaryLabel->hide();
+    m_hourlySalaryEdit->hide();
+    m_outcomeClaimLabel->hide();
+    m_outcomeClaimCheckBox->hide();
+    m_bonusLabel->hide();
+    m_bonusEdit->hide();
+
+    m_employeeInfoGrid->setColumnStretch(0,1);
+
+
     // Buttons / Signals
     m_saveButton = new QPushButton("Save");
     connect(m_saveButton, SIGNAL (released()), this, SLOT (handleSaveButtonClick()) );
     m_deleteButton = new QPushButton("Delete");
     connect(m_deleteButton, SIGNAL (released()), this, SLOT (handleDeleteButtonClick()) );
+    connect(m_payTypeMenu, SIGNAL (currentIndexChanged(int)), this, SLOT (handlePayTypeChange()) );
 
-    // Validators
-    //    QIntValidator *intValidator = new QIntValidator(0,999999999,m_hoursDoneEdit);
-    //    QDoubleValidator *doubleValidator = new QDoubleValidator(0,999999999,m_hoursDoneEdit);
-    //QDoubleValidator *doubleValidator = new QDoubleValidator(0.0,999999999.9,salaryEdit);
-    //salaryEdit->setValidator(doubleValidator);
-    //realizedIncomeEdit->setValidator(doubleValidator);
-    //outcomeClaimEdit->setValidator(doubleValidator);
+    m_buttonLayout->addWidget(m_saveButton,0);
+    m_buttonLayout->addWidget(m_deleteButton,1);
 
-    m_leftLayout->addWidget(m_lastNameLabel,0,0);
-    m_leftLayout->addWidget(m_lastNameEdit,0,1);
+    //m_displayInfo = new QLabel("info text");
+    //m_employeeInfoGrid->addWidget(m_displayInfo,10,0,1,2);
 
-    m_leftLayout->addWidget(m_firstNameLabel,1,0);
-    m_leftLayout->addWidget(m_firstNameEdit,1,1);
-
-    m_leftLayout->addWidget(m_SSNLabel,2,0);
-    m_leftLayout->addWidget(m_SSNEdit,2,1);
-
-    m_leftLayout->addWidget(m_payTypeLabel,3,0);
-    m_leftLayout->addWidget(m_payTypeMenu,3,1);
-
-    m_leftLayout->addWidget(m_hoursDoneLabel,4,0);
-    m_leftLayout->addWidget(m_hoursDoneEdit,4,1);
-
-    m_leftLayout->addWidget(m_hourlySalaryLabel,5,0);
-    m_leftLayout->addWidget(m_hourlySalaryEdit,5,1);
-
-    m_leftLayout->addWidget(m_monthlySalaryLabel,6,0);
-    m_leftLayout->addWidget(m_monthlySalaryEdit,6,1);
-
-    m_leftLayout->addWidget(m_outcomeClaimLabel,7,0);
-    m_leftLayout->addWidget(m_outcomeClaimCheckBox,7,1);
-
-    m_leftLayout->addWidget(m_bonusLabel,8,0);
-    m_leftLayout->addWidget(m_bonusEdit,8,1);
-
-    m_leftLayout->addWidget(m_saveButton,9,0);
-    m_leftLayout->addWidget(m_deleteButton,9,1);
-
-    m_displayInfo = new QLabel("info text");
-    m_leftLayout->addWidget(m_displayInfo,10,0,1,2);
-
-    m_leftLayout->setColumnStretch(0,1);
-    m_scrollAreaContainer->setLayout(m_leftLayout);
-    mainLayout->addWidget(m_scrollArea);
+    // Set layouts
+    m_scrollArea->setLayout(m_employeeInfoGrid);
+    m_leftLayout->addWidget(m_scrollArea);
+    m_leftLayout->addLayout(m_buttonLayout);
+    mainLayout->addLayout(m_leftLayout);
 }
 
 void EmployeeView::registerObserver(IObserver* observer) {
@@ -254,13 +277,63 @@ void EmployeeView::handleTreeWidgetDoubleClick() {
         QString monthlySalary = QString::number(m_salesEmp->getMonthlySalary());
         m_monthlySalaryEdit->setText(monthlySalary);
         m_outcomeClaimCheckBox->setChecked(m_salesEmp->getOutcomeClaim());
+        QString bonus = QString::number(m_salesEmp->getBonus());
+        m_bonusEdit->setText(bonus);
+    }
+}
+
+void EmployeeView::handlePayTypeChange() {
+    qDebug() << "Pay type menu active index changed!";
+
+    string type = m_payTypeMenu->currentText().toStdString();
+
+    if (type == "Monthly") {
+        m_monthlySalaryLabel->show();
+        m_monthlySalaryEdit->show();
+        m_hoursDoneLabel->hide();
+        m_hoursDoneEdit->hide();
+        m_hourlySalaryLabel->hide();
+        m_hourlySalaryEdit->hide();
+        m_outcomeClaimLabel->hide();
+        m_outcomeClaimCheckBox->hide();
+        m_bonusLabel->hide();
+        m_bonusEdit->hide();
+
+    } else if (type == "Hourly") {
+        m_monthlySalaryLabel->hide();
+        m_monthlySalaryEdit->hide();
+        m_hoursDoneLabel->show();
+        m_hoursDoneEdit->show();
+        m_hourlySalaryLabel->show();
+        m_hourlySalaryEdit->show();
+        m_outcomeClaimLabel->hide();
+        m_outcomeClaimCheckBox->hide();
+        m_bonusLabel->hide();
+        m_bonusEdit->hide();
+
+    } else if (type == "Salesman") {
+        m_monthlySalaryLabel->show();
+        m_monthlySalaryEdit->show();
+        m_hoursDoneLabel->hide();
+        m_hoursDoneEdit->hide();
+        m_hourlySalaryLabel->hide();
+        m_hourlySalaryEdit->hide();
+        m_outcomeClaimLabel->show();
+        m_outcomeClaimCheckBox->show();
+        m_bonusLabel->show();
+        m_bonusEdit->show();
+
+    } else {
+        m_monthlySalaryLabel->hide();
+        m_monthlySalaryEdit->hide();
+        m_hoursDoneLabel->hide();
+        m_hoursDoneEdit->hide();
+        m_hourlySalaryLabel->hide();
+        m_hourlySalaryEdit->hide();
+        m_outcomeClaimLabel->hide();
+        m_outcomeClaimCheckBox->hide();
+        m_bonusLabel->hide();
+        m_bonusEdit->hide();
 
     }
-
-    // TODO ELISA Tassa vahan vihjeita:
-    // 1. Ratkaise SSN kayttaen hyvaksi valittua employeeList:in indeksia
-    // 2. Pyyda controllerilta uusi tyontekija SSN:n avulla (observer->getEmployee(ssn))
-    // 3. Downcasti saatu Employee* tyypin objekti Salesman/Hourly/Monthly objektiksi (dynamic_cast)
-    // 4. Paivita editorin kentat m_firstNameEdit->setText(QString::fromStdString(firstName)) ... jne.
-
 }

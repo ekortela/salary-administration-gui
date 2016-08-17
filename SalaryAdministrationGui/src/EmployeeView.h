@@ -25,17 +25,18 @@ public:
 
 private:
     unsigned int *treeWidgetSelectedItem;
+    int rowHeight;
     QLabel *m_lastNameLabel, *m_firstNameLabel, *m_SSNLabel, *m_payTypeLabel,
             *m_monthlySalaryLabel, *m_outcomeClaimLabel, *m_hoursDoneLabel,
             *m_hourlySalaryLabel, *m_displayInfo, *m_bonusLabel;
     QComboBox *m_payTypeMenu;
     QPushButton *m_addNewEmployeeButton, *m_saveButton, *m_deleteButton;
     QCheckBox *m_outcomeClaimCheckBox;
-    QWidget *m_treeWidgetContainer, *m_scrollAreaContainer;
-    QHBoxLayout *m_mainLayout;
-    QVBoxLayout *m_rightLayout;
+    QWidget *m_layoutContainer;
+    QHBoxLayout *m_mainLayout, *m_buttonLayout;
+    QVBoxLayout *m_leftLayout, *m_rightLayout;
     QScrollArea *m_scrollArea;
-    QGridLayout *m_leftLayout;
+    QGridLayout *m_employeeInfoGrid;
     QTreeWidget *m_treeWidget;
 
     IObserver *observer;
@@ -47,4 +48,5 @@ private slots:
     void handleSaveButtonClick();
     void handleDeleteButtonClick();
     void handleTreeWidgetDoubleClick();
+    void handlePayTypeChange();
 };
