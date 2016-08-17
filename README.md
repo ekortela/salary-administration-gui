@@ -19,13 +19,13 @@ of information you should save of each worker so that you would then be able to
 print out all this information of all the saved workers at the same time (e.g. in the
 form of a list).
 
-Monthly paid employee Hourly paid employee Salesman
-Name                            Name                                    Name
+Monthly paid employee 			Hourly paid employee 			Salesman
+Name                            Name                            Name
 Social security number          Social security number 			Social security number
 Monthly compensation            Hourly Compensation 			Monthly compensation
-                                Done hours                              Bonus % 
-                                                                        Realized outcome
-                                                                        Outcome claim
+                                Done hours                      Bonus % 
+                                                                Realized outcome
+                                                                Outcome claim
 
 The workers clearly differ from each other in the salary formation.
 
@@ -74,6 +74,7 @@ Dokumentaatio:
 Valmiit:
     (x) Luo ohjelmistoarkkitehtuurin UML class diagrammi
 	(100%) GUI: Lisaa double click napin funktionaalisuus
+	(x) GUI: käyttöliittymä näyttää nyt vain työntekijätyypille oleelliset syöttökentät
 
 Poistettu:
     (-) Staattinen CPPUTEST yksikkotestien ajamiseen meidan repositoryssa (kaytetaan QtTest frameworkkia)
