@@ -58,6 +58,7 @@ Koodausta:
     (20%) BACKEND: Unit testerit backendille QtTest frameworkilla
     (70%) BACKEND: Implementoi metodit tyontekijoiden parametrien asettamiseen controllerissa
     () BACKEND: Lisaa run-time lokitiedosto, johon kaikki qDebug/qCritical/qInfo viestit tallentuvat
+	() BACKEND+GUI: Lue kaikki configuraatio-arvot tiedostosta!
 
 Infrastruktuuri:
     () Muuta hakemiston rakenne selkeammaksi (esim. src/model/, src/controller/, src/main/, ...)
