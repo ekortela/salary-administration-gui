@@ -31,8 +31,6 @@ public:
                      string newFirstName, string newLastName, string newSsn,
                      double newMonthlySalary, double newHourlySalary,
                      double newDoneHours, double newBonus, bool newOutcomeClaim);
-
-
     bool removeEmployee(string ssn);
     int getEmployeeIndex(string ssn);
     Employee* getEmployee(string ssn);
@@ -41,8 +39,10 @@ public:
     void printEmployeeModel();
 
     // Getting/setting the employee properties by using unique social security number
-    void setEmployeeFirstName(string ssn, string newName);
+    void setEmployeeFirstName(string ssn, string newFirstName);
     string getEmployeeFirstName(string ssn);
+    void setEmployeeLastName(string ssn, string newLastName);
+    string getEmployeeLastName(string ssn);
     void setEmployeeSsn(string ssn, string newSsn);
     string getEmployeeSsn(string ssn);
     void setEmployeeHourlySalary(string ssn, double newHourlySalary);
@@ -62,6 +62,7 @@ public:
                      string newFirstName, string newLastName, string newSsn,
                      double newMonthlySalary, double newHourlySalary,
                      double newDoneHours, double newBonus, bool newOutcomeClaim);
+
     void handleEventRemoveEmployee(string ssn);
     void handleEventPrintEmployees();
     void handleEventRequestViewUpdate();

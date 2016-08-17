@@ -31,6 +31,6 @@ Employee *EmployeeFactory::getEmployee(employee_types::type typ,
         return new SalesmanEmployee(newFirstName, newLastName, newSsn, newMonthlySalary, newBonus, newOutcomeClaim);
 
     default:
-        throw out_of_range("Employee type not recognized: " + to_string(typ));
+        return nullptr;
     }
 }

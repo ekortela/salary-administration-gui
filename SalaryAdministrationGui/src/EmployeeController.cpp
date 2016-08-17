@@ -18,11 +18,15 @@ bool EmployeeController::addEmployee(employee_types::type typ,
 {
 
     if (getEmployeeIndex(newSsn) == -1) {
-        model.push_back(EmployeeFactory::getEmployee(typ, newFirstName, newLastName, newSsn,
+        Employee* p = EmployeeFactory::getEmployee(typ, newFirstName, newLastName, newSsn,
                                                      newMonthlySalary, newHourlySalary,
-                                                     newDoneHours, newBonus, newOutcomeClaim) );
-        qDebug() << "New employee was created with SSN: " << QString::fromStdString(newSsn);
-        return true;
+                                                     newDoneHours, newBonus, newOutcomeClaim);
+        if(p != nullptr) {
+            qDebug() << "New employee was created with SSN: " << QString::fromStdString(newSsn);
+            return true;
+        }
+        else
+            qDebug() << "Employee type was not recognized: " << typ;
     }
     else {
         qCritical() << "Unable to add: Employee already exists! SSN: " << QString::fromStdString(newSsn);
@@ -75,7 +79,7 @@ void EmployeeController::setEmployeeFirstName(string ssn, string newFirstName)
     if (p != nullptr)
         p->setFirstName(newFirstName);
     else
-        qCritical() << "Unable to set employee name: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+        qCritical() << "Unable to set employee first name: Employee does not exist! SSN: " << QString::fromStdString(ssn);
 }
 
 string EmployeeController::getEmployeeFirstName(string ssn)
@@ -84,7 +88,26 @@ string EmployeeController::getEmployeeFirstName(string ssn)
     if (p != nullptr)
         return p->getFirstName();
     else
-        qCritical() << "Unable to get employee name: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+        qCritical() << "Unable to get employee first name: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+    return("");
+}
+
+void EmployeeController::setEmployeeLastName(string ssn, string newLastName)
+{
+    Employee* p = getEmployee(ssn);
+    if (p != nullptr)
+        p->setLastName(newLastName);
+    else
+        qCritical() << "Unable to set employee last name: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+}
+
+string EmployeeController::getEmployeeLastName(string ssn)
+{
+    Employee* p = getEmployee(ssn);
+    if (p != nullptr)
+        return p->getLastName();
+    else
+        qCritical() << "Unable to get employee last name: Employee does not exist! SSN: " << QString::fromStdString(ssn);
     return("");
 }
 
