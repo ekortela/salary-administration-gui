@@ -130,16 +130,7 @@ void EmployeeView::createEmployeeInformationView(QHBoxLayout *mainLayout)
     m_employeeInfoGrid->addWidget(m_bonusEdit,6,1);
 
     // Hiding widgets
-    m_monthlySalaryLabel->hide();
-    m_monthlySalaryEdit->hide();
-    m_hoursDoneLabel->hide();
-    m_hoursDoneEdit->hide();
-    m_hourlySalaryLabel->hide();
-    m_hourlySalaryEdit->hide();
-    m_outcomeClaimLabel->hide();
-    m_outcomeClaimCheckBox->hide();
-    m_bonusLabel->hide();
-    m_bonusEdit->hide();
+    setInformationFormWidgetVisibility(false,false,false,false,false);
 
     m_employeeInfoGrid->setColumnStretch(0,1);
 
@@ -237,103 +228,63 @@ void EmployeeView::handleTreeWidgetDoubleClick() {
     unsigned int rowIdx = m_treeWidget->currentIndex().row();
     qDebug() << "Item double clicked: " << QString::number(rowIdx);
 
-    QTreeWidgetItem *empItem = m_treeWidget->currentItem();
-    QString ssn = empItem->text(2);
-    string ssnString = ssn.toStdString();
-    Employee *m_emp = observer->handleEventGetEmployee(ssnString);
+    Employee *m_emp = observer->handleEventGetEmployee(m_treeWidget->currentItem()->text(2).toStdString());
 
-    QString firstName = QString::fromStdString(m_emp->getFirstName());
-    m_firstNameEdit->setText(firstName);
+    m_firstNameEdit->setText(QString::fromStdString(m_emp->getFirstName()));
+    m_lastNameEdit->setText(QString::fromStdString(m_emp->getLastName()));
 
-    QString lastName = QString::fromStdString(m_emp->getLastName());
-    m_lastNameEdit->setText(lastName);
+    m_SSNEdit->setText(m_treeWidget->currentItem()->text(2));
 
-    m_SSNEdit->setText(ssn);
-
-    employee_types::type type = m_emp->getType();
-
-    if (type == employee_types::MONTHLY_PAID_EMPLOYEE)
+    if (m_emp->getType() == employee_types::MONTHLY_PAID_EMPLOYEE)
     {
         m_payTypeMenu->setCurrentIndex(1);
         MonthlyPaidEmployee *m_monthlyEmp = dynamic_cast <MonthlyPaidEmployee*> (m_emp);
 
-        QString salary = QString::number(m_monthlyEmp->getSalary());
-        m_monthlySalaryEdit->setText(salary);
-    } else if (type == employee_types::HOURLY_PAID_EMPLOYEE)
+        m_monthlySalaryEdit->setText(QString::number(m_monthlyEmp->getSalary()));
+    } else if (m_emp->getType() == employee_types::HOURLY_PAID_EMPLOYEE)
     {
         m_payTypeMenu->setCurrentIndex(2);
         HourlyPaidEmployee *m_hourlyEmp = dynamic_cast <HourlyPaidEmployee*> (m_emp);
 
-        QString hoursDone = QString::number(m_hourlyEmp->getDoneHours());
-        m_hoursDoneEdit->setText(hoursDone);
-
-        QString hourlySalary = QString::number(m_hourlyEmp->getHourlySalary());
-        m_hourlySalaryEdit->setText(hourlySalary);
+        m_hoursDoneEdit->setText(QString::number(m_hourlyEmp->getDoneHours()));
+        m_hourlySalaryEdit->setText(QString::number(m_hourlyEmp->getHourlySalary()));
     } else
     {
         m_payTypeMenu->setCurrentIndex(3);
         SalesmanEmployee* m_salesEmp = dynamic_cast <SalesmanEmployee*> (m_emp);
 
-        QString monthlySalary = QString::number(m_salesEmp->getMonthlySalary());
-        m_monthlySalaryEdit->setText(monthlySalary);
+        m_monthlySalaryEdit->setText(QString::number(m_salesEmp->getMonthlySalary()));
         m_outcomeClaimCheckBox->setChecked(m_salesEmp->getOutcomeClaim());
-        QString bonus = QString::number(m_salesEmp->getBonus());
-        m_bonusEdit->setText(bonus);
+        m_bonusEdit->setText(QString::number(m_salesEmp->getBonus()));
     }
 }
 
 void EmployeeView::handlePayTypeChange() {
     qDebug() << "Pay type menu active index changed!";
 
-    string type = m_payTypeMenu->currentText().toStdString();
+    if (m_payTypeMenu->currentText().toStdString() == employeeTypetoString(employee_types::MONTHLY_PAID_EMPLOYEE)) {
+        setInformationFormWidgetVisibility(true,false,false,false,false);
 
-    if (type == "Monthly") {
-        m_monthlySalaryLabel->show();
-        m_monthlySalaryEdit->show();
-        m_hoursDoneLabel->hide();
-        m_hoursDoneEdit->hide();
-        m_hourlySalaryLabel->hide();
-        m_hourlySalaryEdit->hide();
-        m_outcomeClaimLabel->hide();
-        m_outcomeClaimCheckBox->hide();
-        m_bonusLabel->hide();
-        m_bonusEdit->hide();
+    } else if (m_payTypeMenu->currentText().toStdString() == employeeTypetoString(employee_types::HOURLY_PAID_EMPLOYEE)) {
+        setInformationFormWidgetVisibility(false,true,true,false,false);
 
-    } else if (type == "Hourly") {
-        m_monthlySalaryLabel->hide();
-        m_monthlySalaryEdit->hide();
-        m_hoursDoneLabel->show();
-        m_hoursDoneEdit->show();
-        m_hourlySalaryLabel->show();
-        m_hourlySalaryEdit->show();
-        m_outcomeClaimLabel->hide();
-        m_outcomeClaimCheckBox->hide();
-        m_bonusLabel->hide();
-        m_bonusEdit->hide();
-
-    } else if (type == "Salesman") {
-        m_monthlySalaryLabel->show();
-        m_monthlySalaryEdit->show();
-        m_hoursDoneLabel->hide();
-        m_hoursDoneEdit->hide();
-        m_hourlySalaryLabel->hide();
-        m_hourlySalaryEdit->hide();
-        m_outcomeClaimLabel->show();
-        m_outcomeClaimCheckBox->show();
-        m_bonusLabel->show();
-        m_bonusEdit->show();
+    } else if (m_payTypeMenu->currentText().toStdString() == employeeTypetoString(employee_types::SALESMAN_EMPLOYEE)) {
+        setInformationFormWidgetVisibility(true,false,false,true,true);
 
     } else {
-        m_monthlySalaryLabel->hide();
-        m_monthlySalaryEdit->hide();
-        m_hoursDoneLabel->hide();
-        m_hoursDoneEdit->hide();
-        m_hourlySalaryLabel->hide();
-        m_hourlySalaryEdit->hide();
-        m_outcomeClaimLabel->hide();
-        m_outcomeClaimCheckBox->hide();
-        m_bonusLabel->hide();
-        m_bonusEdit->hide();
-
+        setInformationFormWidgetVisibility(false,false,false,false,false);
     }
+}
+
+void EmployeeView::setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus) {
+    m_monthlySalaryLabel->setVisible(mSal);
+    m_monthlySalaryEdit->setVisible(mSal);
+    m_hoursDoneLabel->setVisible(hDone);
+    m_hoursDoneEdit->setVisible(hDone);
+    m_hourlySalaryLabel->setVisible(hSal);
+    m_hourlySalaryEdit->setVisible(hSal);
+    m_outcomeClaimLabel->setVisible(oClaim);
+    m_outcomeClaimCheckBox->setVisible(oClaim);
+    m_bonusLabel->setVisible(bonus);
+    m_bonusEdit->setVisible(bonus);
 }

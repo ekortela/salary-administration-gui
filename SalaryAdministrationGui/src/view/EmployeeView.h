@@ -43,6 +43,7 @@ private:
 
     void createTreeWidget(QHBoxLayout *m_mainLayout);
     void createEmployeeInformationView(QHBoxLayout *m_mainLayout);
+	void setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus);
 
 private slots:
     void handleSaveButtonClick();
