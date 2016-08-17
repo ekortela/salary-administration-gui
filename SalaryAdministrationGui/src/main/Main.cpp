@@ -29,6 +29,7 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 
 int main(int argc, char *argv[]) {
 
+//    QLoggingCategory::setFilterRules("*.debug=false");
     qInstallMessageHandler(myMessageOutput);
 
     QApplication app(argc, argv);

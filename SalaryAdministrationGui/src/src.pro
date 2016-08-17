@@ -3,9 +3,17 @@
 ######################################################################
 
 QT += widgets
-TEMPLATE = app
-TARGET = src
-INCLUDEPATH += .
+
+TARGET = SalaryAdministrationGui
+INCLUDEPATH += controller \
+               model \
+               view \
+               main
+
+release: DESTDIR = build/release
+debug:   DESTDIR = build/debug
+OBJECTS_DIR = $$DESTDIR/.obj
+MOC_DIR = $$DESTDIR/.moc
 
 # Input
 HEADERS += controller/EmployeeController.h \
@@ -15,13 +23,7 @@ HEADERS += controller/EmployeeController.h \
            model/HourlyPaidEmployee.h \
            model/MonthlyPaidEmployee.h \
            model/SalesmanEmployee.h \
-           view/EmployeeView.h \
-           /view/EmployeeView.h \
-           /model/Employee.h \
-           /model/MonthlyPaidEmployee.h \
-           /model/HourlyPaidEmployee.h \
-           /model/SalesmanEmployee.h \
-           /model/EmployeeFactory.h
+           view/EmployeeView.h
 SOURCES += controller/EmployeeController.cpp \
            main/Main.cpp \
            model/Employee.cpp \

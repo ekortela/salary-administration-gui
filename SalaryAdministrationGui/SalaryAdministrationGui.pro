@@ -3,13 +3,17 @@
 ######################################################################
 
 QT += widgets
-TEMPLATE = app
 TARGET = SalaryAdministrationGui
 INCLUDEPATH += src/controller \
                src/model \
                src/view \
                src/main
 
+
+release: DESTDIR = build/release
+debug:   DESTDIR = build/debug
+OBJECTS_DIR = $$DESTDIR/.obj
+MOC_DIR = $$DESTDIR/.moc
 
 # Input
 HEADERS += src/controller/EmployeeController.h \
