@@ -347,13 +347,15 @@ bool EmployeeController::handleEventAddEmployee(employee_types::type typ,
     return false;
 }
 
-void EmployeeController::handleEventRemoveEmployee(string ssn) {
+bool EmployeeController::handleEventRemoveEmployee(string ssn) {
     if(removeEmployee(ssn) ) {
         updateView();
+        return true;
     }
     else  {
         m_view->popErrorBox("Unable to remove employee with SSN: " + ssn);
     }
+    return false;
 }
 
 void EmployeeController::handleEventPrintEmployees() {

@@ -45,10 +45,13 @@ private:
     void createTreeWidget(QHBoxLayout *m_mainLayout);
     void createEmployeeInformationView(QHBoxLayout *m_mainLayout);
     void setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus);
+    bool confirmDeletionMessageBox();
+    void clearForm();
 
 private slots:
     void handleSaveButtonClick();
     void handleDeleteButtonClick();
     void handleTreeWidgetDoubleClick();
     void handlePayTypeChange();
+    void handleAddNewEmployeeButtonClick();
 };

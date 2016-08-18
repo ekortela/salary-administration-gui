@@ -15,7 +15,7 @@ public:
 
   virtual void handleEventRequestViewUpdate() = 0;
 
-  virtual void handleEventRemoveEmployee(string ssn) = 0;
+  virtual bool handleEventRemoveEmployee(string ssn) = 0;
 
   virtual Employee* handleEventGetEmployee(string ssn) = 0;
 
