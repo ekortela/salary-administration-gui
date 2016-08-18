@@ -2,7 +2,7 @@
 * EmployeeController.cpp
 *
 * The Controller part of MVC design pattern. The Controller contains
-* methods for modifying the Model properties and updates the View 
+* methods for modifying the Model properties and updates the View
 * whenever the Model changes.
 *
 *  Created on: 10.8.2016
@@ -26,7 +26,7 @@ public:
     EmployeeController(EmployeeView *view);
     ~EmployeeController() {};
 
-	// For adding, removing and inspecting the Model objects 
+    // For adding, removing and inspecting the Model objects
     bool addEmployee(employee_types::type typ,
                      string newFirstName, string newLastName, string newSsn,
                      double newMonthlySalary, double newHourlySalary,
@@ -39,23 +39,25 @@ public:
     void printEmployeeModel();
 
     // Getting/setting the employee properties by using unique social security number
-    void setEmployeeFirstName(string ssn, string newFirstName);
+    bool setEmployeeFirstName(string ssn, string newFirstName);
     string getEmployeeFirstName(string ssn);
-    void setEmployeeLastName(string ssn, string newLastName);
+    bool setEmployeeLastName(string ssn, string newLastName);
     string getEmployeeLastName(string ssn);
-    void setEmployeeSsn(string ssn, string newSsn);
+    bool setEmployeeSsn(string ssn, string newSsn);
     string getEmployeeSsn(string ssn);
-    void setEmployeeHourlySalary(string ssn, double newHourlySalary);
+    bool setEmployeeHourlySalary(string ssn, double newHourlySalary);
     double getEmployeeHourlySalary(string ssn);
-    void setEmployeeMonthlySalary(string ssn, double newMonthlySalary);
+    bool setEmployeeMonthlySalary(string ssn, double newMonthlySalary);
     double getEmployeeMonthlySalary(string ssn);
-    void setEmployeeBonus(string ssn, double newBonus);
+    bool setEmployeeBonus(string ssn, double newBonus);
     double getEmployeeBonus(string ssn);
-    void setEmployeeOutcomeclaim(string ssn, bool newOutcomeClaim);
-    bool getEmployeeOutcomeclaim(string ssn);
+    bool setEmployeeOutcomeclaim(string ssn, bool newOutcomeClaim);
+    bool getEmployeeOutcomeClaim(string ssn);
+    bool setEmployeeDoneHours(string ssn, double newDoneHours);
+    double getEmployeeDoneHours(string ssn);
 
-	// Display the Model in the View 
-	void updateView();
+    // Display the Model in the View
+    void updateView();
 
     // Methods that handle messages from View to Controller
     bool handleEventAddEmployee(employee_types::type typ,
@@ -68,4 +70,3 @@ public:
     void handleEventRequestViewUpdate();
     Employee* handleEventGetEmployee(string ssn);
 };
-

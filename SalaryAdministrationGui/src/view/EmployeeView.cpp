@@ -171,13 +171,22 @@ void EmployeeView::updateEmployeeList(vector<Employee *> model) {
     }
 }
 
-void EmployeeView::popBox(string message) {
+void EmployeeView::popInfoBox(string message) {
     qDebug() << "QmessageBox printing message: \"" << QString::fromStdString(message) << "\"";
     QMessageBox::information(
         this,
         tr( QCoreApplication::applicationName().toStdString().c_str() ),
         tr(message.c_str()) );
 }
+
+void EmployeeView::popErrorBox(string message) {
+    qDebug() << "QmessageBox printing message: \"" << QString::fromStdString(message) << "\"";
+    QMessageBox::critical(
+        this,
+        tr( QCoreApplication::applicationName().toStdString().c_str() ),
+        tr(message.c_str()) );
+}
+
 
 void EmployeeView::handleSaveButtonClick() {
     qDebug() << "Save button was clicked!";
@@ -192,36 +201,18 @@ void EmployeeView::handleSaveButtonClick() {
     double bonus = this->m_bonusEdit->text().toDouble();
     bool outcomeClaim = m_outcomeClaimCheckBox->checkState();
 
-    if (typ != employee_types::UNKNOWN) {
-        observer->handleEventAddEmployee(typ,
-                              firstName, lastName, ssn,
-                              monthlySalary, hourlySalary, hoursDone, bonus, outcomeClaim);
-
-        QString qstr;
-
-        // TEST m_displayInfo -box
-        // TODO REMOVE Get SSN number and set it to display button
-        // QString qstr = QString("Type %1 added").arg(QString::number(m_payTypeMenu->currentIndex()) );
-
-        // Display right pane tree widget click item
-        //    QString qstr = QString("Item at %1").arg(QString::number(m_mainLayout->itemAt(0)) );
-
-        // m_treeWidget selected row double click item
-        // qstr = QString("Current index: %1").arg(QString::number(m_payTypeMenu->currentIndex() ));
-
-        // m_payType ComboBox selected index
-        // qstr = QString("Current index: %1").arg(QString::number(m_payTypeMenu->currentIndex() ));
-
-        // m_displayInfo->setText(qstr);
+    if (typ != employee_types::UNKNOWN)
+    {
+        observer->handleEventAddEmployee(typ, firstName, lastName, ssn, monthlySalary, hourlySalary, hoursDone, bonus, outcomeClaim);
     }
     else {
-        popBox("You must select \"Pay Type\"!");
+        popInfoBox("You must select \"Pay Type\"!");
     }
 }
 
 void EmployeeView::handleDeleteButtonClick() {
     qDebug() << "Delete button was clicked!";
-    popBox("Delete button clicked!");
+    popInfoBox("Delete button clicked!");
 }
 
 void EmployeeView::handleTreeWidgetDoubleClick() {
@@ -232,7 +223,6 @@ void EmployeeView::handleTreeWidgetDoubleClick() {
 
     m_firstNameEdit->setText(QString::fromStdString(m_emp->getFirstName()));
     m_lastNameEdit->setText(QString::fromStdString(m_emp->getLastName()));
-
     m_SSNEdit->setText(m_treeWidget->currentItem()->text(2));
 
     if (m_emp->getType() == employee_types::MONTHLY_PAID_EMPLOYEE)
@@ -241,6 +231,7 @@ void EmployeeView::handleTreeWidgetDoubleClick() {
         MonthlyPaidEmployee *m_monthlyEmp = dynamic_cast <MonthlyPaidEmployee*> (m_emp);
 
         m_monthlySalaryEdit->setText(QString::number(m_monthlyEmp->getSalary()));
+
     } else if (m_emp->getType() == employee_types::HOURLY_PAID_EMPLOYEE)
     {
         m_payTypeMenu->setCurrentIndex(2);
@@ -248,6 +239,7 @@ void EmployeeView::handleTreeWidgetDoubleClick() {
 
         m_hoursDoneEdit->setText(QString::number(m_hourlyEmp->getDoneHours()));
         m_hourlySalaryEdit->setText(QString::number(m_hourlyEmp->getHourlySalary()));
+
     } else
     {
         m_payTypeMenu->setCurrentIndex(3);
@@ -275,6 +267,8 @@ void EmployeeView::handlePayTypeChange() {
         setInformationFormWidgetVisibility(false,false,false,false,false);
     }
 }
+
+
 
 void EmployeeView::setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus) {
     m_monthlySalaryLabel->setVisible(mSal);

@@ -1,3 +1,5 @@
+#pragma once
+
 /*
  * HourlyPaidEmployee.h
  *

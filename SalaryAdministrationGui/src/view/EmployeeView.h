@@ -21,7 +21,8 @@ public:
     void registerObserver(IObserver *observer);
     void addToEmployeeList(string firstName, string lastName, string payType);
     void updateEmployeeList(vector<Employee *> model);
-    void popBox(string message);
+    void popInfoBox(string message);
+    void popErrorBox(string message);
 
 private:
     unsigned int *treeWidgetSelectedItem;
@@ -43,7 +44,7 @@ private:
 
     void createTreeWidget(QHBoxLayout *m_mainLayout);
     void createEmployeeInformationView(QHBoxLayout *m_mainLayout);
-	void setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus);
+    void setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus);
 
 private slots:
     void handleSaveButtonClick();

@@ -18,6 +18,7 @@ MOC_DIR = $$DESTDIR/.moc
 # Input
 HEADERS += src/controller/EmployeeController.h \
            src/controller/IObserver.h \
+           src/controller/EmployeeControllerException.h \
            src/model/Employee.h \
            src/model/EmployeeFactory.h \
            src/model/HourlyPaidEmployee.h \
