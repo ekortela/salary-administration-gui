@@ -5,22 +5,26 @@
 QT += testlib core gui widgets
 TEMPLATE = app
 TARGET = test
-INCLUDEPATH += .
+INCLUDEPATH += ../src/controller \
+               ../src/model \
+               ../src/view \
+               ../src/main
 
 # Input
-HEADERS += ../src/EmployeeController.h \
-           ../src/EmployeeView.h \
-           ../src/Employee.h \
-           ../src/MonthlyPaidEmployee.h \
-           ../src/HourlyPaidEmployee.h \
-           ../src/SalesmanEmployee.h \
-           ../src/IObserver.h \
-           ../src/EmployeeFactory.h
-SOURCES += EmployeeControllerTest.cpp \
-           ../src/EmployeeController.cpp \
-           ../src/EmployeeView.cpp \
-           ../src/Employee.cpp \
-           ../src/MonthlyPaidEmployee.cpp \
-           ../src/HourlyPaidEmployee.cpp \
-           ../src/SalesmanEmployee.cpp \
-           ../src/EmployeeFactory.cpp
+HEADERS += ../src/controller/EmployeeController.h \
+           ../src/controller/IObserver.h \
+           ../src/controller/EmployeeControllerException.h \
+           ../src/model/Employee.h \
+           ../src/model/EmployeeFactory.h \
+           ../src/model/HourlyPaidEmployee.h \
+           ../src/model/MonthlyPaidEmployee.h \
+           ../src/model/SalesmanEmployee.h \
+           ../src/view/EmployeeView.h
+SOURCES += ../src/controller/EmployeeController.cpp \
+           EmployeeControllerTest.cpp \
+           ../src/model/Employee.cpp \
+           ../src/model/EmployeeFactory.cpp \
+           ../src/model/HourlyPaidEmployee.cpp \
+           ../src/model/MonthlyPaidEmployee.cpp \
+           ../src/model/SalesmanEmployee.cpp \
+           ../src/view/EmployeeView.cpp

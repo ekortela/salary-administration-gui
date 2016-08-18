@@ -4,8 +4,8 @@
 #include <QtTest/QtTest>
 #include <QCoreApplication>
 #include <QtCore/QDebug>
-#include "../src/EmployeeController.h"
-#include "../src/EmployeeView.h"
+#include "EmployeeController.h"
+#include "EmployeeView.h"
 
 
 void noMessageOutput(QtMsgType, const QMessageLogContext&, const QString &) { }
