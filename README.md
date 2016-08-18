@@ -45,9 +45,7 @@ You can fill up all relevant information that is missing with reasonable assumpt
 TODO-lista
 
 Koodausta:
-	() GUI: Tarvitaan uuden tyontekijan lisaamiseen oma nappi, jolla voidaan luoda uusi tyontekija (save vain 
-		tallentaa parametrit)
-    (30%) GUI: Lisaa delete -napin funktionaalisuus
+    (90%) GUI: Lisaa delete -napin funktionaalisuus
             Ohje:
             1. Jos delete nappia on painettu JA listasta on valittu on aktiivinen tyontekija
             2. Kysy kayttajalta varmistus poistetaanko tyontekija
@@ -78,6 +76,7 @@ Valmiit:
 	(100%) GUI: Lisaa double click napin funktionaalisuus
 	(100%) GUI: kayttoliittyma nayttaa nyt vain tyontekijatyypille oleelliset syottokentat
 	(100%) BACKEND: Implementoi metodit tyontekijoiden parametrien asettamiseen controllerissa
+	(100%) GUI: Add new employee -nappi tyhjentää lomakkeen
 
 Poistettu:
     (-) Staattinen CPPUTEST yksikkotestien ajamiseen meidan repositoryssa (kaytetaan QtTest frameworkkia)

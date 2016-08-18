@@ -45,8 +45,7 @@ bool EmployeeController::removeEmployee(string ssn) {
         delete model[idx];
         return true;
     }
-	else
-        qCritical() << "Unable to remove: Employee does not exist! SSN: " << QString::fromStdString(ssn);
+    qCritical() << "Unable to remove: Employee does not exist! SSN: " << QString::fromStdString(ssn);
     return false;
 }
 
@@ -293,12 +292,14 @@ bool EmployeeController::handleEventAddEmployee(employee_types::type typ,
     return status;
 }
 
-void EmployeeController::handleEventRemoveEmployee(string ssn) {
+bool EmployeeController::handleEventRemoveEmployee(string ssn) {
     if(removeEmployee(ssn) ) {
         updateView();
+        return true;
     }
     else  {
         m_view->popBox("Unable to remove employee!");
+        return false;
     }
 }
 

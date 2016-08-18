@@ -46,6 +46,7 @@ void EmployeeView::createTreeWidget(QHBoxLayout *mainLayout)
 
     // Add new employee button
     m_addNewEmployeeButton = new QPushButton("Add new employee");
+    connect(m_addNewEmployeeButton, SIGNAL (released()), this, SLOT (handleAddNewEmployeeButtonClick()) );
 
     m_rightLayout->addWidget(m_treeWidget);
     m_rightLayout->addWidget(m_addNewEmployeeButton);
@@ -221,12 +222,65 @@ void EmployeeView::handleSaveButtonClick() {
 
 void EmployeeView::handleDeleteButtonClick() {
     qDebug() << "Delete button was clicked!";
-    popBox("Delete button clicked!");
+
+    if (m_treeWidget->currentItem() != NULL) {
+
+        if(confirmDeletionMessageBox()) {
+
+            for (int i = 0; i < employeeList.size(); i++) {
+
+                if (employeeList[i]->text(2) == m_treeWidget->currentItem()->text(2)) {
+                    employeeList.removeAt(i);
+                    qDebug() << "Employee removed from employeeList!";
+                    if (observer->handleEventRemoveEmployee(m_SSNEdit->text().toStdString())) {
+                        popBox("Employee deleted");
+                        observer->handleEventRequestViewUpdate();
+                        break;
+                    }
+                }
+            }
+        }
+
+    } else {
+        popBox("Unable to delete! No employee selected.");
+    }
+}
+
+void EmployeeView::handleAddNewEmployeeButtonClick() {
+    qDebug() << "Add new employee button clicked!";
+    clearForm();
+    m_payTypeMenu->setCurrentIndex(0);
+}
+
+void EmployeeView::clearForm() {
+    m_firstNameEdit->clear();
+    m_lastNameEdit->clear();
+    m_SSNEdit->clear();
+    m_monthlySalaryEdit->clear();
+    m_hoursDoneEdit->clear();
+    m_hourlySalaryEdit->clear();
+    m_outcomeClaimCheckBox->setChecked(false);
+    m_bonusEdit->clear();
+}
+
+bool EmployeeView::confirmDeletionMessageBox() {
+    QMessageBox::StandardButton confirm;
+      confirm = QMessageBox::question(this, "Employee deletoin", "Are you sure you want to delete the employee?",
+                                    QMessageBox::Yes|QMessageBox::Cancel);
+      if (confirm == QMessageBox::Yes) {
+        qDebug() << "Yes was clicked";
+        return true;
+      } else {
+        qDebug() << "Yes was *not* clicked";
+        return false;
+      }
 }
 
 void EmployeeView::handleTreeWidgetDoubleClick() {
     unsigned int rowIdx = m_treeWidget->currentIndex().row();
     qDebug() << "Item double clicked: " << QString::number(rowIdx);
+
+    clearForm();
 
     Employee *m_emp = observer->handleEventGetEmployee(m_treeWidget->currentItem()->text(2).toStdString());
 
@@ -288,3 +342,5 @@ void EmployeeView::setInformationFormWidgetVisibility(bool mSal, bool hDone, boo
     m_bonusLabel->setVisible(bonus);
     m_bonusEdit->setVisible(bonus);
 }
+
+
