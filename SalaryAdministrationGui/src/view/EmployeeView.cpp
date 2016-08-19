@@ -8,9 +8,10 @@ EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
     m_layoutContainer = new QWidget;
     m_layoutContainer->setWindowTitle("Salary Admin");
 
-    this->m_mainLayout = new QHBoxLayout;
-    createEmployeeInformationView(m_mainLayout);
-    createTreeWidget(m_mainLayout);
+    m_mainLayout = new QHBoxLayout;
+    createMenuBar();
+    createEmployeeInformationView();
+    createTreeWidget();
 
     m_layoutContainer->setLayout(m_mainLayout);
     //window->resize(QDesktopWidget().availableGeometry().size() * 0.3);
@@ -19,8 +20,23 @@ EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
     m_layoutContainer->show();
 }
 
+void EmployeeView::createMenuBar() {
+    m_menuBar = new QMenuBar(this);
+    m_mainLayout->setMenuBar(m_menuBar);
 
-void EmployeeView::createTreeWidget(QHBoxLayout *mainLayout)
+    m_fileMenu = new QMenu("File");
+    m_menuBar->addMenu(m_fileMenu);
+    m_fileMenu->addAction("New employee list");
+    m_fileMenu->addAction("Save list");
+    m_fileMenu->addAction("Load list");
+    m_fileMenu->addSeparator();
+    m_fileMenu->addAction("Help");
+    m_fileMenu->addSeparator();
+    m_fileMenu->addAction("Exit");
+}
+
+
+void EmployeeView::createTreeWidget()
 {
     m_rightLayout = new QVBoxLayout;
     m_treeWidget = new QTreeWidget;
@@ -50,10 +66,10 @@ void EmployeeView::createTreeWidget(QHBoxLayout *mainLayout)
 
     m_rightLayout->addWidget(m_treeWidget);
     m_rightLayout->addWidget(m_addNewEmployeeButton);
-    mainLayout->addLayout(m_rightLayout);
+    m_mainLayout->addLayout(m_rightLayout);
 }
 
-void EmployeeView::createEmployeeInformationView(QHBoxLayout *mainLayout)
+void EmployeeView::createEmployeeInformationView()
 {
     // Create structure
     m_leftLayout = new QVBoxLayout;
@@ -146,6 +162,9 @@ void EmployeeView::createEmployeeInformationView(QHBoxLayout *mainLayout)
     m_buttonLayout->addWidget(m_saveButton,0);
     m_buttonLayout->addWidget(m_deleteButton,1);
 
+    m_buttonLayout->setStretch(0,1);
+    m_buttonLayout->setStretch(1,1);
+
     //m_displayInfo = new QLabel("info text");
     //m_employeeInfoGrid->addWidget(m_displayInfo,10,0,1,2);
 
@@ -153,7 +172,7 @@ void EmployeeView::createEmployeeInformationView(QHBoxLayout *mainLayout)
     m_scrollArea->setLayout(m_employeeInfoGrid);
     m_leftLayout->addWidget(m_scrollArea);
     m_leftLayout->addLayout(m_buttonLayout);
-    mainLayout->addLayout(m_leftLayout);
+    m_mainLayout->addLayout(m_leftLayout);
 }
 
 void EmployeeView::registerObserver(IObserver* observer) {
@@ -225,6 +244,7 @@ void EmployeeView::handleDeleteButtonClick() {
                     qDebug() << "Employee removed from employeeList!";
                     if (observer->handleEventRemoveEmployee(m_SSNEdit->text().toStdString())) {
                         popInfoBox("Employee deleted");
+                        clearForm();
                         observer->handleEventRequestViewUpdate();
                         break;
                     }
@@ -321,8 +341,6 @@ void EmployeeView::handlePayTypeChange() {
         setInformationFormWidgetVisibility(false,false,false,false,false);
     }
 }
-
-
 
 void EmployeeView::setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus) {
     m_monthlySalaryLabel->setVisible(mSal);

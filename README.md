@@ -45,14 +45,7 @@ You can fill up all relevant information that is missing with reasonable assumpt
 TODO-lista
 
 Koodausta:
-    (90%) GUI: Lisaa delete -napin funktionaalisuus
-            Ohje:
-            1. Jos delete nappia on painettu JA listasta on valittu on aktiivinen tyontekija
-            2. Kysy kayttajalta varmistus poistetaanko tyontekija
-            3. Poista tyontekija model-vektorista JA employeeList-vektorista
-            4. Paivita tyontekijalista kutsumalla observerin handleEventRequestUpdate() metodia
-            HUOM!! Vaatii IObserver -rajapinnalle kahden metodin implementoimista
-    () GUI: Paatabi, jossa on vahintaan Save, Load, Help/About ja Exit valinnat. Save tallentaa
+    (30%) GUI: Paatabi, jossa on vahintaan Save, Load, Help/About ja Exit valinnat. Save tallentaa
             mallin parametrit tekstitiedostoon, jotka ladataan automaattisesti GUI:n kaynnistyksessa!
     (70%) BACKEND: Unit testerit backendille QtTest frameworkilla (controller ja model valmis, view puuttuu)
     () BACKEND: Lisaa run-time lokitiedosto, johon kaikki qDebug/qCritical/qInfo viestit tallentuvat
@@ -77,6 +70,7 @@ Valmiit:
 	(100%) GUI: kayttoliittyma nayttaa nyt vain tyontekijatyypille oleelliset syottokentat
 	(100%) BACKEND: Implementoi metodit tyontekijoiden parametrien asettamiseen controllerissa
 	(100%) GUI: Add new employee -nappi tyhjentää lomakkeen
+	(100%) GUI: Lisaa delete -napin funktionaalisuus
 
 Poistettu:
     (-) Staattinen CPPUTEST yksikkotestien ajamiseen meidan repositoryssa (kaytetaan QtTest frameworkkia)

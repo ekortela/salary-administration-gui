@@ -33,17 +33,20 @@ private:
     QComboBox *m_payTypeMenu;
     QPushButton *m_addNewEmployeeButton, *m_saveButton, *m_deleteButton;
     QCheckBox *m_outcomeClaimCheckBox;
-    QWidget *m_layoutContainer;
+    QWidget *m_layoutContainer, *m_menuWidget;
     QHBoxLayout *m_mainLayout, *m_buttonLayout;
-    QVBoxLayout *m_leftLayout, *m_rightLayout;
+    QVBoxLayout *m_leftLayout, *m_rightLayout, *m_layoutFrame;
     QScrollArea *m_scrollArea;
     QGridLayout *m_employeeInfoGrid;
     QTreeWidget *m_treeWidget;
+    QMenuBar *m_menuBar;
+    QMenu *m_fileMenu;
 
     IObserver *observer;
 
-    void createTreeWidget(QHBoxLayout *m_mainLayout);
-    void createEmployeeInformationView(QHBoxLayout *m_mainLayout);
+    void createMenuBar();
+    void createTreeWidget();
+    void createEmployeeInformationView();
     void setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus);
     bool confirmDeletionMessageBox();
     void clearForm();
