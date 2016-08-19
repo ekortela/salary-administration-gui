@@ -10,6 +10,7 @@
 
 void noMessageOutput(QtMsgType, const QMessageLogContext&, const QString &) { }
 
+using namespace ec;
 
 class EmployeeControllerTest: public QObject
 {
@@ -28,7 +29,6 @@ private slots:
 
     // test methods
     void addEmployee();
-    void getEmployee();
     void removeEmployee();
     void setGetEmployeeFirstName();
     void setGetEmployeeLastName();
@@ -38,6 +38,7 @@ private slots:
     void setGetEmployeeBonus();
     void setGetEmployeeOutcomeclaim();
     void setGetEmployeeDoneHours();
+    void getEmployee();
 };
 
 EmployeeControllerTest::EmployeeControllerTest(QObject *parent): QObject(parent) { }
@@ -72,11 +73,17 @@ void EmployeeControllerTest::cleanup()
 void EmployeeControllerTest::addEmployee()
 {
     int unsigned n = 3;
-    QVERIFY(m_controller->addEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "", "", "1", 0.0, 0.0, 0.0, 0.0, false));
+    string ssn = "1";
+    QVERIFY(m_controller->addEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "", "", ssn, 0.0, 0.0, 0.0, 0.0, false));
     QVERIFY(m_controller->addEmployee(employee_types::HOURLY_PAID_EMPLOYEE, "", "", "2", 0.0, 0.0, 0.0, 0.0, false));
     QVERIFY(m_controller->addEmployee(employee_types::SALESMAN_EMPLOYEE, "", "", "3", 0.0, 0.0, 0.0, 0.0, false));
-    QVERIFY(!m_controller->addEmployee(employee_types::UNKNOWN, "", "", "4", 0.0, 0.0, 0.0, 0.0, false));
     QCOMPARE(n , m_controller->getEmployeeCount());
+
+    // try to add employee with ssn that already exists
+    QVERIFY_EXCEPTION_THROWN(m_controller->addEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "", "", ssn, 0.0, 0.0, 0.0, 0.0, false), EmployeeAlreadyExistsException);
+
+    // try to add employee of invalid employee type
+    QVERIFY_EXCEPTION_THROWN(m_controller->addEmployee(employee_types::UNKNOWN, "", "", "4", 0.0, 0.0, 0.0, 0.0, false), EmployeeTypeInvalidException);
 }
 
 void EmployeeControllerTest::removeEmployee()
@@ -88,7 +95,9 @@ void EmployeeControllerTest::removeEmployee()
     QCOMPARE(n, m_controller->getEmployeeCount());
     QVERIFY(m_controller->addEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "", "", ssn, 0.0, 0.0, 0.0, 0.0, false));
     QVERIFY(m_controller->removeEmployee(ssn));
-    QVERIFY(!m_controller->removeEmployee("ssn_doesnt_exist"));
+
+    // try to remove employee with ssn that does not exist
+    QVERIFY_EXCEPTION_THROWN(m_controller->removeEmployee("does_not_exist"), SsnDoesNotExistException);
 }
 
 void EmployeeControllerTest::setGetEmployeeFirstName() {
@@ -97,6 +106,10 @@ void EmployeeControllerTest::setGetEmployeeFirstName() {
     QVERIFY(m_controller->addEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "", "", ssn, 0.0, 0.0, 0.0, 0.0, false));
     QVERIFY(m_controller->setEmployeeFirstName(ssn, firstName));
     QCOMPARE(firstName, m_controller->getEmployeeFirstName(ssn));
+
+    // try to set value for ssn that does not exist
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeFirstName("not_exist", ""), SsnDoesNotExistException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeFirstName("not_exist"), SsnDoesNotExistException);
 }
 
 
@@ -106,6 +119,10 @@ void EmployeeControllerTest::setGetEmployeeLastName()  {
     QVERIFY(m_controller->addEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "", "", ssn, 0.0, 0.0, 0.0, 0.0, false));
     QVERIFY(m_controller->setEmployeeLastName(ssn, lastName));
     QCOMPARE(lastName, m_controller->getEmployeeLastName(ssn));
+
+    // try to set value for ssn that does not exist
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeLastName("not_exist", ""), SsnDoesNotExistException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeLastName("not_exist"), SsnDoesNotExistException);
 }
 
 void EmployeeControllerTest::setGetEmployeeSsn()  {
@@ -114,14 +131,34 @@ void EmployeeControllerTest::setGetEmployeeSsn()  {
     QVERIFY(m_controller->addEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "", "", ssn, 0.0, 0.0, 0.0, 0.0, false));
     QVERIFY(m_controller->setEmployeeSsn(ssn, newSsn));
     QCOMPARE(newSsn, m_controller->getEmployeeSsn(newSsn));
+
+    // try to set value for ssn that does not exist
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeSsn("not_exist", ""), SsnDoesNotExistException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeSsn("not_exist"), SsnDoesNotExistException);
 }
 
 void EmployeeControllerTest::setGetEmployeeHourlySalary()  {
+    // hourly salary
     string ssn = "1";
-    double newHourlySalary = 123.4;
+    double newHourlySalary = 1.0;
     QVERIFY(m_controller->addEmployee(employee_types::HOURLY_PAID_EMPLOYEE, "", "", ssn, 0.0, 0.0, 0.0, 0.0, false));
     QVERIFY(m_controller->setEmployeeHourlySalary(ssn, newHourlySalary));
     QCOMPARE(newHourlySalary, m_controller->getEmployeeHourlySalary(ssn));
+
+    // try to set monthly salary for salesman employee
+    string ssn2 = "2";
+    double newMonthlySalary2 = 2.0;
+    QVERIFY(m_controller->addEmployee(employee_types::SALESMAN_EMPLOYEE, "", "", ssn2, 0.0, 0.0, 0.0, 0.0, false));
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeHourlySalary(ssn2, newMonthlySalary2), EmployeeTypeInvalidException);
+
+    // try to set monthly salary for monthly paid employee
+    string ssn3 = "3";
+    double newMonthlySalary3 = 3.0;
+    QVERIFY(m_controller->addEmployee(employee_types::HOURLY_PAID_EMPLOYEE, "", "", ssn3, 0.0, 0.0, 0.0, 0.0, false));
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeHourlySalary(ssn2, newMonthlySalary3), EmployeeTypeInvalidException);
+
+    // try to set value for ssn that does not exist
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeHourlySalary("not_exist", 0.0), SsnDoesNotExistException);
 }
 
 void EmployeeControllerTest::setGetEmployeeMonthlySalary()  {
@@ -144,8 +181,10 @@ void EmployeeControllerTest::setGetEmployeeMonthlySalary()  {
     string ssn3 = "3";
     double newMonthlySalary3 = 3.0;
     QVERIFY(m_controller->addEmployee(employee_types::HOURLY_PAID_EMPLOYEE, "", "", ssn3, 0.0, 0.0, 0.0, 0.0, false));
-    QVERIFY(!m_controller->setEmployeeMonthlySalary(ssn3, newMonthlySalary3));
-    QCOMPARE(0.0, m_controller->getEmployeeMonthlySalary(ssn3));
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeMonthlySalary(ssn3, newMonthlySalary3), EmployeeTypeInvalidException);
+
+    // try to set value for ssn that does not exist
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeMonthlySalary("not_exist", 0.0), SsnDoesNotExistException);
 }
 
 void EmployeeControllerTest::setGetEmployeeBonus()  {
@@ -161,15 +200,18 @@ void EmployeeControllerTest::setGetEmployeeBonus()  {
     string ssn2 = "2";
     double newBonus2 = 2.0;
     QVERIFY(m_controller->addEmployee(employee_types::HOURLY_PAID_EMPLOYEE, "", "", ssn2, 0.0, 0.0, 0.0, 0.0, false));
-    QVERIFY(!m_controller->setEmployeeBonus(ssn2, newBonus2 ));
-    QCOMPARE(0.0 , m_controller->getEmployeeBonus(ssn2));
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeBonus(ssn2, newBonus2), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeBonus(ssn2), EmployeeTypeInvalidException);
 
     // try to set monthly salary for monthly paid employee
     string ssn3 = "3";
     double newBonus3= 3.0;
     QVERIFY(m_controller->addEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "", "", ssn3, 0.0, 0.0, 0.0, 0.0, false));
-    QVERIFY(!m_controller->setEmployeeBonus(ssn3, newBonus3));
-    QCOMPARE(0.0, m_controller->getEmployeeBonus(ssn3));
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeBonus(ssn3, newBonus3), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeBonus(ssn3), EmployeeTypeInvalidException);
+
+//    // try to set value for ssn that does not exist
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeBonus("not_exist", 0.0), SsnDoesNotExistException);
 }
 
 void EmployeeControllerTest::setGetEmployeeOutcomeclaim()  {
@@ -185,15 +227,18 @@ void EmployeeControllerTest::setGetEmployeeOutcomeclaim()  {
     string ssn2 = "2";
     double newOutcomeClaim2 = true;
     QVERIFY(m_controller->addEmployee(employee_types::HOURLY_PAID_EMPLOYEE, "", "", ssn2, 0.0, 0.0, 0.0, 0.0, false));
-    QVERIFY(!m_controller->setEmployeeBonus(ssn2, newOutcomeClaim2 ));
-    QCOMPARE(false , m_controller->getEmployeeOutcomeClaim(ssn2));
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeOutcomeclaim(ssn2, newOutcomeClaim2), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeOutcomeClaim(ssn2), EmployeeTypeInvalidException);
 
     // try to set outcome claim for monthly paid employee
     string ssn3 = "3";
     double newOutcomeClaim3 = true;
     QVERIFY(m_controller->addEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "", "", ssn3, 0.0, 0.0, 0.0, 0.0, false));
-    QVERIFY(!m_controller->setEmployeeBonus(ssn3, newOutcomeClaim3));
-    QCOMPARE(false, m_controller->getEmployeeOutcomeClaim(ssn3));
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeOutcomeclaim(ssn3, newOutcomeClaim3), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeOutcomeClaim(ssn3), EmployeeTypeInvalidException);
+
+    // try to set value for ssn that does not exist
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeOutcomeclaim("not_exist", 0.0), SsnDoesNotExistException);
 }
 
 void EmployeeControllerTest::setGetEmployeeDoneHours() {
@@ -209,15 +254,19 @@ void EmployeeControllerTest::setGetEmployeeDoneHours() {
     string ssn2 = "2";
     double newDoneHours2 = 2.0;
     QVERIFY(m_controller->addEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "", "", ssn2, 0.0, 0.0, 0.0, 0.0, false));
-    QVERIFY(!m_controller->setEmployeeDoneHours(ssn2, newDoneHours2 ));
-    QCOMPARE(0.0 , m_controller->getEmployeeDoneHours(ssn2));
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeDoneHours(ssn2, newDoneHours2), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeDoneHours(ssn2), EmployeeTypeInvalidException);
 
     // try to set done hours for salesman employee
     string ssn3 = "3";
     double newDoneHours3 = 3.0;
     QVERIFY(m_controller->addEmployee(employee_types::SALESMAN_EMPLOYEE, "", "", ssn3, 0.0, 0.0, 0.0, 0.0, false));
-    QVERIFY(!m_controller->setEmployeeDoneHours(ssn3, newDoneHours3));
-    QCOMPARE(0.0, m_controller->getEmployeeDoneHours(ssn3));
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeDoneHours(ssn3, newDoneHours3), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeDoneHours(ssn3), EmployeeTypeInvalidException);
+
+    // try to set value for ssn that does not exist
+    QVERIFY_EXCEPTION_THROWN(m_controller->setEmployeeDoneHours("not_exist", 0.0), SsnDoesNotExistException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeDoneHours("not_exist"), SsnDoesNotExistException);
 }
 
 void EmployeeControllerTest::getEmployee()
@@ -249,13 +298,11 @@ void EmployeeControllerTest::getEmployee()
     QCOMPARE(firstName , m_controller->getEmployeeFirstName(ssn4));
     QCOMPARE(lastName , m_controller->getEmployeeLastName(ssn4));
     QCOMPARE(monthlySalary, m_controller->getEmployeeMonthlySalary(ssn4));
-    QCOMPARE(0.0, m_controller->getEmployeeHourlySalary(ssn4));
-    QCOMPARE(0.0, m_controller->getEmployeeDoneHours(ssn4));
-    QCOMPARE(0.0, m_controller->getEmployeeBonus(ssn4));
-    QCOMPARE(false, m_controller->getEmployeeOutcomeClaim(ssn4));
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeHourlySalary(ssn4), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeDoneHours(ssn4), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeBonus(ssn4), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeOutcomeClaim(ssn4), EmployeeTypeInvalidException);
 }
-
-
 
 QTEST_MAIN(EmployeeControllerTest)
 

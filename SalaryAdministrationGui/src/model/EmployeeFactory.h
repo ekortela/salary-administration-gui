@@ -12,6 +12,7 @@
 
 
 #include "Employee.h"
+#include "EmployeeFactoryException.h"
 
 class EmployeeFactory {
 
@@ -21,7 +22,7 @@ class EmployeeFactory {
                                      double newMonthlySalary, double newHourlySalary,
                                      double newDoneHours, double newBonus, bool newOutcomeClaim);
     private:
-        EmployeeFactory() {}; // prevent instantiation (=pure abstract class)
+        EmployeeFactory() {} // prevent instantiation (=pure abstract class)
 };
 
 #endif /* EMPLOYEEFACTORY_H_ */

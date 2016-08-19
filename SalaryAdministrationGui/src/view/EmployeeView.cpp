@@ -1,6 +1,7 @@
 
 #include <QCoreApplication>
 #include "EmployeeView.h"
+#include "EmployeeControllerException.h"
 
 
 EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
@@ -204,7 +205,36 @@ void EmployeeView::handleSaveButtonClick() {
 
     if (typ != employee_types::UNKNOWN)
     {
-        observer->handleEventAddEmployee(typ, firstName, lastName, ssn, monthlySalary, hourlySalary, hoursDone, bonus, outcomeClaim);
+        try {
+
+            switch(typ) {
+
+            case employee_types::MONTHLY_PAID_EMPLOYEE:
+                observer->handleEventAddEmployee(typ, firstName, lastName, ssn, monthlySalary, 0.0, 0.0, 0.0, false);
+                break;
+
+            case employee_types::HOURLY_PAID_EMPLOYEE:
+                observer->handleEventAddEmployee(typ, firstName, lastName, ssn, 0.0, hourlySalary, hoursDone, 0.0, false);
+                break;
+
+            case employee_types::SALESMAN_EMPLOYEE:
+                observer->handleEventAddEmployee(typ, firstName, lastName, ssn, monthlySalary, 0.0, 0.0, bonus, outcomeClaim);
+                break;
+
+            default:
+                popErrorBox("Invalid employee type: " + string(employeeTypetoString(typ)) );
+                break;
+            }
+
+        } catch (ec::EmployeeAlreadyExistsException &e1) {
+            popErrorBox("Unable to save employee! " + string(e1.what()) );
+
+        } catch (ec::EmployeeTypeInvalidException &e2) {
+            popErrorBox("Unexpected behaviour: Invalid employee type! " + string(e2.what()) );
+
+        } catch (exception &e) {
+            popErrorBox("Unexpected error: " + string(e.what()) );
+        }
     }
     else {
         popInfoBox("You must select \"Pay Type\"!");
@@ -220,13 +250,24 @@ void EmployeeView::handleDeleteButtonClick() {
 
             for (int i = 0; i < employeeList.size(); i++) {
 
-                if (employeeList[i]->text(2) == m_treeWidget->currentItem()->text(2)) {
+                QString ssn = employeeList[i]->text(2);
+
+                if ( ssn.compare(m_treeWidget->currentItem()->text(2)) == 0) {
+
                     employeeList.removeAt(i);
-                    qDebug() << "Employee removed from employeeList!";
-                    if (observer->handleEventRemoveEmployee(m_SSNEdit->text().toStdString())) {
-                        popInfoBox("Employee deleted");
-                        observer->handleEventRequestViewUpdate();
+                    qDebug() << "Employee (idx: " << i << ") removed from employee list!";
+
+                    try {
+
+                        observer->handleEventRemoveEmployee(m_SSNEdit->text().toStdString() );
+                        popInfoBox("Employee (SSN: " + ssn.toStdString() + ") deleted");
                         break;
+
+                    } catch( ec::SsnDoesNotExistException &e1) {
+                        popErrorBox("Unable to delete employee! " + string(e1.what()) );
+
+                    } catch(exception &e) {
+                        popErrorBox("Unknown exception occurred: " + string(e.what()) );
                     }
                 }
             }

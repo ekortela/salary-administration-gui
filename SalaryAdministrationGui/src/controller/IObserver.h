@@ -6,8 +6,13 @@ class IObserver
 public:
   virtual ~IObserver() {}
 
-  virtual bool handleEventAddEmployee(employee_types::type typ,
+  virtual void handleEventAddEmployee(employee_types::type typ,
                            string newFirstName, string newLastName, string newSsn,
+                           double newMonthlySalary, double newHourlySalary,
+                           double newDoneHours, double newBonus, bool newOutcomeClaim) = 0;
+
+  virtual void handleEventUpdateEmployee(string newSsn,
+                           string newFirstName, string newLastName,
                            double newMonthlySalary, double newHourlySalary,
                            double newDoneHours, double newBonus, bool newOutcomeClaim) = 0;
 
@@ -15,7 +20,7 @@ public:
 
   virtual void handleEventRequestViewUpdate() = 0;
 
-  virtual bool handleEventRemoveEmployee(string ssn) = 0;
+  virtual void handleEventRemoveEmployee(string ssn) = 0;
 
   virtual Employee* handleEventGetEmployee(string ssn) = 0;
 

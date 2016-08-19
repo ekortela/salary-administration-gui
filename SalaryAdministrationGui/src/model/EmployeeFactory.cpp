@@ -9,6 +9,7 @@
 #include "MonthlyPaidEmployee.h"
 #include "HourlyPaidEmployee.h"
 #include "SalesmanEmployee.h"
+#include "EmployeeFactoryException.h"
 #include <stdexcept>
 
 using namespace std;

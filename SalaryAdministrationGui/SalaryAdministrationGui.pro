@@ -21,6 +21,7 @@ HEADERS += src/controller/EmployeeController.h \
            src/controller/EmployeeControllerException.h \
            src/model/Employee.h \
            src/model/EmployeeFactory.h \
+           scr/model/EmployeeFactoryException.h \
            src/model/HourlyPaidEmployee.h \
            src/model/MonthlyPaidEmployee.h \
            src/model/SalesmanEmployee.h \
