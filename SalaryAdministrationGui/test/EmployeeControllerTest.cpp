@@ -39,6 +39,7 @@ private slots:
     void setGetEmployeeOutcomeclaim();
     void setGetEmployeeDoneHours();
     void getEmployee();
+    void updateEmployee();
 };
 
 EmployeeControllerTest::EmployeeControllerTest(QObject *parent): QObject(parent) { }
@@ -302,6 +303,50 @@ void EmployeeControllerTest::getEmployee()
     QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeDoneHours(ssn4), EmployeeTypeInvalidException);
     QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeBonus(ssn4), EmployeeTypeInvalidException);
     QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeOutcomeClaim(ssn4), EmployeeTypeInvalidException);
+}
+
+void EmployeeControllerTest::updateEmployee() {
+
+    // monthly employee
+    string ssn1 = "1", newFirstName = "Teuvo1", newLastName = "Laaksonen1";
+    double newMonthlySalary = 1.0;
+    QVERIFY(m_controller->addEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "", "", ssn1, 0.0, 0.0, 0.0, 0.0, false));
+    QVERIFY(m_controller->updateEmployee(ssn1, newFirstName, newLastName, newMonthlySalary, 0.0, 0.0, 0.0, false));
+    QCOMPARE(newFirstName, m_controller->getEmployeeFirstName(ssn1) );
+    QCOMPARE(newLastName, m_controller->getEmployeeLastName(ssn1) );
+    QCOMPARE(newMonthlySalary, m_controller->getEmployeeMonthlySalary(ssn1) );
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeHourlySalary(ssn1), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeDoneHours(ssn1), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeBonus(ssn1), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeOutcomeClaim(ssn1), EmployeeTypeInvalidException);
+
+
+    // hourly employee
+    string ssn2 = "2", newFirstName2 = "Teuvo2", newLastName2 = "Laaksonen2";
+    double newHourlySalary = 2.0, newDoneHours = 200;
+    QVERIFY(m_controller->addEmployee(employee_types::HOURLY_PAID_EMPLOYEE, "", "", ssn2, 0.0, 0.0, 0.0, 0.0, false));
+    QVERIFY(m_controller->updateEmployee(ssn2, newFirstName2, newLastName2, 0.0, newHourlySalary, newDoneHours, 0.0, false));
+    QCOMPARE(newFirstName2, m_controller->getEmployeeFirstName(ssn2) );
+    QCOMPARE(newLastName2, m_controller->getEmployeeLastName(ssn2) );
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeMonthlySalary(ssn2), EmployeeTypeInvalidException );
+    QCOMPARE(newHourlySalary, m_controller->getEmployeeHourlySalary(ssn2));
+    QCOMPARE(newDoneHours, m_controller->getEmployeeDoneHours(ssn2));
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeBonus(ssn2), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeOutcomeClaim(ssn2), EmployeeTypeInvalidException);
+
+    // salesman employee
+    string ssn3 = "3", newFirstName3 = "Teuvo3", newLastName3 = "Laaksonen3";
+    double newMonthlySalary3 = 3.0, newBonus = 20.0;
+    bool newOutcomeClaim = true;
+    QVERIFY(m_controller->addEmployee(employee_types::SALESMAN_EMPLOYEE, "", "", ssn3, 0.0, 0.0, 0.0, 0.0, false));
+    QVERIFY(m_controller->updateEmployee(ssn3, newFirstName3, newLastName3, newMonthlySalary3, 0.0, 0.0, newBonus, newOutcomeClaim));
+    QCOMPARE(newFirstName3, m_controller->getEmployeeFirstName(ssn3) );
+    QCOMPARE(newLastName3, m_controller->getEmployeeLastName(ssn3) );
+    QCOMPARE(newMonthlySalary3, m_controller->getEmployeeMonthlySalary(ssn3) );
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeHourlySalary(ssn3), EmployeeTypeInvalidException);
+    QVERIFY_EXCEPTION_THROWN(m_controller->getEmployeeDoneHours(ssn3), EmployeeTypeInvalidException);
+    QCOMPARE(newBonus, m_controller->getEmployeeBonus(ssn3));
+    QCOMPARE(newOutcomeClaim, m_controller->getEmployeeOutcomeClaim(ssn3));
 }
 
 QTEST_MAIN(EmployeeControllerTest)
