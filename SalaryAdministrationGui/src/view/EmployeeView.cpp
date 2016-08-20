@@ -7,10 +7,11 @@
 #include <QCoreApplication>
 #include "EmployeeView.h"
 
+
 EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
 
     m_layoutContainer = new QWidget;
-    m_layoutContainer->setWindowTitle("Salary Admin");
+    m_layoutContainer->setWindowTitle(getQStringFromConfig("main_window"));
 
     m_mainLayout = new QHBoxLayout;
     createMenuBar();
@@ -24,19 +25,66 @@ EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
     m_layoutContainer->show();
 }
 
+EmployeeView::~EmployeeView() {
+}
+
+QString EmployeeView::getQStringFromConfig(string parameterName) {
+
+    m_xmlFile = new QFile(config_filename);
+
+    QString value = "default";
+
+    if (m_xmlFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
+
+        m_xmlReader = new QXmlStreamReader(m_xmlFile);
+
+        while(!m_xmlReader->atEnd() && !m_xmlReader->hasError()) {
+
+            QXmlStreamReader::TokenType token = m_xmlReader->readNext();
+
+            if(token == QXmlStreamReader::StartElement && token != QXmlStreamReader::StartDocument) {
+
+                string tag = m_xmlReader->name().toString().toStdString();
+
+                if( tag.compare(parameterName) == 0) {
+                    value = m_xmlReader->readElementText();
+                    qDebug() << "Read xml parameter: " + QString::fromStdString(tag) + ": " << value;
+                    break;
+                }
+            }
+        }
+
+        if(m_xmlReader->hasError()) {
+            popErrorBox("Parse error \"" + config_filename.toStdString() + "\": " +
+                        m_xmlReader->errorString().toStdString());
+        }
+
+    } else {
+        popErrorBox("Could not open: \"" + config_filename.toStdString() + "\"\nMake sure that your Qt build configuration target (Projects->Build Directory) has been set to the same directory that has SalaryAdministrationGui.pro -file");
+        QApplication::quit();
+    }
+
+    m_xmlReader->clear();
+    m_xmlFile->close();
+
+    return value;
+}
+
+
+
 void EmployeeView::createMenuBar() {
     m_menuBar = new QMenuBar(this);
     m_mainLayout->setMenuBar(m_menuBar);
 
-    m_fileMenu = new QMenu("File");
+    m_fileMenu = new QMenu(getQStringFromConfig("menu_main"));
     m_menuBar->addMenu(m_fileMenu);
-    m_fileMenu->addAction("New employee list");
-    m_fileMenu->addAction("Save list");
-    m_fileMenu->addAction("Load list");
+    m_fileMenu->addAction(getQStringFromConfig("menu_new"));
+    m_fileMenu->addAction(getQStringFromConfig("menu_save"));
+    m_fileMenu->addAction(getQStringFromConfig("menu_load"));
     m_fileMenu->addSeparator();
-    m_fileMenu->addAction("Help");
+    m_fileMenu->addAction(getQStringFromConfig("menu_help"));
     m_fileMenu->addSeparator();
-    m_fileMenu->addAction("Exit");
+    m_fileMenu->addAction(getQStringFromConfig("menu_exit"));
 }
 
 
@@ -48,24 +96,20 @@ void EmployeeView::createTreeWidget()
     m_treeWidget->setSortingEnabled(true);
 
     QStringList labels;
-    labels << "Last name" << "First name" << "SSN";
+    labels
+        << getQStringFromConfig("treewidget1")
+        << getQStringFromConfig("treewidget2")
+        << getQStringFromConfig("treewidget3");
+
     m_treeWidget->setHeaderLabels(labels);
 
     m_treeWidget->resizeColumnToContents(1);
     m_treeWidget->resizeColumnToContents(2);
     m_treeWidget->resizeColumnToContents(3);
 
-    // TODO ELISA Add double click signal to load employee type
-     connect(m_treeWidget, SIGNAL (itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT (handleTreeWidgetDoubleClick()) );
+    connect(m_treeWidget, SIGNAL (itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT (handleTreeWidgetDoubleClick()) );
 
-    // NOTE: To have the Controller pass the information to the View-object, you need to use
-    // the index of the Employee via the IObserver -interface. This will require adding virtual method
-    // "handleEventSetActiveEmployee()" to the observer interface and implementing it in the Controller
-    // with the required functionality. Remember to call the controller's updateView() -method when
-    // model is changed.
-
-    // Add new employee button
-    m_addNewEmployeeButton = new QPushButton("Add new employee");
+    m_addNewEmployeeButton = new QPushButton(getQStringFromConfig("button_add_emp"));
     connect(m_addNewEmployeeButton, SIGNAL (released()), this, SLOT (handleAddNewEmployeeButtonClick()) );
 
     m_rightLayout->addWidget(m_treeWidget);
@@ -87,11 +131,11 @@ void EmployeeView::createEmployeeInformationView()
     m_employeeInfoGrid->addWidget(empty,7,0);
 
     // Employee information feed
-    m_lastNameLabel = new QLabel("Last name:");
+    m_lastNameLabel = new QLabel(getQStringFromConfig("editor_lastname"));
     m_lastNameEdit = new QLineEdit();
-    m_firstNameLabel = new QLabel("First name(s):");
+    m_firstNameLabel = new QLabel(getQStringFromConfig("editor_firstname"));
     m_firstNameEdit = new QLineEdit;
-    m_SSNLabel = new QLabel("SSN:");
+    m_SSNLabel = new QLabel(getQStringFromConfig("editor_ssn"));
     m_SSNEdit = new QLineEdit;
 
     m_payTypeLabel = new QLabel("Pay type:");

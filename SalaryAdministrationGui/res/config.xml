@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view_strings>
+    <main_window>Salary Admin</main_window>
+	<menu_main>File...</menu_main>
+	<menu_new>New...</menu_new>
+	<menu_save>Save...</menu_save>
+	<menu_load>Load...</menu_load>
+	<menu_help>Help</menu_help>
+	<menu_exit>Exit</menu_exit>
+	<treewidget1>Last name</treewidget1>
+	<treewidget2>First name</treewidget2>
+	<treewidget3>SSN</treewidget3>
+	<button_add_emp>Add new employee</button_add_emp>
+	<editor_firstname>First name(s):</editor_firstname>
+	<editor_lastname>Last name:</editor_lastname>
+	<editor_ssn>SSN:</editor_ssn>
+	<editor_pay_type>Pay type:</editor_pay_type>
+	<editor_hours_done>Pay type:</editor_hours_done>
+	<editor_mon_sal>Pay type:</editor_mon_sal>
+	<editor_hour_sal>Pay type:</editor_hour_sal>
+	<editor_claim>Pay type:</editor_claim>
+	<editor_bonus>Pay type:</editor_bonus>
+</view_strings>

@@ -22,6 +22,7 @@ class EmployeeView: public QMainWindow {
 
 public:
     explicit EmployeeView(QWidget *parent = 0);
+    ~EmployeeView();
     void registerObserver(IObserver *m_observer);
     void addToEmployeeList(string firstName, string lastName, string payType);
     void updateEmployeeList(vector<Employee *> model);
@@ -29,6 +30,7 @@ public:
     void popErrorBox(string message);
 
 private:
+    const QString config_filename = "../../res/config.xml";
     unsigned int *m_treeWidgetSelectedItem;
     int rowHeight;
     QLineEdit *m_lastNameEdit, *m_firstNameEdit, *m_SSNEdit, *m_hoursDoneEdit,
@@ -49,6 +51,9 @@ private:
     QMenu *m_fileMenu;
     QList<QTreeWidgetItem *> employeeList;
 
+    QFile *m_xmlFile;
+    QXmlStreamReader *m_xmlReader;
+
     IObserver *m_observer;
 
     void createMenuBar();
@@ -57,6 +62,7 @@ private:
     void setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus);
     bool confirmDeletionMessageBox();
     void clearForm();
+    QString getQStringFromConfig(string parameterName);
 
 private slots:
     void handleSaveButtonClick();

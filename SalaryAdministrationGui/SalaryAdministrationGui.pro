@@ -3,6 +3,9 @@
 ######################################################################
 
 QT += widgets
+
+CONFIG += console
+
 TARGET = SalaryAdministrationGui
 INCLUDEPATH += src/controller \
                src/model \
