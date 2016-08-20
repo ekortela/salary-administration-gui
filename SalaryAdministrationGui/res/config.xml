@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <view_strings>
-    <main_window>Salary Admin</main_window>
+    <main_window>SalaryAdmininstrationGui</main_window>
 	<menu_main>File...</menu_main>
 	<menu_new>New...</menu_new>
 	<menu_save>Save...</menu_save>
@@ -11,6 +11,8 @@
 	<treewidget2>First name</treewidget2>
 	<treewidget3>SSN</treewidget3>
 	<button_add_emp>Add new employee</button_add_emp>
+	<button_save_emp>Save</button_save_emp>
+	<button_delete_emp>Delete</button_delete_emp>
 	<editor_firstname>First name(s):</editor_firstname>
 	<editor_lastname>Last name:</editor_lastname>
 	<editor_ssn>SSN:</editor_ssn>

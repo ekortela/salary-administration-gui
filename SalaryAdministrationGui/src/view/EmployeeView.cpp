@@ -201,9 +201,9 @@ void EmployeeView::createEmployeeInformationView()
 
 
     // Buttons / Signals
-    m_saveButton = new QPushButton("Save");
+    m_saveButton = new QPushButton(getQStringFromConfig("button_save_emp"));
     connect(m_saveButton, SIGNAL (released()), this, SLOT (handleSaveButtonClick()) );
-    m_deleteButton = new QPushButton("Delete");
+    m_deleteButton = new QPushButton(getQStringFromConfig("button_delete_emp"));
     connect(m_deleteButton, SIGNAL (released()), this, SLOT (handleDeleteButtonClick()) );
     connect(m_payTypeMenu, SIGNAL (currentIndexChanged(int)), this, SLOT (handlePayTypeChange()) );
 
