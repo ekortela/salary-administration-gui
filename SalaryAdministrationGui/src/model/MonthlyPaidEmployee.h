@@ -1,11 +1,11 @@
-#pragma once
+//============================================================================
+// Name        : MonthlyPaidEmployee.h
+// Author      : Aapo Keskimolo
+// Description : Definition file for monthly paid employee class. Inherits from
+//               Employee base-class.
+//============================================================================
 
-/*
- * MonthlyPaidEmployee.h
- *
- *  Created on: 9.8.2016
- *      Author: keskimol
- */
+#pragma once
 
 #ifndef MONTHLYPAIDEMPLOYEE_H_
 #define MONTHLYPAIDEMPLOYEE_H_

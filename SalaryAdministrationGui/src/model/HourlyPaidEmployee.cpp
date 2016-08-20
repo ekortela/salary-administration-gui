@@ -1,9 +1,8 @@
-/*
- * HourlyPaidEmployee.cpp
- *
- *  Created on: 9.8.2016
- *      Author: keskimol
- */
+//============================================================================
+// Name        : HourlyPaidEmployee.cpp
+// Author      : Aapo Keskimolo
+// Description : Declarations for hourly paid employee class methods
+//============================================================================
 
 #include "HourlyPaidEmployee.h"
 

@@ -1,10 +1,19 @@
+//============================================================================
+// Name        : EmployeeView.h
+// Author      : Aapo Keskimolo, Elisa Kortela
+// Description : View component of the MVC design pattern. The View inherits
+//               QMainWindow as the parent widget. The View communicates with
+//               the Controller via a handler interface, which is implemented
+//               by the Controller.
+//============================================================================
+
 #pragma once
 
+#include <QtWidgets>
 #include "Employee.h"
 #include "MonthlyPaidEmployee.h"
 #include "HourlyPaidEmployee.h"
 #include "SalesmanEmployee.h"
-#include <QtWidgets>
 #include "IObserver.h"
 
 class EmployeeView: public QMainWindow {
@@ -12,21 +21,18 @@ class EmployeeView: public QMainWindow {
     Q_OBJECT
 
 public:
-    QLineEdit *m_lastNameEdit, *m_firstNameEdit, *m_SSNEdit, *m_hoursDoneEdit,
-                *m_hourlySalaryEdit, *m_monthlySalaryEdit, *m_bonusEdit;
-    QList<QTreeWidgetItem *> employeeList;
-
     explicit EmployeeView(QWidget *parent = 0);
-
-    void registerObserver(IObserver *observer);
+    void registerObserver(IObserver *m_observer);
     void addToEmployeeList(string firstName, string lastName, string payType);
     void updateEmployeeList(vector<Employee *> model);
     void popInfoBox(string message);
     void popErrorBox(string message);
 
 private:
-    unsigned int *treeWidgetSelectedItem;
+    unsigned int *m_treeWidgetSelectedItem;
     int rowHeight;
+    QLineEdit *m_lastNameEdit, *m_firstNameEdit, *m_SSNEdit, *m_hoursDoneEdit,
+                *m_hourlySalaryEdit, *m_monthlySalaryEdit, *m_bonusEdit;
     QLabel *m_lastNameLabel, *m_firstNameLabel, *m_SSNLabel, *m_payTypeLabel,
             *m_monthlySalaryLabel, *m_outcomeClaimLabel, *m_hoursDoneLabel,
             *m_hourlySalaryLabel, *m_displayInfo, *m_bonusLabel;
@@ -41,8 +47,9 @@ private:
     QTreeWidget *m_treeWidget;
     QMenuBar *m_menuBar;
     QMenu *m_fileMenu;
+    QList<QTreeWidgetItem *> employeeList;
 
-    IObserver *observer;
+    IObserver *m_observer;
 
     void createMenuBar();
     void createTreeWidget();

@@ -1,18 +1,13 @@
-/*
- * EmployeeFactory.cpp
- *
- *  Created on: 9.8.2016
- *      Author: keskimol
- */
+//============================================================================
+// Name        : EmployeeFactory.cpp
+// Author      : Aapo Keskimolo
+// Description : Declarations for employee factory abstract class
+//============================================================================
 
 #include "EmployeeFactory.h"
 #include "MonthlyPaidEmployee.h"
 #include "HourlyPaidEmployee.h"
 #include "SalesmanEmployee.h"
-#include <stdexcept>
-
-using namespace std;
-
 
 Employee *EmployeeFactory::getEmployee(employee_types::type typ,
                                                string newFirstName, string newLastName, string newSsn,

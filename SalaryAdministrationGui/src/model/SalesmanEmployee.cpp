@@ -1,9 +1,8 @@
-/*
- * SalesmanEmployee.cpp
- *
- *  Created on: 9.8.2016
- *      Author: keskimol
- */
+//============================================================================
+// Name        : SalesmanEmployee.cpp
+// Author      : Aapo Keskimolo
+// Description : Declarations for salesman class methods
+//============================================================================
 
 #include "SalesmanEmployee.h"
 

@@ -1,11 +1,11 @@
-#pragma once
+//============================================================================
+// Name        : SalesmanEmployee.h
+// Author      : Aapo Keskimolo
+// Description : Definition file salesman employee class. Inherits from Employee
+//               base-class.
+//============================================================================
 
-/*
- * SalesmanEmployee.h
- *
- *  Created on: 9.8.2016
- *      Author: keskimol
- */
+#pragma once
 
 #ifndef SALESMANEMPLOYEE_H_
 #define SALESMANEMPLOYEE_H_

@@ -1,15 +1,11 @@
 //============================================================================
 // Name        : Employee.cpp
 // Author      : Aapo Keskimolo
-// Description : Class implementations for Employee types by using Factory Pattern
+// Description : Declarations for employee base class
 //============================================================================
 
-#include <string>
-#include <vector>
-#include <iostream>
 #include "Employee.h"
 
-using namespace std;
 
 void Employee::setFirstName(string newFirstName) {
     firstName = newFirstName;

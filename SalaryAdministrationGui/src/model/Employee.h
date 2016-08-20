@@ -1,11 +1,11 @@
-#pragma once
+//============================================================================
+// Name        : Employee.h
+// Author      : Aapo Keskimolo
+// Description : Generic employee base class that will be used as base for all
+//               employee types.
+//============================================================================
 
-/*
- * Employee.h
- *
- *  Created on: 9.8.2016
- *      Author: keskimol
- */
+#pragma once
 
 #ifndef EMPLOYEE_H_
 #define EMPLOYEE_H_

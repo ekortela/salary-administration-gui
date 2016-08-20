@@ -1,15 +1,15 @@
-#pragma once
+//============================================================================
+// Name        : EmployeeFactory.h
+// Author      : Aapo Keskimolo
+// Description : Abstract class for creating employee classes based on employee
+//               types (enum). Returns an instance of employee object initialized
+//               with given input parameters.
+//============================================================================
 
-/*
- * EmployeeFactory.h
- *
- *  Created on: 9.8.2016
- *      Author: keskimol
- */
+#pragma once
 
 #ifndef EMPLOYEEFACTORY_H_
 #define EMPLOYEEFACTORY_H_
-
 
 #include "Employee.h"
 

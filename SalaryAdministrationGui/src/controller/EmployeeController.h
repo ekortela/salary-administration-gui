@@ -1,13 +1,13 @@
-/*
-* EmployeeController.cpp
-*
-* The Controller part of MVC design pattern. The Controller contains
-* methods for modifying the Model properties and updates the View
-* whenever the Model changes.
-*
-*  Created on: 10.8.2016
-*      Author: keskimol
-*/
+//============================================================================
+// Name        : EmployeeController.h
+// Author      : Aapo Keskimolo
+// Description : The Controller part of MVC design pattern. The Controller contains
+//               methods for modifying the Model properties and updates the View
+//               whenever the Model changes. View can request actions from the
+//               from the Controller via the observer interface.
+//============================================================================
+
+#pragma once
 
 #include <vector>
 #include <QtWidgets>
@@ -20,9 +20,9 @@ class EmployeeController: public IObserver {
 
 private:
     vector<Employee*> model;
+    EmployeeView *m_view;
 
 public:
-    EmployeeView *m_view;
     EmployeeController(EmployeeView *view);
     ~EmployeeController() {};
 
@@ -65,6 +65,7 @@ public:
                      double newMonthlySalary, double newHourlySalary,
                      double newDoneHours, double newBonus, bool newOutcomeClaim);
 
+    // Implemented observer methods
     bool handleEventRemoveEmployee(string ssn);
     void handleEventPrintEmployees();
     void handleEventRequestViewUpdate();

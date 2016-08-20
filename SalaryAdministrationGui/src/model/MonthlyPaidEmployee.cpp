@@ -1,11 +1,9 @@
-/*
- * MonthlyPaidEmployee.cpp
- *
- *  Created on: 9.8.2016
- *      Author: keskimol
- */
+//============================================================================
+// Name        : MonthlyPaidEmployee.cpp
+// Author      : Aapo Keskimolo
+// Description : Declarations for monthly paid employee class methods
+//============================================================================
 
-#include <string>
 #include "MonthlyPaidEmployee.h"
 
 

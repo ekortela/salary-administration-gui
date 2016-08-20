@@ -1,11 +1,11 @@
-#pragma once
+//============================================================================
+// Name        : HourlyPaidEmployee.h
+// Author      : Aapo Keskimolo
+// Description : Definition file for hourly paid employee class. Inherits from
+//               Employee base-class.
+//============================================================================
 
-/*
- * HourlyPaidEmployee.h
- *
- *  Created on: 9.8.2016
- *      Author: keskimol
- */
+#pragma once
 
 #ifndef HOURLYPAIDEMPLOYEE_H_
 #define HOURLYPAIDEMPLOYEE_H_

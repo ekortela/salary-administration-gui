@@ -1,7 +1,11 @@
+//============================================================================
+// Name        : EmployeeView.cpp
+// Author      : Aapo Keskimolo, Elisa Kortela
+// Description : Declarations for employee view class methods
+//============================================================================
 
 #include <QCoreApplication>
 #include "EmployeeView.h"
-
 
 EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
 
@@ -176,7 +180,7 @@ void EmployeeView::createEmployeeInformationView()
 }
 
 void EmployeeView::registerObserver(IObserver* observer) {
-    this->observer = observer;
+    this->m_observer = observer;
 }
 
 void EmployeeView::updateEmployeeList(vector<Employee *> model) {
@@ -223,7 +227,7 @@ void EmployeeView::handleSaveButtonClick() {
 
     if (typ != employee_types::UNKNOWN)
     {
-        observer->handleEventAddEmployee(typ, firstName, lastName, ssn, monthlySalary, hourlySalary, hoursDone, bonus, outcomeClaim);
+        m_observer->handleEventAddEmployee(typ, firstName, lastName, ssn, monthlySalary, hourlySalary, hoursDone, bonus, outcomeClaim);
     }
     else {
         popInfoBox("You must select \"Pay Type\"!");
@@ -242,10 +246,10 @@ void EmployeeView::handleDeleteButtonClick() {
                 if (employeeList[i]->text(2) == m_treeWidget->currentItem()->text(2)) {
                     employeeList.removeAt(i);
                     qDebug() << "Employee removed from employeeList!";
-                    if (observer->handleEventRemoveEmployee(m_SSNEdit->text().toStdString())) {
+                    if (m_observer->handleEventRemoveEmployee(m_SSNEdit->text().toStdString())) {
                         popInfoBox("Employee deleted");
                         clearForm();
-                        observer->handleEventRequestViewUpdate();
+                        m_observer->handleEventRequestViewUpdate();
                         break;
                     }
                 }
@@ -293,7 +297,7 @@ void EmployeeView::handleTreeWidgetDoubleClick() {
 
     clearForm();
 
-    Employee *m_emp = observer->handleEventGetEmployee(m_treeWidget->currentItem()->text(2).toStdString());
+    Employee *m_emp = m_observer->handleEventGetEmployee(m_treeWidget->currentItem()->text(2).toStdString());
 
     m_firstNameEdit->setText(QString::fromStdString(m_emp->getFirstName()));
     m_lastNameEdit->setText(QString::fromStdString(m_emp->getLastName()));

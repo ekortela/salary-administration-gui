@@ -1,3 +1,11 @@
+//============================================================================
+// Name        : Main.cpp
+// Author      : Aapo Keskimolo
+// Description : The Main executor for Salary Administration GUI. Initializes
+//               the QApplication, View and Controller for handling the GUI
+//               operations.
+//============================================================================
+
 #include <QApplication>
 #include "EmployeeController.h"
 #include <stdio.h>
