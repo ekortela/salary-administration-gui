@@ -60,7 +60,7 @@ QString EmployeeView::getQStringFromConfig(string parameterName) {
         }
 
     } else {
-        popErrorBox("Could not open: \"" + config_filename.toStdString() + "\"\nMake sure that your Qt build configuration target (Projects->Build Directory) has been set to the same directory that has SalaryAdministrationGui.pro -file");
+        popErrorBox("Could not open: \"" + config_filename.toStdString() + "\"\nMake sure that your Qt build configuration target (Projects->Build Directory) has been set to the directory that has SalaryAdministrationGui.pro -file\n");
         QApplication::quit();
     }
 
@@ -138,7 +138,7 @@ void EmployeeView::createEmployeeInformationView()
     m_SSNLabel = new QLabel(getQStringFromConfig("editor_ssn"));
     m_SSNEdit = new QLineEdit;
 
-    m_payTypeLabel = new QLabel("Pay type:");
+    m_payTypeLabel = new QLabel(getQStringFromConfig("editor_pay_type"));
     m_payTypeMenu = new QComboBox;
 
     QStringList payTypes;
@@ -148,22 +148,22 @@ void EmployeeView::createEmployeeInformationView()
              << employeeTypetoString(employee_types::SALESMAN_EMPLOYEE);
     m_payTypeMenu->insertItems(0, payTypes);
 
-    m_hoursDoneLabel = new QLabel("Hours done:");
+    m_hoursDoneLabel = new QLabel(getQStringFromConfig("editor_hours_done"));
     m_hoursDoneEdit = new QLineEdit;
     m_hoursDoneEdit->setValidator(new QDoubleValidator(0,10000,2,m_hoursDoneEdit) );
 
-    m_monthlySalaryLabel = new QLabel("Monthly Salary:");
+    m_monthlySalaryLabel = new QLabel(getQStringFromConfig("editor_mon_sal"));
     m_monthlySalaryEdit = new QLineEdit;
     m_monthlySalaryEdit->setValidator(new QDoubleValidator(0,20000,2,m_monthlySalaryEdit));
 
-    m_hourlySalaryLabel = new QLabel("Hourly Salary:");
+    m_hourlySalaryLabel = new QLabel(getQStringFromConfig("editor_hour_sal"));
     m_hourlySalaryEdit = new QLineEdit;
     m_hourlySalaryEdit->setValidator(new QDoubleValidator(0,1000,2,m_hourlySalaryEdit));
 
-    m_outcomeClaimLabel = new QLabel("Outcome claim:");
+    m_outcomeClaimLabel = new QLabel(getQStringFromConfig("editor_claim"));
     m_outcomeClaimCheckBox = new QCheckBox;
 
-    m_bonusLabel = new QLabel("Bonus:");
+    m_bonusLabel = new QLabel(getQStringFromConfig("editor_bonus"));
     m_bonusEdit = new QLineEdit;
 
     m_employeeInfoGrid->addWidget(m_lastNameLabel,0,0);

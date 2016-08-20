@@ -15,9 +15,9 @@
 	<editor_lastname>Last name:</editor_lastname>
 	<editor_ssn>SSN:</editor_ssn>
 	<editor_pay_type>Pay type:</editor_pay_type>
-	<editor_hours_done>Pay type:</editor_hours_done>
-	<editor_mon_sal>Pay type:</editor_mon_sal>
-	<editor_hour_sal>Pay type:</editor_hour_sal>
-	<editor_claim>Pay type:</editor_claim>
-	<editor_bonus>Pay type:</editor_bonus>
+	<editor_hours_done>Hours done:</editor_hours_done>
+	<editor_mon_sal>Monthly salary:</editor_mon_sal>
+	<editor_hour_sal>Hourly salary:</editor_hour_sal>
+	<editor_claim>Outcome claim:</editor_claim>
+	<editor_bonus>Bonus:</editor_bonus>
 </view_strings>
