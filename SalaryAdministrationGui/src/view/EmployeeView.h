@@ -65,13 +65,16 @@ private:
     bool confirmDeletionMessageBox();
     void clearForm();
     QString getQStringFromXml(string parameterName);
+    //void updateLabels();
+
+    // Taman alla on aapon heinia
 
     const QString xml_config_filename = "../../res/config.xml";
 
     const string CONFIGURATION_FILEPATH = "config.cfg";
     static string const MODEL_STATE_FILEPATH;
 
-//    string previousConfigXml;
+    // string configLastUsedConfigFilepath
     string configLastModelStateFilepath = MODEL_STATE_FILEPATH;
 
     friend inline std::ofstream& operator<<(std::ofstream& os, const EmployeeView& e) {

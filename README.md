@@ -45,13 +45,18 @@ You can fill up all relevant information that is missing with reasonable assumpt
 TODO-lista
 
 Koodausta:
-    (30%) GUI: Paatabi, jossa on vahintaan Save, Load, Help/About ja Exit valinnat. Save tallentaa
-            mallin parametrit tekstitiedostoon, jotka ladataan automaattisesti GUI:n kaynnistyksessa!
-    (70%) BACKEND: Unit testerit backendille QtTest frameworkilla (controller ja model valmis, view puuttuu)
+	(!) GUI: Syottokenttien kokorajoitukset
+	() GUI: Add new employee -> Clear form
+    () GUI: Save employee kysyy kayttajalta halutaanko korvata olemassaolevan tyontekijan tiedot
+	() GUI: Kaikki widget kentat pitaa ladata XML tiedostosta
     () BACKEND: Lisaa run-time lokitiedosto, johon kaikki qDebug/qCritical/qInfo viestit tallentuvat
-	() BACKEND+GUI: Lue kaikki configuraatio-arvot tiedostosta!
-	(?) GUI: Jos tyontekijaa on klikattu listalla, tallennetaan View:n muuttujaan tyontekijan SSN numero
-	(?) GUI: Kaytettavyys paranisi, jos delete ja save nappi olisivat GUI:n vasemmalla laidalla?
+    (?) GUI: Jos tyontekijaa on tuplaklikattu listalla, tallennetaan View:n muuttujaan tyontekijan SSN numero
+    (?) GUI: Kaytettavyys paranisi, jos delete ja save nappi olisivat GUI:n vasemmalla laidalla?
+	
+	(30%) GUI: Paatabi, jossa on vahintaan Save As, Load, Help/About ja Exit valinnat. Save nostaa
+		  kayttajalle valikon, jossa voi tallentaa tiedoston (Qt tarjoaa valmiit metodit)
+    (90%) BACKEND: Unit testerit backendille QtTest frameworkilla (testerit valmis, automatisoi testrunnerit)
+    (80%) BACKEND+GUI: Lue kaikki configuraatio-arvot tiedostosta! (testaus kesken)
 	
 Infrastruktuuri:
     () Muuta hakemiston rakenne selkeammaksi (esim. src/model/, src/controller/, src/main/, ...)
@@ -61,16 +66,16 @@ Infrastruktuuri:
 
 Dokumentaatio:
     () Luo Use Case diagrammi dokumenttia varten (esim. EAP)
-    () GUI:n dokumentaatio
-    () Backendin dokumentaatio
+    (10%) GUI:n dokumentaatio
+    (10%) Backendin dokumentaatio
 
 Valmiit:
     (100%) Luo ohjelmistoarkkitehtuurin UML class diagrammi
-	(100%) GUI: Lisaa double click napin funktionaalisuus
-	(100%) GUI: kayttoliittyma nayttaa nyt vain tyontekijatyypille oleelliset syottokentat
-	(100%) BACKEND: Implementoi metodit tyontekijoiden parametrien asettamiseen controllerissa
-	(100%) GUI: Add new employee -nappi tyhjentää lomakkeen
-	(100%) GUI: Lisaa delete -napin funktionaalisuus
+    (100%) GUI: Lisaa double click napin funktionaalisuus
+    (100%) GUI: kayttoliittyma nayttaa nyt vain tyontekijatyypille oleelliset syottokentat
+    (100%) BACKEND: Implementoi metodit tyontekijoiden parametrien asettamiseen controllerissa
+    (100%) GUI: Add new employee -nappi tyhjentää lomakkeen
+    (100%) GUI: Lisaa delete -napin funktionaalisuus
 
 Poistettu:
     (-) Staattinen CPPUTEST yksikkotestien ajamiseen meidan repositoryssa (kaytetaan QtTest frameworkkia)

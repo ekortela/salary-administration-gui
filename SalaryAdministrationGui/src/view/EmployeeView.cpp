@@ -22,6 +22,8 @@ EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
     createMenuBar();
     createEmployeeInformationView();
     createTreeWidget();
+    //updateWidgetLabelsFromXml();
+
 
     m_layoutContainer->setLayout(m_mainLayout);
     //window->resize(QDesktopWidget().availableGeometry().size() * 0.3);
@@ -31,7 +33,7 @@ EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
 }
 
 EmployeeView::~EmployeeView() {
-    saveCurrentModelStateToFile();
+    //saveCurrentModelStateToFile();
     saveCurrentConfig();
 }
 
@@ -127,7 +129,6 @@ void EmployeeView::createEmployeeInformationView()
     // Create structure
     m_leftLayout = new QVBoxLayout;
     m_scrollArea = new QScrollArea;
-    m_scrollArea->setMinimumHeight(300);
     m_employeeInfoGrid = new QGridLayout;
     m_buttonLayout = new QHBoxLayout;
 
@@ -155,15 +156,15 @@ void EmployeeView::createEmployeeInformationView()
 
     m_hoursDoneLabel = new QLabel(getQStringFromXml("editor_hours_done"));
     m_hoursDoneEdit = new QLineEdit;
-    m_hoursDoneEdit->setValidator(new QDoubleValidator(0,10000,2,m_hoursDoneEdit) );
+    m_hoursDoneEdit->setValidator(new QDoubleValidator(0,3,2,m_hoursDoneEdit) );
 
     m_monthlySalaryLabel = new QLabel(getQStringFromXml("editor_mon_sal"));
     m_monthlySalaryEdit = new QLineEdit;
-    m_monthlySalaryEdit->setValidator(new QDoubleValidator(0,20000,2,m_monthlySalaryEdit));
+    m_monthlySalaryEdit->setValidator(new QDoubleValidator(0,4,2,m_monthlySalaryEdit));
 
     m_hourlySalaryLabel = new QLabel(getQStringFromXml("editor_hour_sal"));
     m_hourlySalaryEdit = new QLineEdit;
-    m_hourlySalaryEdit->setValidator(new QDoubleValidator(0,1000,2,m_hourlySalaryEdit));
+    m_hourlySalaryEdit->setValidator(new QDoubleValidator(0,3,2,m_hourlySalaryEdit));
 
     m_outcomeClaimLabel = new QLabel(getQStringFromXml("editor_claim"));
     m_outcomeClaimCheckBox = new QCheckBox;
@@ -263,6 +264,8 @@ void EmployeeView::popErrorBox(string message) {
 
 void EmployeeView::handleSaveButtonClick() {
     qDebug() << "Save button was clicked!";
+
+    // exception: employee ssn already exists
 
     employee_types::type typ = static_cast<employee_types::type>(m_payTypeMenu->currentIndex());
     string firstName = m_firstNameEdit->text().toStdString();
