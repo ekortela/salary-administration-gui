@@ -459,13 +459,22 @@ void EmployeeView::saveCurrentConfig() {
 
 
 void EmployeeView::loadLastSavedConfig() {
+
     ifstream ifs(CONFIGURATION_FILEPATH, ios::in | ios::binary);
-    if( !(ifs >> (*this) )) {
-        popErrorBox("Unable to load previously saved configuration from " + CONFIGURATION_FILEPATH + "");
+
+    if (ifs.good())
+    {
+        if( !(ifs >> (*this) )) {
+            popErrorBox("Unable to load previously saved configuration from " + CONFIGURATION_FILEPATH + "");
+        } else {
+            qInfo() << "Previously saved configuration loaded from" << QString::fromStdString(CONFIGURATION_FILEPATH);
+        }
+
     } else {
-        qInfo() << "Previously saved configuration loaded from" << QString::fromStdString(CONFIGURATION_FILEPATH);
+        popInfoBox("No existing configuration file" + CONFIGURATION_FILEPATH + "found");
     }
-    ifs.close();
+
+   ifs.close();
 }
 
 

@@ -408,55 +408,62 @@ void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
     // open input stream
     ifstream ifs(filename, ios::in | ios::binary);
 
-    // read serialized header data
-    ModelDataHeader es;
+    if (ifs.good()) {
 
-    if (ifs >> es) {
+        // read serialized header data
+        ModelDataHeader es;
 
-        qDebug() << "File employee count: monthly: " << es.nMonthly << ", hourly: " << es.nHourly << ", salesman: " << es.nSalesman;
+        if (ifs >> es) {
 
-        // read serialized model data
-        // note: order has to be 1. monthly 2. hourly 3. sales
-        for (unsigned int i = 0; i < es.nMonthly; i++) {
-            MonthlyPaidEmployee *m = new MonthlyPaidEmployee("", "", "", 0.0);
-            if ( ifs >> *m ) {
-                model.push_back(m);
-            } else {
-                m_view->popErrorBox("Load monthly paid employee " + to_string(i) + " failed!");
+            qDebug() << "File employee count: monthly: " << es.nMonthly << ", hourly: " << es.nHourly << ", salesman: " << es.nSalesman;
+
+            // read serialized model data
+            // note: order has to be 1. monthly 2. hourly 3. sales
+            for (unsigned int i = 0; i < es.nMonthly; i++) {
+                MonthlyPaidEmployee *m = new MonthlyPaidEmployee("", "", "", 0.0);
+                if ( ifs >> *m ) {
+                    model.push_back(m);
+                } else {
+                    m_view->popErrorBox("Load monthly paid employee " + to_string(i) + " failed!");
+                }
             }
+
+            for (unsigned int i = 0; i < es.nHourly; i++) {
+                HourlyPaidEmployee *m = new HourlyPaidEmployee("", "", "", 0.0, 0.0);
+                if ( ifs >> *m ) {
+                    model.push_back(m);
+                } else {
+                    m_view->popErrorBox("Load hourly paid employee " + to_string(i) + " failed!");
+                }
+            }
+
+            for (unsigned int i = 0; i < es.nSalesman; i++) {
+                SalesmanEmployee *m = new SalesmanEmployee("", "", "", 0.0, 0.0, false);
+                if ( ifs >> *m ) {
+                    model.push_back(m);
+                } else {
+                    m_view->popErrorBox("Load salesman object " + to_string(i) + " failed!");
+                }
+            }
+
+
+        } else {
+            m_view->popErrorBox("Loading header data failed!");
+            if (remove( filename.c_str()))
+                qDebug() << "File " << QString::fromStdString(filename) << " deleted";
+            else
+                qCritical() << "Removing file " << QString::fromStdString(filename) << " was unsuccessful";
         }
 
-        for (unsigned int i = 0; i < es.nHourly; i++) {
-            HourlyPaidEmployee *m = new HourlyPaidEmployee("", "", "", 0.0, 0.0);
-            if ( ifs >> *m ) {
-                model.push_back(m);
-            } else {
-                m_view->popErrorBox("Load hourly paid employee " + to_string(i) + " failed!");
-            }
-        }
+        // close stream
+        ifs.close();
 
-        for (unsigned int i = 0; i < es.nSalesman; i++) {
-            SalesmanEmployee *m = new SalesmanEmployee("", "", "", 0.0, 0.0, false);
-            if ( ifs >> *m ) {
-                model.push_back(m);
-            } else {
-                m_view->popErrorBox("Load salesman object " + to_string(i) + " failed!");
-            }
-        }
-
+        updateView();
 
     } else {
-        m_view->popErrorBox("Loading header data failed!");
-        if (remove( filename.c_str()))
-            qDebug() << "File " << QString::fromStdString(filename) << " deleted";
-        else
-            qCritical() << "Removing file " << QString::fromStdString(filename) << " was unsuccessful";
+        m_view->popInfoBox("No previously saved employee list was found");
+        qCritical() << "No model parameters file" << QString::fromStdString(filename) << "found!";
     }
-
-    // close stream
-    ifs.close();
-
-    updateView();
 }
 
 ModelDataHeader EmployeeController::createModelDataHeader() {
