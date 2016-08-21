@@ -27,7 +27,6 @@ class SalesmanEmployee: public Employee
                       string newSsn, double newMonthlySalary,
                       double newBonus, bool newOutcomeClaim );
     virtual ~SalesmanEmployee();
-
     void setMonthlySalary(double newMonthlySalary);
     double getMonthlySalary();
     void setBonus(double newBonus);
@@ -38,13 +37,55 @@ class SalesmanEmployee: public Employee
     double getSalary();
     void printInfo();
 
-    friend inline std::ofstream& operator<<(std::ofstream& os, const SalesmanEmployee& e) {
-        os << e.firstName;
+    friend std::ofstream& operator<<(std::ofstream& os, const SalesmanEmployee& e) {
+        os << e.firstName.size() << separator;
+        os << e.firstName << separator;
+        os << e.lastName.size() << separator;
+        os << e.lastName << separator;
+        os << e.socialSecurityNumber.size() << separator;
+        os << e.socialSecurityNumber<< separator;
+        os << e.monthlySalary << separator;
+        os << e.bonus << separator;
+//        os << e.realizedOutcome << separator;
+        os << e.outcomeClaim << separator;
         return os;
     }
 
-    friend inline std::ifstream& operator>>(std::ifstream& is, SalesmanEmployee& e) {
-        is >> e.firstName;
+    friend std::ifstream& operator>>(std::ifstream& is, SalesmanEmployee& e) {
+        int len = 0;
+        char sep;
+        is >> len;
+        is >> sep;
+        if (len) {
+            std::vector<char> tmp(len);
+            is.read(tmp.data() , len);
+            e.firstName.assign(tmp.data(), len);
+        }
+        is >> sep;
+        is >> len;
+        is >> sep;
+        if (len) {
+            std::vector<char> tmp(len);
+            is.read(tmp.data() , len);
+            e.lastName.assign(tmp.data(), len);
+        }
+        is >> sep;
+        is >> len;
+        is >> sep;
+        if (len) {
+            std::vector<char> tmp(len);
+            is.read(tmp.data() , len);
+            e.socialSecurityNumber.assign(tmp.data(), len);
+        }
+        is >> sep;
+        is >> e.monthlySalary;
+        is >> sep;
+        is >> e.bonus;
+        is >> sep;
+//        is >> e.realizedOutcome;
+//        is >> sep;
+        is >> e.outcomeClaim;
+        is >> sep;
         return is;
     }
 };

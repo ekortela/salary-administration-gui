@@ -16,7 +16,7 @@ class IObserver
 {
 public:
   virtual ~IObserver() {}
-  virtual bool handleEventAddEmployee(employee_types::type typ,
+  virtual bool handleEventCreateEmployee(employee_types::type typ,
                            string newFirstName, string newLastName, string newSsn,
                            double newMonthlySalary, double newHourlySalary,
                            double newDoneHours, double newBonus, bool newOutcomeClaim) = 0;

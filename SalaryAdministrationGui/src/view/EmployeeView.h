@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <QMainWindow>
 #include <QtWidgets>
 #include "Employee.h"
 #include "MonthlyPaidEmployee.h"
@@ -29,6 +30,7 @@ public:
     void updateEmployeeList(vector<Employee *> model);
     void popInfoBox(string message);
     void popErrorBox(string message);
+    bool popQuestionBox(string title, string message);
     void saveCurrentModelStateToFile(const string filepath = MODEL_STATE_FILEPATH);
     void loadLastModelStateFromFile(const string filepath = MODEL_STATE_FILEPATH);
 
@@ -52,6 +54,7 @@ private:
     QMenuBar *m_menuBar;
     QMenu *m_fileMenu;
     QList<QTreeWidgetItem *> employeeList;
+    QAction *m_quitAction;
 
     QFile *m_xmlFile;
     QXmlStreamReader *m_xmlReader;
@@ -62,7 +65,6 @@ private:
     void createTreeWidget();
     void createEmployeeInformationView();
     void setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus);
-    bool confirmDeletionMessageBox();
     void clearForm();
     QString getQStringFromXml(string parameterName);
     //void updateLabels();
@@ -97,4 +99,5 @@ private slots:
     void handleTreeWidgetDoubleClick();
     void handlePayTypeChange();
     void handleAddNewEmployeeButtonClick();
+    void handleExitClick();
 };

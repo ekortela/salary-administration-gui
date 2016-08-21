@@ -21,13 +21,15 @@ class EmployeeController: public IObserver {
 private:
     vector<Employee*> model;
     EmployeeView *m_view;
+    ModelDataHeader createModelDataHeader();
+    void writeEmployeeTypeToStream(ofstream &ofs, employee_types::type typ);
 
 public:
     EmployeeController(EmployeeView *view);
     ~EmployeeController() {};
 
     // For adding, removing and inspecting the Model objects
-    bool addEmployee(employee_types::type typ,
+    bool createEmployee(employee_types::type typ,
                      string newFirstName, string newLastName, string newSsn,
                      double newMonthlySalary, double newHourlySalary,
                      double newDoneHours, double newBonus, bool newOutcomeClaim);
@@ -60,7 +62,7 @@ public:
     void updateView();
 
     // Methods that handle messages from View to Controller
-    bool handleEventAddEmployee(employee_types::type typ,
+    bool handleEventCreateEmployee(employee_types::type typ,
                      string newFirstName, string newLastName, string newSsn,
                      double newMonthlySalary, double newHourlySalary,
                      double newDoneHours, double newBonus, bool newOutcomeClaim);

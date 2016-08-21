@@ -3,6 +3,7 @@
 #include "MonthlyPaidEmployee.h"
 #include "SalesmanEmployee.h"
 
+
 EmployeeController::EmployeeController(EmployeeView *view)
 {
     this->m_view = view;
@@ -11,7 +12,7 @@ EmployeeController::EmployeeController(EmployeeView *view)
 }
 
 
-bool EmployeeController::addEmployee(employee_types::type typ,
+bool EmployeeController::createEmployee(employee_types::type typ,
                                      string newFirstName, string newLastName, string newSsn,
                                      double newMonthlySalary = 0.0, double newHourlySalary = 0.0,
                                      double newDoneHours = 0.0, double newBonus = 0.0,
@@ -332,12 +333,12 @@ void EmployeeController::updateView() {
     qDebug() << "Controller updated View";
 }
 
-bool EmployeeController::handleEventAddEmployee(employee_types::type typ,
+bool EmployeeController::handleEventCreateEmployee(employee_types::type typ,
                                      string newFirstName, string newLastName, string newSsn,
                                      double newMonthlySalary = 0.0,
                                      double newHourlySalary = 0.0, double newDoneHours = 0.0,
                                      double newBonus = 0.0, bool newOutcomeClaim = false) {
-    if(addEmployee(typ, newFirstName, newLastName, newSsn,
+    if(createEmployee(typ, newFirstName, newLastName, newSsn,
                 newMonthlySalary, newHourlySalary, newDoneHours, newBonus, newOutcomeClaim) ) {
         updateView();
         return true;
@@ -374,41 +375,136 @@ Employee* EmployeeController::handleEventGetEmployee(string ssn) {
 void EmployeeController::handleEventSaveModelStateToFile(string filename) {
     // save objects
 
-    // test
-    clearEmployees();
-    addEmployee(employee_types::SALESMAN_EMPLOYEE, "First name", "Last name", "SSN", 2000.0, 0.0, 0.0, 30.0, true);
+//    // test
+//    clearEmployees();
+//    createEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "Tiina", "Koitaja", "1", 999.0, 0.0, 0.0, 60.0, false);
+//    createEmployee(employee_types::SALESMAN_EMPLOYEE, "First name", "Last name", "3", 2000.0, 0.0, 0.0, 30.0, true);
+//    createEmployee(employee_types::SALESMAN_EMPLOYEE, "Erro", "Makkke", "4", 20.0, 0.0, 0.0, 60.0, false);
+//    createEmployee(employee_types::HOURLY_PAID_EMPLOYEE, "Jani", "Kelpo", "4", 0.0, 19.0, 190.0, 0.0, false);
 
-    // open stream and save all model objects
+    // open output stream
     ofstream ofs(filename, ios::binary | ios::out);
-    for (unsigned int i = 0; i < model.size(); i++) {
-        SalesmanEmployee *m = dynamic_cast<SalesmanEmployee *> (model[i]);
-        ofs << *m;
-    }
+
+    // write serialized header data
+    ModelDataHeader es = createModelDataHeader();
+    qDebug() << "Loaded employee data count: monthly: " << es.nMonthly << ", hourly: " << es.nHourly << ", salesman: " << es.nSalesman << "\n";
+    ofs << es;
+
+    writeEmployeeTypeToStream(ofs, employee_types::MONTHLY_PAID_EMPLOYEE);
+    writeEmployeeTypeToStream(ofs, employee_types::HOURLY_PAID_EMPLOYEE);
+    writeEmployeeTypeToStream(ofs, employee_types::SALESMAN_EMPLOYEE);
+
+    // close stream
     ofs.close();
 
-    m_view->popInfoBox("Model state saved in " + filename);
+    qInfo() << "Model state saved in file \"" + QString::fromStdString(filename) + "\"";
 }
 
 void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
     // load objects
 
-    m_view->popInfoBox( "Press ok to load model state from " + filename);
+//    m_view->popInfoBox( "Press ok to load model state from \"" + filename + "\"");
 
+    // open input stream
     ifstream ifs(filename, ios::in | ios::binary);
-    SalesmanEmployee *m = new SalesmanEmployee("", "", "1", 0.0, 0.0, false);
-    if ( !(ifs >> *m) ) {
-        m_view->popInfoBox( m->getFirstName());
+
+    // read serialized header data
+    ModelDataHeader es;
+
+    if (ifs >> es) {
+
+        qDebug() << "File employee count: monthly: " << es.nMonthly << ", hourly: " << es.nHourly << ", salesman: " << es.nSalesman << "\n";
+
+        // read serialized model data
+        // note: order has to be 1. monthly 2. hourly 3. sales
+        for (unsigned int i = 0; i < es.nMonthly; i++) {
+            MonthlyPaidEmployee *m = new MonthlyPaidEmployee("", "", "", 0.0);
+            if ( ifs >> *m ) {
+                model.push_back(m);
+            } else {
+                m_view->popErrorBox("Load monthly paid employee " + to_string(i) + " failed!");
+            }
+        }
+
+        for (unsigned int i = 0; i < es.nHourly; i++) {
+            HourlyPaidEmployee *m = new HourlyPaidEmployee("", "", "", 0.0, 0.0);
+            if ( ifs >> *m ) {
+                model.push_back(m);
+            } else {
+                m_view->popErrorBox("Load hourly paid employee " + to_string(i) + " failed!");
+            }
+        }
+
+        for (unsigned int i = 0; i < es.nSalesman; i++) {
+            SalesmanEmployee *m = new SalesmanEmployee("", "", "", 0.0, 0.0, false);
+            if ( ifs >> *m ) {
+                model.push_back(m);
+            } else {
+                m_view->popErrorBox("Load salesman object " + to_string(i) + " failed!");
+            }
+        }
+
+
     } else {
-        m_view->popErrorBox( "Unable to load model state from " + filename);
+        m_view->popErrorBox("Loading header data failed!");
+        if (remove( filename.c_str()))
+            qDebug() << "File " << QString::fromStdString(filename) << " deleted\n";
+        else
+            qCritical() << "Removing file " << QString::fromStdString(filename) << " was unsuccessful!\n";
     }
-//    updateView();
 
-//    ifstream ifs(CONFIGURATION_FILEPATH, ios::in | ios::binary);
-//    if( !(ifs >> (*this) )) {
-//        popErrorBox("Unable to load previously saved configuration from \"" + CONFIGURATION_FILEPATH + "\"");
-//        return;
-//    }
-////    popInfoBox("Configuration settings loaded from " + configLastModelStateFilepath);
-//    qInfo() << "Previously saved configuration loaded from \"" << QString::fromStdString(CONFIGURATION_FILEPATH) << "\"." << "\n";
+    // close stream
+    ifs.close();
 
+    updateView();
+}
+
+ModelDataHeader EmployeeController::createModelDataHeader() {
+
+    ModelDataHeader dataHdr;
+
+    for (unsigned int i = 0; i < model.size(); i++) {
+
+        Employee *p = model[i];
+
+        if (p->getType() == employee_types::MONTHLY_PAID_EMPLOYEE )
+            dataHdr.nMonthly++;
+        else if (p->getType() == employee_types::HOURLY_PAID_EMPLOYEE )
+            dataHdr.nHourly++;
+        else if (p->getType() == employee_types::SALESMAN_EMPLOYEE )
+            dataHdr.nSalesman++;
+        else
+            cout << "ERROR: Invalid cast to object!!\n";
+    }
+
+    return dataHdr;
+}
+
+void EmployeeController::writeEmployeeTypeToStream(ofstream &ofs, employee_types::type typ) {
+
+    int n = 0;
+
+    for (unsigned int i = 0; i < model.size(); i++) {
+
+        Employee *p = model[i];
+
+        if (p->getType() == employee_types::MONTHLY_PAID_EMPLOYEE && typ == employee_types::MONTHLY_PAID_EMPLOYEE) {
+            MonthlyPaidEmployee *m = dynamic_cast<MonthlyPaidEmployee *> (model[i]);
+            ofs << *m;
+
+        } else if (p->getType() == employee_types::HOURLY_PAID_EMPLOYEE && employee_types::HOURLY_PAID_EMPLOYEE) {
+            HourlyPaidEmployee *m = dynamic_cast<HourlyPaidEmployee *> (model[i]);
+            ofs << *m;
+
+        } else if (p->getType() == employee_types::SALESMAN_EMPLOYEE && typ == employee_types::SALESMAN_EMPLOYEE ) {
+            SalesmanEmployee *m = dynamic_cast<SalesmanEmployee *> (model[i]);
+            ofs << *m;
+        } else {
+            continue;
+        }
+
+        n++;
+    }
+
+    qDebug() << "Wrote " << n << employeeTypetoString(typ) << "to file.\n";
 }

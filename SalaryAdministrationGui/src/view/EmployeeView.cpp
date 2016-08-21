@@ -7,7 +7,6 @@
 #include <QCoreApplication>
 #include "EmployeeView.h"
 
-// initialize static members
 const string EmployeeView::MODEL_STATE_FILEPATH = "model.state";
 
 
@@ -24,7 +23,6 @@ EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
     createTreeWidget();
     //updateWidgetLabelsFromXml();
 
-
     m_layoutContainer->setLayout(m_mainLayout);
     //window->resize(QDesktopWidget().availableGeometry().size() * 0.3);
     m_layoutContainer->resize(600,350);
@@ -32,10 +30,13 @@ EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
     m_layoutContainer->show();
 }
 
+
 EmployeeView::~EmployeeView() {
-    //saveCurrentModelStateToFile();
-    saveCurrentConfig();
+    qDebug() << "Destructor called\n";
+//    saveCurrentModelStateToFile();
+//    saveCurrentConfig();
 }
+
 
 QString EmployeeView::getQStringFromXml(string parameterName) {
 
@@ -79,6 +80,7 @@ QString EmployeeView::getQStringFromXml(string parameterName) {
     return value;
 }
 
+
 void EmployeeView::createMenuBar() {
     m_menuBar = new QMenuBar(this);
     m_mainLayout->setMenuBar(m_menuBar);
@@ -91,7 +93,10 @@ void EmployeeView::createMenuBar() {
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(getQStringFromXml("menu_help"));
     m_fileMenu->addSeparator();
-    m_fileMenu->addAction(getQStringFromXml("menu_exit"));
+//    m_fileMenu->addAction(getQStringFromXml("menu_exit"));
+    m_quitAction = new QAction(tr("&Quit"), this);
+    m_fileMenu->addAction(m_quitAction);
+    connect(m_quitAction, &QAction::triggered, this, &EmployeeView::handleExitClick );
 }
 
 
@@ -123,6 +128,7 @@ void EmployeeView::createTreeWidget()
     m_rightLayout->addWidget(m_addNewEmployeeButton);
     m_mainLayout->addLayout(m_rightLayout);
 }
+
 
 void EmployeeView::createEmployeeInformationView()
 {
@@ -229,9 +235,11 @@ void EmployeeView::createEmployeeInformationView()
     m_mainLayout->addLayout(m_leftLayout);
 }
 
+
 void EmployeeView::registerObserver(IObserver* observer) {
     this->m_observer = observer;
 }
+
 
 void EmployeeView::updateEmployeeList(vector<Employee *> model) {
     employeeList.clear();
@@ -245,6 +253,7 @@ void EmployeeView::updateEmployeeList(vector<Employee *> model) {
     }
 }
 
+
 void EmployeeView::popInfoBox(string message) {
     qDebug() << "QmessageBox printing message: \"" << QString::fromStdString(message) << "\"";
     QMessageBox::information(
@@ -253,12 +262,26 @@ void EmployeeView::popInfoBox(string message) {
         tr(message.c_str()) );
 }
 
+
 void EmployeeView::popErrorBox(string message) {
     qDebug() << "QmessageBox printing message: \"" << QString::fromStdString(message) << "\"";
     QMessageBox::critical(
         this,
         tr( QCoreApplication::applicationName().toStdString().c_str() ),
         tr(message.c_str()) );
+}
+
+
+bool EmployeeView::popQuestionBox(string title, string message) {
+    QMessageBox::StandardButton confirm;
+      confirm = QMessageBox::question(this, QString::fromStdString(title), QString::fromStdString(message), QMessageBox::Yes|QMessageBox::Cancel);
+      if (confirm == QMessageBox::Yes) {
+        qDebug() << "Yes was clicked";
+        return true;
+      } else {
+        qDebug() << "Yes was *not* clicked";
+        return false;
+      }
 }
 
 
@@ -279,19 +302,20 @@ void EmployeeView::handleSaveButtonClick() {
 
     if (typ != employee_types::UNKNOWN)
     {
-        m_observer->handleEventAddEmployee(typ, firstName, lastName, ssn, monthlySalary, hourlySalary, hoursDone, bonus, outcomeClaim);
+        m_observer->handleEventCreateEmployee(typ, firstName, lastName, ssn, monthlySalary, hourlySalary, hoursDone, bonus, outcomeClaim);
     }
     else {
         popInfoBox("You must select \"Pay Type\"!");
     }
 }
 
+
 void EmployeeView::handleDeleteButtonClick() {
     qDebug() << "Delete button was clicked!";
 
     if (m_treeWidget->currentItem() != NULL) {
 
-        if(confirmDeletionMessageBox()) {
+        if(popQuestionBox("Employee deletion", "Are you sure you want to delete the employee?")) {
 
             for (int i = 0; i < employeeList.size(); i++) {
 
@@ -313,11 +337,13 @@ void EmployeeView::handleDeleteButtonClick() {
     }
 }
 
+
 void EmployeeView::handleAddNewEmployeeButtonClick() {
     qDebug() << "Add new employee button clicked!";
     clearForm();
     m_payTypeMenu->setCurrentIndex(0);
 }
+
 
 void EmployeeView::clearForm() {
     m_firstNameEdit->clear();
@@ -330,18 +356,6 @@ void EmployeeView::clearForm() {
     m_bonusEdit->clear();
 }
 
-bool EmployeeView::confirmDeletionMessageBox() {
-    QMessageBox::StandardButton confirm;
-      confirm = QMessageBox::question(this, "Employee deletoin", "Are you sure you want to delete the employee?",
-                                    QMessageBox::Yes|QMessageBox::Cancel);
-      if (confirm == QMessageBox::Yes) {
-        qDebug() << "Yes was clicked";
-        return true;
-      } else {
-        qDebug() << "Yes was *not* clicked";
-        return false;
-      }
-}
 
 void EmployeeView::handleTreeWidgetDoubleClick() {
     unsigned int rowIdx = m_treeWidget->currentIndex().row();
@@ -381,6 +395,7 @@ void EmployeeView::handleTreeWidgetDoubleClick() {
     }
 }
 
+
 void EmployeeView::handlePayTypeChange() {
     qDebug() << "Pay type menu active index changed!";
 
@@ -398,6 +413,19 @@ void EmployeeView::handlePayTypeChange() {
     }
 }
 
+
+void EmployeeView::handleExitClick() {
+    qDebug() << "Exit click detected!!";
+
+    if(popQuestionBox("Exit", "Are you sure to exit the program?")) {
+        saveCurrentModelStateToFile();
+        saveCurrentConfig();
+        close();
+        qApp->exit(0);
+    }
+}
+
+
 void EmployeeView::setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus) {
     m_monthlySalaryLabel->setVisible(mSal);
     m_monthlySalaryEdit->setVisible(mSal);
@@ -411,24 +439,28 @@ void EmployeeView::setInformationFormWidgetVisibility(bool mSal, bool hDone, boo
     m_bonusEdit->setVisible(bonus);
 }
 
+
 void EmployeeView::saveCurrentConfig() {
-    ofstream ofs("config.cfg", ios::out | ios::binary);
+    ofstream ofs(CONFIGURATION_FILEPATH, ios::out | ios::binary);
     ofs << (*this);
     ofs.close();
     qInfo() << "Current configuration saved in \"" << QString::fromStdString(CONFIGURATION_FILEPATH) << "\"." << "\n";
 }
 
+
 void EmployeeView::loadLastSavedConfig() {
     ifstream ifs(CONFIGURATION_FILEPATH, ios::in | ios::binary);
     if( !(ifs >> (*this) )) {
         popErrorBox("Unable to load previously saved configuration from \"" + CONFIGURATION_FILEPATH + "\"");
-        return;
+    } else {
+        qInfo() << "Previously saved configuration loaded from \"" << QString::fromStdString(CONFIGURATION_FILEPATH) << "\"." << "\n";
     }
-//    popInfoBox("Configuration settings loaded from " + configLastModelStateFilepath);
-    qInfo() << "Previously saved configuration loaded from \"" << QString::fromStdString(CONFIGURATION_FILEPATH) << "\"." << "\n";
+    ifs.close();
 }
 
+
 void EmployeeView::saveCurrentModelStateToFile(const string filepath) {
+// TODO AAPO loyda bugi joka aiheuttaa application crashin exitissa
 
     if (m_observer != nullptr) {
         m_observer->handleEventSaveModelStateToFile(filepath);
@@ -439,6 +471,7 @@ void EmployeeView::saveCurrentModelStateToFile(const string filepath) {
         qCritical() << "Unable to save model state: Observer is null!" << "\n";
     }
 }
+
 
 void EmployeeView::loadLastModelStateFromFile(const string filepath) {
     if (m_observer != nullptr) {

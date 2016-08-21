@@ -20,6 +20,9 @@
 
 using namespace std;
 
+static char const separator = ',';
+static char const eof = '\n';
+
 namespace employee_types
 {
     enum type {
@@ -29,6 +32,31 @@ namespace employee_types
         SALESMAN_EMPLOYEE = 3
     };
 }
+
+
+struct ModelDataHeader {
+    unsigned int nMonthly = 0, nHourly = 0, nSalesman = 0;
+    ModelDataHeader() {}
+    ModelDataHeader(unsigned int mon, unsigned int hou, unsigned int sal): nMonthly(mon), nHourly(hou), nSalesman(sal) {}
+
+    friend std::ofstream& operator<<(std::ofstream& os, const ModelDataHeader& e) {
+        os << e.nMonthly << separator;
+        os << e.nHourly << separator;
+        os << e.nSalesman << separator;
+        return os;
+    }
+    friend std::ifstream& operator>>(std::ifstream& is, ModelDataHeader& e) {
+        char sep;
+        is >> e.nMonthly;
+        is >> sep;
+        is >> e.nHourly;
+        is >> sep;
+        is >> e.nSalesman;
+        is >> sep;
+        return is;
+    }
+};
+
 
 inline const char* employeeTypetoString(employee_types::type typ) {
     switch (typ)
@@ -44,15 +72,14 @@ inline const char* employeeTypetoString(employee_types::type typ) {
         }
 }
 
-
-
 class Employee
 {
   protected:
-    string firstName, lastName, socialSecurityNumber;
+    string lastName, socialSecurityNumber;
     employee_types::type typ;
 
   public:
+    string firstName;
     virtual ~Employee() {}
     virtual double getSalary() = 0;
     virtual void printInfo() = 0;

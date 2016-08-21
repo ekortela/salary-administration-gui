@@ -45,18 +45,17 @@ You can fill up all relevant information that is missing with reasonable assumpt
 TODO-lista
 
 Koodausta:
-	(!) GUI: Syottokenttien kokorajoitukset
-	() GUI: Add new employee -> Clear form
+    (!) GUI: Syottokenttien kokorajoitukset
+    () GUI: Add new employee -> Clear form
     () GUI: Save employee kysyy kayttajalta halutaanko korvata olemassaolevan tyontekijan tiedot
-	() GUI: Kaikki widget kentat pitaa ladata XML tiedostosta
+    () GUI: Kaikki widget kentat pitaa ladata XML tiedostosta
     () BACKEND: Lisaa run-time lokitiedosto, johon kaikki qDebug/qCritical/qInfo viestit tallentuvat
     (?) GUI: Jos tyontekijaa on tuplaklikattu listalla, tallennetaan View:n muuttujaan tyontekijan SSN numero
     (?) GUI: Kaytettavyys paranisi, jos delete ja save nappi olisivat GUI:n vasemmalla laidalla?
 	
-	(30%) GUI: Paatabi, jossa on vahintaan Save As, Load, Help/About ja Exit valinnat. Save nostaa
-		  kayttajalle valikon, jossa voi tallentaa tiedoston (Qt tarjoaa valmiit metodit)
+    (30%) GUI: Paatabi, jossa on vahintaan Save As, Load, Help/About ja Exit valinnat. Save nostaa
+            kayttajalle valikon, jossa voi tallentaa tiedoston (Qt tarjoaa valmiit metodit)
     (90%) BACKEND: Unit testerit backendille QtTest frameworkilla (testerit valmis, automatisoi testrunnerit)
-    (80%) BACKEND+GUI: Lue kaikki configuraatio-arvot tiedostosta! (testaus kesken)
 	
 Infrastruktuuri:
     () Muuta hakemiston rakenne selkeammaksi (esim. src/model/, src/controller/, src/main/, ...)
@@ -76,6 +75,7 @@ Valmiit:
     (100%) BACKEND: Implementoi metodit tyontekijoiden parametrien asettamiseen controllerissa
     (100%) GUI: Add new employee -nappi tyhjentää lomakkeen
     (100%) GUI: Lisaa delete -napin funktionaalisuus
+    (100%) BACKEND+GUI: Lue kaikki configuraatio-arvot tiedostosta!
 
 Poistettu:
     (-) Staattinen CPPUTEST yksikkotestien ajamiseen meidan repositoryssa (kaytetaan QtTest frameworkkia)
