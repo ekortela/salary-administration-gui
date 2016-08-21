@@ -375,12 +375,12 @@ Employee* EmployeeController::handleEventGetEmployee(string ssn) {
 void EmployeeController::handleEventSaveModelStateToFile(string filename) {
     // save objects
 
-//    // test
-//    clearEmployees();
-//    createEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "Tiina", "Koitaja", "1", 999.0, 0.0, 0.0, 60.0, false);
-//    createEmployee(employee_types::SALESMAN_EMPLOYEE, "First name", "Last name", "3", 2000.0, 0.0, 0.0, 30.0, true);
-//    createEmployee(employee_types::SALESMAN_EMPLOYEE, "Erro", "Makkke", "4", 20.0, 0.0, 0.0, 60.0, false);
-//    createEmployee(employee_types::HOURLY_PAID_EMPLOYEE, "Jani", "Kelpo", "4", 0.0, 19.0, 190.0, 0.0, false);
+    // test
+    clearEmployees();
+    createEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "Tiina", "Koitaja", "1", 999.0, 0.0, 0.0, 60.0, false);
+    createEmployee(employee_types::SALESMAN_EMPLOYEE, "First name", "Last name", "3", 2000.0, 0.0, 0.0, 30.0, true);
+    createEmployee(employee_types::SALESMAN_EMPLOYEE, "Erro", "Makkke", "4", 20.0, 0.0, 0.0, 60.0, false);
+    createEmployee(employee_types::HOURLY_PAID_EMPLOYEE, "Jani", "Kelpo", "4", 0.0, 19.0, 190.0, 0.0, false);
 
     // open output stream
     ofstream ofs(filename, ios::binary | ios::out);
