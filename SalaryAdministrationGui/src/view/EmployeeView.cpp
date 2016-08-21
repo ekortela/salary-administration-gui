@@ -162,23 +162,31 @@ void EmployeeView::createEmployeeInformationView()
              << employeeTypetoString(employee_types::SALESMAN_EMPLOYEE);
     m_payTypeMenu->insertItems(0, payTypes);
 
-    m_hoursDoneLabel = new QLabel(getQStringFromXml("editor_hours_done"));
-    m_hoursDoneEdit = new QLineEdit;
-    m_hoursDoneEdit->setValidator(new QDoubleValidator(0,3,2,m_hoursDoneEdit) );
-
     m_monthlySalaryLabel = new QLabel(getQStringFromXml("editor_mon_sal"));
     m_monthlySalaryEdit = new QLineEdit;
-    m_monthlySalaryEdit->setValidator(new QDoubleValidator(0,4,2,m_monthlySalaryEdit));
+    QDoubleValidator *m_mDouble = new QDoubleValidator(0,9999.99,2,this);
+    m_mDouble->setNotation(QDoubleValidator::StandardNotation);
+    m_monthlySalaryEdit->setValidator(m_mDouble);
 
     m_hourlySalaryLabel = new QLabel(getQStringFromXml("editor_hour_sal"));
     m_hourlySalaryEdit = new QLineEdit;
-    m_hourlySalaryEdit->setValidator(new QDoubleValidator(0,3,2,m_hourlySalaryEdit));
+    QDoubleValidator *m_hDouble = new QDoubleValidator(0,999.99,2,this);
+    m_hDouble->setNotation(QDoubleValidator::StandardNotation);
+    m_hourlySalaryEdit->setValidator(m_hDouble);
+
+    m_hoursDoneLabel = new QLabel(getQStringFromXml("editor_hours_done"));
+    m_hoursDoneEdit = new QLineEdit;
+    QDoubleValidator *m_hdDouble = new QDoubleValidator(0,999.99,2,this);
+    m_hdDouble->setNotation(QDoubleValidator::StandardNotation);
+    m_hoursDoneEdit->setValidator(m_hdDouble);
+
 
     m_outcomeClaimLabel = new QLabel(getQStringFromXml("editor_claim"));
     m_outcomeClaimCheckBox = new QCheckBox;
 
     m_bonusLabel = new QLabel(getQStringFromXml("editor_bonus"));
     m_bonusEdit = new QLineEdit;
+    m_bonusEdit->setValidator(new QIntValidator(0,100,this));
 
     m_employeeInfoGrid->addWidget(m_lastNameLabel,0,0);
     m_employeeInfoGrid->addWidget(m_lastNameEdit,0,1);
@@ -296,11 +304,11 @@ void EmployeeView::handleSaveButtonClick() {
     string firstName = m_firstNameEdit->text().toStdString();
     string lastName = m_lastNameEdit->text().toStdString();
     string ssn = m_SSNEdit->text().toStdString();
-    double monthlySalary = m_monthlySalaryEdit->text().toDouble();
-    double hourlySalary = m_hourlySalaryEdit->text().toDouble();
-    double hoursDone = m_hoursDoneEdit->text().toDouble();
-    double bonus = this->m_bonusEdit->text().toDouble();
-    bool outcomeClaim = m_outcomeClaimCheckBox->checkState();
+    double monthlySalary = m_monthlySalaryEdit->text().replace(",",".").toDouble();
+    double hourlySalary = m_hourlySalaryEdit->text().replace(",",".").toDouble();
+    double hoursDone = m_hoursDoneEdit->text().replace(",",".").toDouble();
+    double bonus = this->m_bonusEdit->text().replace(",",".").toDouble();
+    bool outcomeClaim = true ? m_outcomeClaimCheckBox->checkState() : false;
 
     if (typ != employee_types::UNKNOWN)
     {

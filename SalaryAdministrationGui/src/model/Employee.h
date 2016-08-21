@@ -20,7 +20,7 @@
 
 using namespace std;
 
-static char const separator = ',';
+static char const separator = ';';
 static char const eof = '\n';
 
 namespace employee_types

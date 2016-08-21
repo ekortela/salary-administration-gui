@@ -46,7 +46,6 @@ class SalesmanEmployee: public Employee
         os << e.socialSecurityNumber<< separator;
         os << e.monthlySalary << separator;
         os << e.bonus << separator;
-//        os << e.realizedOutcome << separator;
         os << e.outcomeClaim << separator;
         return os;
     }
@@ -82,8 +81,6 @@ class SalesmanEmployee: public Employee
         is >> sep;
         is >> e.bonus;
         is >> sep;
-//        is >> e.realizedOutcome;
-//        is >> sep;
         is >> e.outcomeClaim;
         is >> sep;
         return is;
