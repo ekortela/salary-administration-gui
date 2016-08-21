@@ -15,6 +15,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -46,10 +48,8 @@ inline const char* employeeTypetoString(employee_types::type typ) {
 
 class Employee
 {
-  private:
-    string firstName, lastName, socialSecurityNumber;
-
   protected:
+    string firstName, lastName, socialSecurityNumber;
     employee_types::type typ;
 
   public:

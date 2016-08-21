@@ -7,11 +7,16 @@
 #include <QCoreApplication>
 #include "EmployeeView.h"
 
+// initialize static members
+const string EmployeeView::MODEL_STATE_FILEPATH = "model.state";
+
 
 EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
 
+    loadLastSavedConfig();
+
     m_layoutContainer = new QWidget;
-    m_layoutContainer->setWindowTitle(getQStringFromConfig("main_window"));
+    m_layoutContainer->setWindowTitle(getQStringFromXml("main_window"));
 
     m_mainLayout = new QHBoxLayout;
     createMenuBar();
@@ -26,11 +31,13 @@ EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
 }
 
 EmployeeView::~EmployeeView() {
+    saveCurrentModelStateToFile();
+    saveCurrentConfig();
 }
 
-QString EmployeeView::getQStringFromConfig(string parameterName) {
+QString EmployeeView::getQStringFromXml(string parameterName) {
 
-    m_xmlFile = new QFile(config_filename);
+    m_xmlFile = new QFile(xml_config_filename);
 
     QString value = "default";
 
@@ -55,12 +62,12 @@ QString EmployeeView::getQStringFromConfig(string parameterName) {
         }
 
         if(m_xmlReader->hasError()) {
-            popErrorBox("Parse error \"" + config_filename.toStdString() + "\": " +
+            popErrorBox("Parse error \"" + xml_config_filename.toStdString() + "\": " +
                         m_xmlReader->errorString().toStdString());
         }
 
     } else {
-        popErrorBox("Could not open: \"" + config_filename.toStdString() + "\"\nMake sure that your Qt build configuration target (Projects->Build Directory) has been set to the directory that has SalaryAdministrationGui.pro -file\n");
+        popErrorBox("Could not open: \"" + xml_config_filename.toStdString() + "\"\nMake sure that your Qt build configuration target (Projects->Build Directory) has been set to the directory that has SalaryAdministrationGui.pro -file\n");
         QApplication::quit();
     }
 
@@ -70,21 +77,19 @@ QString EmployeeView::getQStringFromConfig(string parameterName) {
     return value;
 }
 
-
-
 void EmployeeView::createMenuBar() {
     m_menuBar = new QMenuBar(this);
     m_mainLayout->setMenuBar(m_menuBar);
 
-    m_fileMenu = new QMenu(getQStringFromConfig("menu_main"));
+    m_fileMenu = new QMenu(getQStringFromXml("menu_main"));
     m_menuBar->addMenu(m_fileMenu);
-    m_fileMenu->addAction(getQStringFromConfig("menu_new"));
-    m_fileMenu->addAction(getQStringFromConfig("menu_save"));
-    m_fileMenu->addAction(getQStringFromConfig("menu_load"));
+    m_fileMenu->addAction(getQStringFromXml("menu_new"));
+    m_fileMenu->addAction(getQStringFromXml("menu_save"));
+    m_fileMenu->addAction(getQStringFromXml("menu_load"));
     m_fileMenu->addSeparator();
-    m_fileMenu->addAction(getQStringFromConfig("menu_help"));
+    m_fileMenu->addAction(getQStringFromXml("menu_help"));
     m_fileMenu->addSeparator();
-    m_fileMenu->addAction(getQStringFromConfig("menu_exit"));
+    m_fileMenu->addAction(getQStringFromXml("menu_exit"));
 }
 
 
@@ -97,9 +102,9 @@ void EmployeeView::createTreeWidget()
 
     QStringList labels;
     labels
-        << getQStringFromConfig("treewidget1")
-        << getQStringFromConfig("treewidget2")
-        << getQStringFromConfig("treewidget3");
+        << getQStringFromXml("treewidget1")
+        << getQStringFromXml("treewidget2")
+        << getQStringFromXml("treewidget3");
 
     m_treeWidget->setHeaderLabels(labels);
 
@@ -109,7 +114,7 @@ void EmployeeView::createTreeWidget()
 
     connect(m_treeWidget, SIGNAL (itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT (handleTreeWidgetDoubleClick()) );
 
-    m_addNewEmployeeButton = new QPushButton(getQStringFromConfig("button_add_emp"));
+    m_addNewEmployeeButton = new QPushButton(getQStringFromXml("button_add_emp"));
     connect(m_addNewEmployeeButton, SIGNAL (released()), this, SLOT (handleAddNewEmployeeButtonClick()) );
 
     m_rightLayout->addWidget(m_treeWidget);
@@ -131,14 +136,14 @@ void EmployeeView::createEmployeeInformationView()
     m_employeeInfoGrid->addWidget(empty,7,0);
 
     // Employee information feed
-    m_lastNameLabel = new QLabel(getQStringFromConfig("editor_lastname"));
+    m_lastNameLabel = new QLabel(getQStringFromXml("editor_lastname"));
     m_lastNameEdit = new QLineEdit();
-    m_firstNameLabel = new QLabel(getQStringFromConfig("editor_firstname"));
+    m_firstNameLabel = new QLabel(getQStringFromXml("editor_firstname"));
     m_firstNameEdit = new QLineEdit;
-    m_SSNLabel = new QLabel(getQStringFromConfig("editor_ssn"));
+    m_SSNLabel = new QLabel(getQStringFromXml("editor_ssn"));
     m_SSNEdit = new QLineEdit;
 
-    m_payTypeLabel = new QLabel(getQStringFromConfig("editor_pay_type"));
+    m_payTypeLabel = new QLabel(getQStringFromXml("editor_pay_type"));
     m_payTypeMenu = new QComboBox;
 
     QStringList payTypes;
@@ -148,22 +153,22 @@ void EmployeeView::createEmployeeInformationView()
              << employeeTypetoString(employee_types::SALESMAN_EMPLOYEE);
     m_payTypeMenu->insertItems(0, payTypes);
 
-    m_hoursDoneLabel = new QLabel(getQStringFromConfig("editor_hours_done"));
+    m_hoursDoneLabel = new QLabel(getQStringFromXml("editor_hours_done"));
     m_hoursDoneEdit = new QLineEdit;
     m_hoursDoneEdit->setValidator(new QDoubleValidator(0,10000,2,m_hoursDoneEdit) );
 
-    m_monthlySalaryLabel = new QLabel(getQStringFromConfig("editor_mon_sal"));
+    m_monthlySalaryLabel = new QLabel(getQStringFromXml("editor_mon_sal"));
     m_monthlySalaryEdit = new QLineEdit;
     m_monthlySalaryEdit->setValidator(new QDoubleValidator(0,20000,2,m_monthlySalaryEdit));
 
-    m_hourlySalaryLabel = new QLabel(getQStringFromConfig("editor_hour_sal"));
+    m_hourlySalaryLabel = new QLabel(getQStringFromXml("editor_hour_sal"));
     m_hourlySalaryEdit = new QLineEdit;
     m_hourlySalaryEdit->setValidator(new QDoubleValidator(0,1000,2,m_hourlySalaryEdit));
 
-    m_outcomeClaimLabel = new QLabel(getQStringFromConfig("editor_claim"));
+    m_outcomeClaimLabel = new QLabel(getQStringFromXml("editor_claim"));
     m_outcomeClaimCheckBox = new QCheckBox;
 
-    m_bonusLabel = new QLabel(getQStringFromConfig("editor_bonus"));
+    m_bonusLabel = new QLabel(getQStringFromXml("editor_bonus"));
     m_bonusEdit = new QLineEdit;
 
     m_employeeInfoGrid->addWidget(m_lastNameLabel,0,0);
@@ -201,9 +206,9 @@ void EmployeeView::createEmployeeInformationView()
 
 
     // Buttons / Signals
-    m_saveButton = new QPushButton(getQStringFromConfig("button_save_emp"));
+    m_saveButton = new QPushButton(getQStringFromXml("button_save_emp"));
     connect(m_saveButton, SIGNAL (released()), this, SLOT (handleSaveButtonClick()) );
-    m_deleteButton = new QPushButton(getQStringFromConfig("button_delete_emp"));
+    m_deleteButton = new QPushButton(getQStringFromXml("button_delete_emp"));
     connect(m_deleteButton, SIGNAL (released()), this, SLOT (handleDeleteButtonClick()) );
     connect(m_payTypeMenu, SIGNAL (currentIndexChanged(int)), this, SLOT (handlePayTypeChange()) );
 
@@ -403,4 +408,41 @@ void EmployeeView::setInformationFormWidgetVisibility(bool mSal, bool hDone, boo
     m_bonusEdit->setVisible(bonus);
 }
 
+void EmployeeView::saveCurrentConfig() {
+    ofstream ofs("config.cfg", ios::out | ios::binary);
+    ofs << (*this);
+    ofs.close();
+    qInfo() << "Current configuration saved in \"" << QString::fromStdString(CONFIGURATION_FILEPATH) << "\"." << "\n";
+}
 
+void EmployeeView::loadLastSavedConfig() {
+    ifstream ifs(CONFIGURATION_FILEPATH, ios::in | ios::binary);
+    if( !(ifs >> (*this) )) {
+        popErrorBox("Unable to load previously saved configuration from \"" + CONFIGURATION_FILEPATH + "\"");
+        return;
+    }
+//    popInfoBox("Configuration settings loaded from " + configLastModelStateFilepath);
+    qInfo() << "Previously saved configuration loaded from \"" << QString::fromStdString(CONFIGURATION_FILEPATH) << "\"." << "\n";
+}
+
+void EmployeeView::saveCurrentModelStateToFile(const string filepath) {
+
+    if (m_observer != nullptr) {
+        m_observer->handleEventSaveModelStateToFile(filepath);
+        configLastModelStateFilepath = filepath;
+
+    } else {
+        popErrorBox("Unable to save model state: Observer is null!");
+        qCritical() << "Unable to save model state: Observer is null!" << "\n";
+    }
+}
+
+void EmployeeView::loadLastModelStateFromFile(const string filepath) {
+    if (m_observer != nullptr) {
+        m_observer->handleEventLoadModelStateFromFile(filepath);
+
+    } else{
+        popErrorBox("Unable to load model state: Observer is null!");
+        qCritical() << "Unable to load model state: Observer is null!" << "\n";
+    }
+}

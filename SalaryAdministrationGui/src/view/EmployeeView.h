@@ -16,6 +16,7 @@
 #include "SalesmanEmployee.h"
 #include "IObserver.h"
 
+
 class EmployeeView: public QMainWindow {
 
     Q_OBJECT
@@ -28,9 +29,10 @@ public:
     void updateEmployeeList(vector<Employee *> model);
     void popInfoBox(string message);
     void popErrorBox(string message);
+    void saveCurrentModelStateToFile(const string filepath = MODEL_STATE_FILEPATH);
+    void loadLastModelStateFromFile(const string filepath = MODEL_STATE_FILEPATH);
 
 private:
-    const QString config_filename = "../../res/config.xml";
     unsigned int *m_treeWidgetSelectedItem;
     int rowHeight;
     QLineEdit *m_lastNameEdit, *m_firstNameEdit, *m_SSNEdit, *m_hoursDoneEdit,
@@ -54,7 +56,7 @@ private:
     QFile *m_xmlFile;
     QXmlStreamReader *m_xmlReader;
 
-    IObserver *m_observer;
+    IObserver *m_observer = nullptr;
 
     void createMenuBar();
     void createTreeWidget();
@@ -62,7 +64,29 @@ private:
     void setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus);
     bool confirmDeletionMessageBox();
     void clearForm();
-    QString getQStringFromConfig(string parameterName);
+    QString getQStringFromXml(string parameterName);
+
+    const QString xml_config_filename = "../../res/config.xml";
+
+    const string CONFIGURATION_FILEPATH = "config.cfg";
+    static string const MODEL_STATE_FILEPATH;
+
+//    string previousConfigXml;
+    string configLastModelStateFilepath = MODEL_STATE_FILEPATH;
+
+    friend inline std::ofstream& operator<<(std::ofstream& os, const EmployeeView& e) {
+        os << e.configLastModelStateFilepath;
+        return os;
+    }
+
+    friend inline std::ifstream& operator>>(std::ifstream& is, EmployeeView& e) {
+        is >> e.configLastModelStateFilepath;
+        return is;
+    }
+
+    void saveCurrentConfig();
+    void loadLastSavedConfig();
+
 
 private slots:
     void handleSaveButtonClick();

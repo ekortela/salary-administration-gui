@@ -37,6 +37,16 @@ class SalesmanEmployee: public Employee
     void setRealizedOutcome();
     double getSalary();
     void printInfo();
+
+    friend inline std::ofstream& operator<<(std::ofstream& os, const SalesmanEmployee& e) {
+        os << e.firstName;
+        return os;
+    }
+
+    friend inline std::ifstream& operator>>(std::ifstream& is, SalesmanEmployee& e) {
+        is >> e.firstName;
+        return is;
+    }
 };
 
 

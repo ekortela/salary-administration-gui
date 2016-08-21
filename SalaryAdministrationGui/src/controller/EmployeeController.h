@@ -70,4 +70,6 @@ public:
     void handleEventPrintEmployees();
     void handleEventRequestViewUpdate();
     Employee* handleEventGetEmployee(string ssn);
+    void handleEventSaveModelStateToFile(string filename);
+    void handleEventLoadModelStateFromFile(string filename);
 };

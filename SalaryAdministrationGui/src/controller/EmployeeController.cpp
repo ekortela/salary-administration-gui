@@ -7,6 +7,7 @@ EmployeeController::EmployeeController(EmployeeView *view)
 {
     this->m_view = view;
     this->m_view->registerObserver(this);
+    this->m_view->loadLastModelStateFromFile();
 }
 
 
@@ -368,4 +369,46 @@ void EmployeeController::handleEventRequestViewUpdate() {
 
 Employee* EmployeeController::handleEventGetEmployee(string ssn) {
     return getEmployee(ssn);
+}
+
+void EmployeeController::handleEventSaveModelStateToFile(string filename) {
+    // save objects
+
+    // test
+    clearEmployees();
+    addEmployee(employee_types::SALESMAN_EMPLOYEE, "First name", "Last name", "SSN", 2000.0, 0.0, 0.0, 30.0, true);
+
+    // open stream and save all model objects
+    ofstream ofs(filename, ios::binary | ios::out);
+    for (unsigned int i = 0; i < model.size(); i++) {
+        SalesmanEmployee *m = dynamic_cast<SalesmanEmployee *> (model[i]);
+        ofs << *m;
+    }
+    ofs.close();
+
+    m_view->popInfoBox("Model state saved in " + filename);
+}
+
+void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
+    // load objects
+
+    m_view->popInfoBox( "Press ok to load model state from " + filename);
+
+    ifstream ifs(filename, ios::in | ios::binary);
+    SalesmanEmployee *m = new SalesmanEmployee("", "", "1", 0.0, 0.0, false);
+    if ( !(ifs >> *m) ) {
+        m_view->popInfoBox( m->getFirstName());
+    } else {
+        m_view->popErrorBox( "Unable to load model state from " + filename);
+    }
+//    updateView();
+
+//    ifstream ifs(CONFIGURATION_FILEPATH, ios::in | ios::binary);
+//    if( !(ifs >> (*this) )) {
+//        popErrorBox("Unable to load previously saved configuration from \"" + CONFIGURATION_FILEPATH + "\"");
+//        return;
+//    }
+////    popInfoBox("Configuration settings loaded from " + configLastModelStateFilepath);
+//    qInfo() << "Previously saved configuration loaded from \"" << QString::fromStdString(CONFIGURATION_FILEPATH) << "\"." << "\n";
+
 }
