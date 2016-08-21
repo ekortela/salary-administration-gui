@@ -12,6 +12,8 @@ const string EmployeeView::MODEL_STATE_FILEPATH = "model.state";
 
 EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
 
+    qInfo() << ">>>>>>>>>>>>>>>>>>> EXECUTION STARTED <<<<<<<<<<<<<<<<<<<<<<<";
+
     loadLastSavedConfig();
 
     m_layoutContainer = new QWidget;
@@ -32,9 +34,9 @@ EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
 
 
 EmployeeView::~EmployeeView() {
-    qDebug() << "Destructor called\n";
 //    saveCurrentModelStateToFile();
 //    saveCurrentConfig();
+    qInfo() << ">>>>>>>>>>>>>>>>>>> EXECUTION STOPPED <<<<<<<<<<<<<<<<<<<<<<<";
 }
 
 
@@ -305,7 +307,7 @@ void EmployeeView::handleSaveButtonClick() {
         m_observer->handleEventCreateEmployee(typ, firstName, lastName, ssn, monthlySalary, hourlySalary, hoursDone, bonus, outcomeClaim);
     }
     else {
-        popInfoBox("You must select \"Pay Type\"!");
+        popInfoBox("Please, select \"" + getQStringFromXml("editor_pay_type").toStdString() + "\"");
     }
 }
 
@@ -444,16 +446,16 @@ void EmployeeView::saveCurrentConfig() {
     ofstream ofs(CONFIGURATION_FILEPATH, ios::out | ios::binary);
     ofs << (*this);
     ofs.close();
-    qInfo() << "Current configuration saved in \"" << QString::fromStdString(CONFIGURATION_FILEPATH) << "\"." << "\n";
+    qInfo() << "Current configuration saved in" << QString::fromStdString(CONFIGURATION_FILEPATH) << "";
 }
 
 
 void EmployeeView::loadLastSavedConfig() {
     ifstream ifs(CONFIGURATION_FILEPATH, ios::in | ios::binary);
     if( !(ifs >> (*this) )) {
-        popErrorBox("Unable to load previously saved configuration from \"" + CONFIGURATION_FILEPATH + "\"");
+        popErrorBox("Unable to load previously saved configuration from " + CONFIGURATION_FILEPATH + "");
     } else {
-        qInfo() << "Previously saved configuration loaded from \"" << QString::fromStdString(CONFIGURATION_FILEPATH) << "\"." << "\n";
+        qInfo() << "Previously saved configuration loaded from" << QString::fromStdString(CONFIGURATION_FILEPATH);
     }
     ifs.close();
 }
@@ -468,7 +470,7 @@ void EmployeeView::saveCurrentModelStateToFile(const string filepath) {
 
     } else {
         popErrorBox("Unable to save model state: Observer is null!");
-        qCritical() << "Unable to save model state: Observer is null!" << "\n";
+        qCritical() << "Unable to save model state: Observer is null!";
     }
 }
 
@@ -479,6 +481,6 @@ void EmployeeView::loadLastModelStateFromFile(const string filepath) {
 
     } else{
         popErrorBox("Unable to load model state: Observer is null!");
-        qCritical() << "Unable to load model state: Observer is null!" << "\n";
+        qCritical() << "Unable to load model state: Observer is null!";
     }
 }

@@ -387,7 +387,7 @@ void EmployeeController::handleEventSaveModelStateToFile(string filename) {
 
     // write serialized header data
     ModelDataHeader es = createModelDataHeader();
-    qDebug() << "Loaded employee data count: monthly: " << es.nMonthly << ", hourly: " << es.nHourly << ", salesman: " << es.nSalesman << "\n";
+    qDebug() << "Loaded employee data count: monthly: " << es.nMonthly << ", hourly: " << es.nHourly << ", salesman: " << es.nSalesman;
     ofs << es;
 
     writeEmployeeTypeToStream(ofs, employee_types::MONTHLY_PAID_EMPLOYEE);
@@ -397,7 +397,7 @@ void EmployeeController::handleEventSaveModelStateToFile(string filename) {
     // close stream
     ofs.close();
 
-    qInfo() << "Model state saved in file \"" + QString::fromStdString(filename) + "\"";
+    qInfo() << "Model state saved in file " + QString::fromStdString(filename) + "";
 }
 
 void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
@@ -413,7 +413,7 @@ void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
 
     if (ifs >> es) {
 
-        qDebug() << "File employee count: monthly: " << es.nMonthly << ", hourly: " << es.nHourly << ", salesman: " << es.nSalesman << "\n";
+        qDebug() << "File employee count: monthly: " << es.nMonthly << ", hourly: " << es.nHourly << ", salesman: " << es.nSalesman;
 
         // read serialized model data
         // note: order has to be 1. monthly 2. hourly 3. sales
@@ -448,9 +448,9 @@ void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
     } else {
         m_view->popErrorBox("Loading header data failed!");
         if (remove( filename.c_str()))
-            qDebug() << "File " << QString::fromStdString(filename) << " deleted\n";
+            qDebug() << "File " << QString::fromStdString(filename) << " deleted";
         else
-            qCritical() << "Removing file " << QString::fromStdString(filename) << " was unsuccessful!\n";
+            qCritical() << "Removing file " << QString::fromStdString(filename) << " was unsuccessful";
     }
 
     // close stream
@@ -474,7 +474,7 @@ ModelDataHeader EmployeeController::createModelDataHeader() {
         else if (p->getType() == employee_types::SALESMAN_EMPLOYEE )
             dataHdr.nSalesman++;
         else
-            cout << "ERROR: Invalid cast to object!!\n";
+            qCritical() << "Invalid cast to object type: " << QString::fromStdString(employeeTypetoString(p->getType()));
     }
 
     return dataHdr;
@@ -506,5 +506,5 @@ void EmployeeController::writeEmployeeTypeToStream(ofstream &ofs, employee_types
         n++;
     }
 
-    qDebug() << "Wrote " << n << employeeTypetoString(typ) << "to file.\n";
+    qDebug() << "Wrote" << n << employeeTypetoString(typ) << "to file";
 }
