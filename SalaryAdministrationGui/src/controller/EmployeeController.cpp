@@ -581,21 +581,24 @@ void EmployeeController::writeEmployeeTypeToStream(ofstream &ofs, employee_types
 
     int n = 0;
 
+    qDebug() << "Writing type:" << employeeTypetoString(typ);
+
     for (unsigned int i = 0; i < model.size(); i++) {
 
         Employee *p = model[i];
 
-        if (p->getType() == employee_types::MONTHLY_PAID_EMPLOYEE && typ == employee_types::MONTHLY_PAID_EMPLOYEE) {
+        if ( (p->getType() == employee_types::MONTHLY_PAID_EMPLOYEE) && (typ == employee_types::MONTHLY_PAID_EMPLOYEE) ) {
             MonthlyPaidEmployee *m = dynamic_cast<MonthlyPaidEmployee *> (model[i]);
             ofs << *m;
 
-        } else if (p->getType() == employee_types::HOURLY_PAID_EMPLOYEE && employee_types::HOURLY_PAID_EMPLOYEE) {
+        } else if ( (p->getType() == employee_types::HOURLY_PAID_EMPLOYEE) && (typ == employee_types::HOURLY_PAID_EMPLOYEE) ) {
             HourlyPaidEmployee *m = dynamic_cast<HourlyPaidEmployee *> (model[i]);
             ofs << *m;
 
-        } else if (p->getType() == employee_types::SALESMAN_EMPLOYEE && typ == employee_types::SALESMAN_EMPLOYEE ) {
+        } else if ( (p->getType() == employee_types::SALESMAN_EMPLOYEE) && (typ == employee_types::SALESMAN_EMPLOYEE) ) {
             SalesmanEmployee *m = dynamic_cast<SalesmanEmployee *> (model[i]);
             ofs << *m;
+
         } else {
             continue;
         }

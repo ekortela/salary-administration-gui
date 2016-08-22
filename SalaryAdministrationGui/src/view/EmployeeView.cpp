@@ -332,7 +332,7 @@ void EmployeeView::handleSaveButtonClick() {
     double hourlySalary = m_hourlySalaryEdit->text().replace(",",".").toDouble();
     double hoursDone = m_hoursDoneEdit->text().replace(",",".").toDouble();
     double bonus = this->m_bonusEdit->text().replace(",",".").toDouble();
-    bool outcomeClaim = true ? m_outcomeClaimCheckBox->checkState() : false;
+    bool outcomeClaim = true ? static_cast<int>(m_outcomeClaimCheckBox->checkState()): false;
 
     if (typ != employee_types::UNKNOWN)
     {
