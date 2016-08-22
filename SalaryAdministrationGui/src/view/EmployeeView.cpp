@@ -545,7 +545,6 @@ void EmployeeView::loadLastSavedConfig() {
 
 
 void EmployeeView::saveCurrentModelStateToFile(const string filepath) {
-// TODO AAPO loyda bugi joka aiheuttaa application crashin exitissa
 
     if (m_observer != nullptr) {
         m_observer->handleEventSaveModelStateToFile(filepath);

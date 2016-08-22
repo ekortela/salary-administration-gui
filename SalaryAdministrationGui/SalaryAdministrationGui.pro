@@ -22,7 +22,7 @@ MOC_DIR = $$DESTDIR/.moc
 # Input
 HEADERS += src/controller/EmployeeController.h \
            src/controller/EmployeeControllerException.h \
-           src/controller/IObserver.h \
+           src/controller/IController.h \
            src/model/Employee.h \
            src/model/EmployeeFactory.h \
            src/model/EmployeeFactoryException.h \
