@@ -43,13 +43,13 @@ private:
             *m_monthlySalaryLabel, *m_outcomeClaimLabel, *m_hoursDoneLabel,
             *m_hourlySalaryLabel, *m_displayInfo, *m_bonusLabel;
     QComboBox *m_payTypeMenu;
-    QPushButton *m_addNewEmployeeButton, *m_saveButton, *m_deleteButton;
+    QPushButton *m_clearFormButton, *m_saveButton, *m_deleteButton;
     QCheckBox *m_outcomeClaimCheckBox;
     QWidget *m_layoutContainer, *m_menuWidget;
-    QHBoxLayout *m_mainLayout, *m_buttonLayout;
-    QVBoxLayout *m_leftLayout, *m_rightLayout, *m_layoutFrame;
+    QHBoxLayout *m_mainLayout;
+    QVBoxLayout *m_layoutFrame;
     QScrollArea *m_scrollArea;
-    QGridLayout *m_employeeInfoGrid;
+    QGridLayout *m_leftLayout;
     QTreeWidget *m_treeWidget;
     QMenuBar *m_menuBar;
     QMenu *m_fileMenu;
@@ -67,7 +67,8 @@ private:
     void setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus);
     void clearForm();
     QString getQStringFromXml(string parameterName);
-    //void updateLabels();
+    void updateLabels();
+    bool checkIfSSNExists(QString ssn);
 
     // Taman alla on aapon heinia
 
@@ -98,6 +99,6 @@ private slots:
     void handleDeleteButtonClick();
     void handleTreeWidgetDoubleClick();
     void handlePayTypeChange();
-    void handleAddNewEmployeeButtonClick();
+    void handleClearFormButton();
     void handleExitClick();
 };

@@ -10,9 +10,9 @@
 	<treewidget1>Last name</treewidget1>
 	<treewidget2>First name</treewidget2>
 	<treewidget3>SSN</treewidget3>
-	<button_add_emp>Add new employee</button_add_emp>
+	<button_clear_form>Clear form</button_clear_form>
 	<button_save_emp>Save Employee</button_save_emp>
-	<button_delete_emp>Delete</button_delete_emp>
+	<button_delete_emp>Delete Employee</button_delete_emp>
 	<editor_firstname>First name(s):</editor_firstname>
 	<editor_lastname>Last name:</editor_lastname>
 	<editor_ssn>SSN:</editor_ssn>
@@ -22,4 +22,7 @@
 	<editor_hour_sal>Hourly salary (EUR)</editor_hour_sal>
 	<editor_claim>Outcome claim:</editor_claim>
 	<editor_bonus>Bonus (%)</editor_bonus>
+	<treewidget1>Last name</treewidget1>
+	<treewidget2>First name(s)</treewidget2>
+	<treewidget3>SSN</treewidget3>
 </view_strings>
