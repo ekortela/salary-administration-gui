@@ -379,20 +379,22 @@ void EmployeeView::handleDeleteButtonClick() {
 
     if (m_treeWidget->currentItem() != NULL) {
 
-        if(popQuestionBox("Employee deletion", "Are you sure you want to delete the employee?")) {
+        string lname = m_treeWidget->currentItem()->text(0).toStdString();
+        string fname = m_treeWidget->currentItem()->text(1).toStdString();
+        string ssnStr = m_treeWidget->currentItem()->text(2).toStdString();
+
+        if(popQuestionBox("Employee deletion", "Are you sure you want to delete the employee:\n   " + lname + ", " + fname + " (SSN: " + ssnStr + ") ?") ) {
 
             for (int i = 0; i < employeeList.size(); i++) {
 
                 QString ssn = employeeList[i]->text(2);
+                QString curSsn = m_treeWidget->currentItem()->text(2);
 
-                if ( ssn.compare(m_treeWidget->currentItem()->text(2)) == 0) {
-
-                    employeeList.removeAt(i);
-                    qDebug() << "Employee (idx: " << i << ") removed from employee list!";
+                if ( ssn.compare(ssn, curSsn) == 0) {
 
                     try {
 
-                        m_observer->handleEventRemoveEmployee(m_SSNEdit->text().toStdString() );
+                        m_observer->handleEventRemoveEmployee(curSsn.toStdString() );
                         popInfoBox("Employee (SSN: " + ssn.toStdString() + ") deleted");
                         break;
 
