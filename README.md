@@ -45,10 +45,10 @@ You can fill up all relevant information that is missing with reasonable assumpt
 TODO-lista
 
 Koodausta:
-    (!) GUI: Syottokenttien kokorajoitukset
-    () GUI: Add new employee -> Clear form
-    () GUI: Save employee kysyy kayttajalta halutaanko korvata olemassaolevan tyontekijan tiedot
-    () GUI: Kaikki widget kentat pitaa ladata XML tiedostosta
+    (90%) GUI: Save employee kysyy kayttajalta halutaanko korvata olemassaolevan tyontekijan tiedot
+		!!! Onniustuu ensimmaisen kerran kun tyontekijan tiedot avataan listasta. Ei onnistu jos yrittaa toisen kerran muuttaa saman tyontekijan tietoja.
+    (90%) GUI: Kaikki widget kentat pitaa ladata XML tiedostosta
+		!!! Koodissa kaikki nayttaisi olevan ok, mutta kakkospylvaalle annetaan nimeksi "First name" eika XML:n mukainen "First name(s)". Mista nykyinen nimi tulee? En itse ainakaan loyda koodista.
     () BACKEND: Lisaa run-time lokitiedosto, johon kaikki qDebug/qCritical/qInfo viestit tallentuvat
     (?) GUI: Jos tyontekijaa on tuplaklikattu listalla, tallennetaan View:n muuttujaan tyontekijan SSN numero
     (?) GUI: Kaytettavyys paranisi, jos delete ja save nappi olisivat GUI:n vasemmalla laidalla?
@@ -76,6 +76,8 @@ Valmiit:
     (100%) GUI: Add new employee -nappi tyhjentää lomakkeen
     (100%) GUI: Lisaa delete -napin funktionaalisuus
     (100%) BACKEND+GUI: Lue kaikki configuraatio-arvot tiedostosta!
+	(100%) GUI: Syottokenttien kokorajoitukset
+	(100%) GUI: Add new employee -> Clear form + leiskaa muutettu
 
 Poistettu:
     (-) Staattinen CPPUTEST yksikkotestien ajamiseen meidan repositoryssa (kaytetaan QtTest frameworkkia)
