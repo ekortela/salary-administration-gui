@@ -8,6 +8,8 @@
 #include "MonthlyPaidEmployee.h"
 #include "HourlyPaidEmployee.h"
 #include "SalesmanEmployee.h"
+#include "EmployeeFactoryException.h"
+#include <stdexcept>
 
 Employee *EmployeeFactory::getEmployee(employee_types::type typ,
                                                string newFirstName, string newLastName, string newSsn,

@@ -15,8 +15,10 @@
 #include "Employee.h"
 #include "EmployeeFactory.h"
 #include "IObserver.h"
+#include "EmployeeControllerException.h"
 
-class EmployeeController: public IObserver {
+
+class EmployeeController: public IController {
 
 private:
     vector<Employee*> model;
@@ -28,9 +30,13 @@ public:
     EmployeeController(EmployeeView *view);
     ~EmployeeController() {};
 
-    // For adding, removing and inspecting the Model objects
+    // For adding, updating, removing and inspecting the Model objects
     bool createEmployee(employee_types::type typ,
                      string newFirstName, string newLastName, string newSsn,
+                     double newMonthlySalary, double newHourlySalary,
+                     double newDoneHours, double newBonus, bool newOutcomeClaim);
+    bool updateEmployee(string ssn,
+                     string newFirstName, string newLastName,
                      double newMonthlySalary, double newHourlySalary,
                      double newDoneHours, double newBonus, bool newOutcomeClaim);
     bool removeEmployee(string ssn);
@@ -62,13 +68,15 @@ public:
     void updateView();
 
     // Methods that handle messages from View to Controller
-    bool handleEventCreateEmployee(employee_types::type typ,
+    void handleEventCreateEmployee(employee_types::type typ,
                      string newFirstName, string newLastName, string newSsn,
                      double newMonthlySalary, double newHourlySalary,
                      double newDoneHours, double newBonus, bool newOutcomeClaim);
-
-    // Implemented observer methods
-    bool handleEventRemoveEmployee(string ssn);
+    void handleEventRemoveEmployee(string ssn);
+    void handleEventUpdateEmployee(string newSsn,
+                             string newFirstName, string newLastName,
+                             double newMonthlySalary, double newHourlySalary,
+                             double newDoneHours, double newBonus, bool newOutcomeClaim);
     void handleEventPrintEmployees();
     void handleEventRequestViewUpdate();
     Employee* handleEventGetEmployee(string ssn);

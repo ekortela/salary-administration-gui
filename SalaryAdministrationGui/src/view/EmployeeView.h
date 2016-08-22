@@ -25,7 +25,7 @@ class EmployeeView: public QMainWindow {
 public:
     explicit EmployeeView(QWidget *parent = 0);
     ~EmployeeView();
-    void registerObserver(IObserver *m_observer);
+    void registerObserver(IController *m_observer);
     void addToEmployeeList(string firstName, string lastName, string payType);
     void updateEmployeeList(vector<Employee *> model);
     void popInfoBox(string message);
@@ -59,7 +59,7 @@ private:
     QFile *m_xmlFile;
     QXmlStreamReader *m_xmlReader;
 
-    IObserver *m_observer = nullptr;
+    IController *m_observer = nullptr;
 
     void createMenuBar();
     void createTreeWidget();
