@@ -111,9 +111,9 @@ void EmployeeView::createTreeWidget()
 
     QStringList labels;
     labels
-        << getQStringFromXml("treewidget1")
-        << getQStringFromXml("treewidget2")
-        << getQStringFromXml("treewidget3");
+        << getQStringFromXml("editor_lastname")
+        << getQStringFromXml("editor_firstname")
+        << getQStringFromXml("editor_ssn");
 
     m_treeWidget->setHeaderLabels(labels);
 
@@ -537,7 +537,7 @@ void EmployeeView::loadLastSavedConfig() {
         }
 
     } else {
-        popInfoBox("No existing configuration file" + CONFIGURATION_FILEPATH + "found");
+        popInfoBox("No existing configuration file " + CONFIGURATION_FILEPATH + " found");
     }
 
    ifs.close();

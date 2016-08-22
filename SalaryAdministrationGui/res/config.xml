@@ -7,9 +7,6 @@
 	<menu_load>Load Emloyees..</menu_load>
 	<menu_help>Help</menu_help>
 	<menu_exit>Exit</menu_exit>
-	<treewidget1>Last name</treewidget1>
-	<treewidget2>First name</treewidget2>
-	<treewidget3>SSN</treewidget3>
 	<button_clear_form>Clear form</button_clear_form>
 	<button_save_emp>Save Employee</button_save_emp>
 	<button_delete_emp>Delete Employee</button_delete_emp>
@@ -22,7 +19,4 @@
 	<editor_hour_sal>Hourly salary (EUR)</editor_hour_sal>
 	<editor_claim>Outcome claim:</editor_claim>
 	<editor_bonus>Bonus (%)</editor_bonus>
-	<treewidget1>Last name</treewidget1>
-	<treewidget2>First name(s)</treewidget2>
-	<treewidget3>SSN</treewidget3>
 </view_strings>
