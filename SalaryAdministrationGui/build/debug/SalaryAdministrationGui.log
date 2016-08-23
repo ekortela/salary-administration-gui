@@ -1,0 +1,110 @@
+23-08-2016 17:26:43:781 - INFO - (src\view\EmployeeView.cpp, EmployeeView::EmployeeView(QWidget*), 16): >>>>>>>>>>>>>>>>>>> EXECUTION STARTED <<<<<<<<<<<<<<<<<<<<<<<
+23-08-2016 17:26:43:790 - DEBUG - (src\view\EmployeeView.cpp, void EmployeeView::popInfoBox(std::__cxx11::string), 286): QmessageBox printing message: " "No existing configuration file config.cfg found" "
+23-08-2016 17:26:45:729 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: main_window: " "SalaryAdmininstrationGui"
+23-08-2016 17:26:45:752 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: menu_main: " "File.."
+23-08-2016 17:26:45:774 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: menu_new: " "New.."
+23-08-2016 17:26:45:794 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: menu_save: " "Save Employees As.."
+23-08-2016 17:26:45:815 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: menu_load: " "Load Emloyees.."
+23-08-2016 17:26:45:849 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_ssn: " "SSN:"
+23-08-2016 17:26:45:873 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_firstname: " "First name(s):"
+23-08-2016 17:26:45:895 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_lastname: " "Last name:"
+23-08-2016 17:26:45:925 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_lastname: " "Last name:"
+23-08-2016 17:26:45:950 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_firstname: " "First name(s):"
+23-08-2016 17:26:45:973 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_ssn: " "SSN:"
+23-08-2016 17:26:45:994 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_pay_type: " "Pay type:"
+23-08-2016 17:26:46:017 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_mon_sal: " "Monthly salary (EUR)"
+23-08-2016 17:26:46:041 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_hour_sal: " "Hourly salary (EUR)"
+23-08-2016 17:26:46:065 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_hours_done: " "Hours done:"
+23-08-2016 17:26:46:087 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_claim: " "Outcome claim:"
+23-08-2016 17:26:46:109 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_bonus: " "Bonus (%)"
+23-08-2016 17:26:46:132 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: button_save_emp: " "Save Employee"
+23-08-2016 17:26:46:155 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: button_delete_emp: " "Delete Employee"
+23-08-2016 17:26:46:178 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: button_clear_form: " "Clear form"
+23-08-2016 17:26:46:231 - DEBUG - (src\view\EmployeeView.cpp, void EmployeeView::popInfoBox(std::__cxx11::string), 286): QmessageBox printing message: " "No previously saved employee list was found" "
+23-08-2016 17:26:47:494 - CRITICAL - (src\controller\EmployeeController.cpp, virtual void EmployeeController::handleEventLoadModelStateFromFile(std::__cxx11::string), 555): No model parameters file "model.state" found!
+23-08-2016 17:26:50:037 - DEBUG - (src\view\EmployeeView.cpp, void EmployeeView::handleSaveAsClick(), 581): Menu item '/Save'/ click detected!!
+23-08-2016 17:26:55:197 - DEBUG - (src\controller\EmployeeController.cpp, virtual void EmployeeController::handleEventSaveModelStateToFile(std::__cxx11::string), 480): Loaded employee data count: monthly:  0 , hourly:  0 , salesman:  0
+23-08-2016 17:26:55:208 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 584): Writing type: Monthly
+23-08-2016 17:26:55:215 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 609): Wrote 0 Monthly to file
+23-08-2016 17:26:55:222 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 584): Writing type: Hourly
+23-08-2016 17:26:55:229 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 609): Wrote 0 Hourly to file
+23-08-2016 17:26:55:236 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 584): Writing type: Salesman
+23-08-2016 17:26:55:243 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 609): Wrote 0 Salesman to file
+23-08-2016 17:26:55:251 - INFO - (src\controller\EmployeeController.cpp, virtual void EmployeeController::handleEventSaveModelStateToFile(std::__cxx11::string), 490): "Model state saved in file C:/Users/Elisa/Documents/aa.cfg"
+23-08-2016 17:27:00:212 - DEBUG - (src\view\EmployeeView.cpp, void EmployeeView::handlePayTypeChange(), 486): Pay type menu active index changed!
+23-08-2016 17:27:02:046 - DEBUG - (src\view\EmployeeView.cpp, void EmployeeView::handleSaveButtonClick(), 328): Save button was clicked!
+23-08-2016 17:27:02:066 - DEBUG - (src\view\EmployeeView.cpp, bool EmployeeView::checkIfSSNExists(QString), 316): SSN: "a"
+23-08-2016 17:27:02:078 - DEBUG - (src\controller\EmployeeController.cpp, bool EmployeeController::createEmployee(employee_types::type, std::__cxx11::string, std::__cxx11::string, std::__cxx11::string, double, double, double, double, bool), 30): New employee was added to model with SSN:  "a"
+23-08-2016 17:27:02:101 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::updateView(), 404): Controller updated View
+23-08-2016 17:27:06:470 - DEBUG - (src\view\EmployeeView.cpp, void EmployeeView::handlePayTypeChange(), 486): Pay type menu active index changed!
+23-08-2016 17:27:09:286 - DEBUG - (src\view\EmployeeView.cpp, void EmployeeView::handleSaveButtonClick(), 328): Save button was clicked!
+23-08-2016 17:27:09:307 - DEBUG - (src\view\EmployeeView.cpp, bool EmployeeView::checkIfSSNExists(QString), 316): SSN: "b"
+23-08-2016 17:27:09:321 - DEBUG - (src\controller\EmployeeController.cpp, bool EmployeeController::createEmployee(employee_types::type, std::__cxx11::string, std::__cxx11::string, std::__cxx11::string, double, double, double, double, bool), 30): New employee was added to model with SSN:  "b"
+23-08-2016 17:27:09:356 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::updateView(), 404): Controller updated View
+23-08-2016 17:27:11:661 - DEBUG - (src\view\EmployeeView.cpp, void EmployeeView::handleSaveAsClick(), 581): Menu item '/Save'/ click detected!!
+23-08-2016 17:27:23:689 - DEBUG - (src\controller\EmployeeController.cpp, virtual void EmployeeController::handleEventSaveModelStateToFile(std::__cxx11::string), 480): Loaded employee data count: monthly:  1 , hourly:  1 , salesman:  0
+23-08-2016 17:27:23:703 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 584): Writing type: Monthly
+23-08-2016 17:27:23:710 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 609): Wrote 1 Monthly to file
+23-08-2016 17:27:23:717 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 584): Writing type: Hourly
+23-08-2016 17:27:23:724 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 609): Wrote 1 Hourly to file
+23-08-2016 17:27:23:731 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 584): Writing type: Salesman
+23-08-2016 17:27:23:738 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 609): Wrote 0 Salesman to file
+23-08-2016 17:27:23:745 - INFO - (src\controller\EmployeeController.cpp, virtual void EmployeeController::handleEventSaveModelStateToFile(std::__cxx11::string), 490): "Model state saved in file C:/Users/Elisa/Documents/aa.cfg"
+23-08-2016 17:27:25:517 - DEBUG - (src\view\EmployeeView.cpp, void EmployeeView::handleLoadClick(), 595): Menu item '/Load'/  click detected!!
+23-08-2016 17:27:30:433 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::updateView(), 404): Controller updated View
+23-08-2016 17:27:30:441 - DEBUG - (src\controller\EmployeeController.cpp, virtual void EmployeeController::handleEventLoadModelStateFromFile(std::__cxx11::string), 508): File employee count: monthly:  1 , hourly:  1 , salesman:  0
+23-08-2016 17:27:30:454 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::updateView(), 404): Controller updated View
+23-08-2016 17:27:40:509 - DEBUG - (src\view\EmployeeView.cpp, void EmployeeView::handleExitClick(), 504): Exit click detected!!
+23-08-2016 17:27:41:366 - DEBUG - (src\view\EmployeeView.cpp, bool EmployeeView::popQuestionBox(std::__cxx11::string, std::__cxx11::string), 307): Yes was clicked
+23-08-2016 17:27:41:388 - DEBUG - (src\controller\EmployeeController.cpp, virtual void EmployeeController::handleEventSaveModelStateToFile(std::__cxx11::string), 480): Loaded employee data count: monthly:  2 , hourly:  2 , salesman:  0
+23-08-2016 17:27:41:415 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 584): Writing type: Monthly
+23-08-2016 17:27:41:431 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 609): Wrote 2 Monthly to file
+23-08-2016 17:27:41:444 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 584): Writing type: Hourly
+23-08-2016 17:27:41:457 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 609): Wrote 2 Hourly to file
+23-08-2016 17:27:41:470 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 584): Writing type: Salesman
+23-08-2016 17:27:41:483 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 609): Wrote 0 Salesman to file
+23-08-2016 17:27:41:497 - INFO - (src\controller\EmployeeController.cpp, virtual void EmployeeController::handleEventSaveModelStateToFile(std::__cxx11::string), 490): "Model state saved in file model.state"
+23-08-2016 17:27:41:512 - INFO - (src\view\EmployeeView.cpp, void EmployeeView::saveCurrentConfig(), 533): Current configuration saved in "config.cfg" 
+23-08-2016 17:27:41:524 - INFO - (src\view\EmployeeView.cpp, virtual EmployeeView::~EmployeeView(), 40): >>>>>>>>>>>>>>>>>>> EXECUTION STOPPED <<<<<<<<<<<<<<<<<<<<<<<
+23-08-2016 17:31:19:735 - INFO - (src\view\EmployeeView.cpp, EmployeeView::EmployeeView(QWidget*), 16): >>>>>>>>>>>>>>>>>>> EXECUTION STARTED <<<<<<<<<<<<<<<<<<<<<<<
+23-08-2016 17:31:19:741 - INFO - (src\view\EmployeeView.cpp, void EmployeeView::loadLastSavedConfig(), 546): Previously saved configuration loaded from "config.cfg"
+23-08-2016 17:31:19:746 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: main_window: " "SalaryAdmininstrationGui"
+23-08-2016 17:31:19:759 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: menu_main: " "File.."
+23-08-2016 17:31:19:766 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: menu_new: " "New.."
+23-08-2016 17:31:19:771 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: menu_save: " "Save Employees As.."
+23-08-2016 17:31:19:777 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: menu_load: " "Load Emloyees.."
+23-08-2016 17:31:19:783 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: menu_about: " "About"
+23-08-2016 17:31:19:788 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: menu_quit: " "Exit"
+23-08-2016 17:31:19:799 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_ssn: " "SSN:"
+23-08-2016 17:31:19:805 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_firstname: " "First name(s):"
+23-08-2016 17:31:19:812 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_lastname: " "Last name:"
+23-08-2016 17:31:19:840 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_lastname: " "Last name:"
+23-08-2016 17:31:19:847 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_firstname: " "First name(s):"
+23-08-2016 17:31:19:854 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_ssn: " "SSN:"
+23-08-2016 17:31:19:860 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_pay_type: " "Pay type:"
+23-08-2016 17:31:19:866 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_mon_sal: " "Monthly salary (EUR)"
+23-08-2016 17:31:19:873 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_hour_sal: " "Hourly salary (EUR)"
+23-08-2016 17:31:19:880 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_hours_done: " "Hours done:"
+23-08-2016 17:31:19:886 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_claim: " "Outcome claim:"
+23-08-2016 17:31:19:892 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: editor_bonus: " "Bonus (%)"
+23-08-2016 17:31:19:898 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: button_save_emp: " "Save Employee"
+23-08-2016 17:31:19:905 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: button_delete_emp: " "Delete Employee"
+23-08-2016 17:31:19:911 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: button_clear_form: " "Clear form"
+23-08-2016 17:31:19:938 - DEBUG - (src\controller\EmployeeController.cpp, virtual void EmployeeController::handleEventLoadModelStateFromFile(std::__cxx11::string), 508): File employee count: monthly:  2 , hourly:  2 , salesman:  0
+23-08-2016 17:31:19:946 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::updateView(), 404): Controller updated View
+23-08-2016 17:31:22:933 - DEBUG - (src\view\EmployeeView.cpp, void EmployeeView::handleSaveAsClick(), 581): Menu item '/Save'/ click detected!!
+23-08-2016 17:31:22:956 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: dialog_save_title: " "Save Employees As.."
+23-08-2016 17:31:26:605 - DEBUG - (src\view\EmployeeView.cpp, void EmployeeView::handleLoadClick(), 595): Menu item '/Load'/  click detected!!
+23-08-2016 17:31:26:628 - DEBUG - (src\view\EmployeeView.cpp, QString EmployeeView::getQStringFromXml(std::__cxx11::string), 64): "Read xml parameter: dialog_load_title: " "Load Employees from file"
+23-08-2016 17:31:33:431 - DEBUG - (src\view\EmployeeView.cpp, void EmployeeView::handleExitClick(), 504): Exit click detected!!
+23-08-2016 17:31:34:126 - DEBUG - (src\view\EmployeeView.cpp, bool EmployeeView::popQuestionBox(std::__cxx11::string, std::__cxx11::string), 307): Yes was clicked
+23-08-2016 17:31:34:148 - DEBUG - (src\controller\EmployeeController.cpp, virtual void EmployeeController::handleEventSaveModelStateToFile(std::__cxx11::string), 480): Loaded employee data count: monthly:  2 , hourly:  2 , salesman:  0
+23-08-2016 17:31:34:166 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 584): Writing type: Monthly
+23-08-2016 17:31:34:182 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 609): Wrote 2 Monthly to file
+23-08-2016 17:31:34:198 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 584): Writing type: Hourly
+23-08-2016 17:31:34:214 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 609): Wrote 2 Hourly to file
+23-08-2016 17:31:34:230 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 584): Writing type: Salesman
+23-08-2016 17:31:34:246 - DEBUG - (src\controller\EmployeeController.cpp, void EmployeeController::writeEmployeeTypeToStream(std::ofstream&, employee_types::type), 609): Wrote 0 Salesman to file
+23-08-2016 17:31:34:262 - INFO - (src\controller\EmployeeController.cpp, virtual void EmployeeController::handleEventSaveModelStateToFile(std::__cxx11::string), 490): "Model state saved in file model.state"
+23-08-2016 17:31:34:281 - INFO - (src\view\EmployeeView.cpp, void EmployeeView::saveCurrentConfig(), 533): Current configuration saved in "config.cfg" 
+23-08-2016 17:31:34:293 - INFO - (src\view\EmployeeView.cpp, virtual EmployeeView::~EmployeeView(), 40): >>>>>>>>>>>>>>>>>>> EXECUTION STOPPED <<<<<<<<<<<<<<<<<<<<<<<

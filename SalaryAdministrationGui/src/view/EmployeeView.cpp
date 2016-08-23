@@ -86,20 +86,30 @@ QString EmployeeView::getQStringFromXml(string parameterName) {
 
 void EmployeeView::createMenuBar() {
     m_menuBar = new QMenuBar(this);
-    m_mainLayout->setMenuBar(m_menuBar);
+        m_mainLayout->setMenuBar(m_menuBar);
 
-    m_fileMenu = new QMenu(getQStringFromXml("menu_main"));
-    m_menuBar->addMenu(m_fileMenu);
-    m_fileMenu->addAction(getQStringFromXml("menu_new"));
-    m_fileMenu->addAction(getQStringFromXml("menu_save"));
-    m_fileMenu->addAction(getQStringFromXml("menu_load"));
-    m_fileMenu->addSeparator();
-    m_fileMenu->addAction(getQStringFromXml("menu_help"));
-    m_fileMenu->addSeparator();
-//    m_fileMenu->addAction(getQStringFromXml("menu_exit"));
-    m_quitAction = new QAction(tr("&Quit"), this);
-    m_fileMenu->addAction(m_quitAction);
-    connect(m_quitAction, &QAction::triggered, this, &EmployeeView::handleExitClick );
+        m_fileMenu = new QMenu(getQStringFromXml("menu_main"));
+
+        m_newAction = new QAction(getQStringFromXml("menu_new"), this);
+        m_saveAsAction = new QAction(getQStringFromXml("menu_save"), this);
+        m_loadAction = new QAction(getQStringFromXml("menu_load"), this);
+        m_aboutAction = new QAction(getQStringFromXml("menu_about"), this);
+        m_quitAction = new QAction(getQStringFromXml("menu_quit"), this);
+
+        m_menuBar->addMenu(m_fileMenu);
+        m_fileMenu->addAction(m_newAction);
+        m_fileMenu->addAction(m_saveAsAction);
+        m_fileMenu->addAction(m_loadAction);
+        m_fileMenu->addSeparator();
+        m_fileMenu->addAction(m_aboutAction);
+        m_fileMenu->addSeparator();
+        m_fileMenu->addAction(m_quitAction);
+
+        connect(m_newAction, &QAction::triggered, this, &EmployeeView::handleNewClick );
+        connect(m_saveAsAction, &QAction::triggered, this, &EmployeeView::handleSaveAsClick );
+        connect(m_loadAction, &QAction::triggered, this, &EmployeeView::handleLoadClick);
+        connect(m_aboutAction, &QAction::triggered, this, &EmployeeView::handleAboutClick );
+        connect(m_quitAction, &QAction::triggered, this, &EmployeeView::handleExitClick );
 }
 
 
@@ -565,4 +575,41 @@ void EmployeeView::loadLastModelStateFromFile(const string filepath) {
         popErrorBox("Unable to load model state: Observer is null!");
         qCritical() << "Unable to load model state: Observer is null!";
     }
+}
+
+void EmployeeView::handleSaveAsClick() {
+    qDebug() << "Menu item '/Save'/ click detected!!";
+
+    QString filepath = QFileDialog::getSaveFileName(this,
+            getQStringFromXml("dialog_save_title"), "",
+            tr("(*.cfg)"));
+
+    if (filepath.isEmpty())
+            return;
+    else {
+        m_observer->handleEventSaveModelStateToFile(filepath.toStdString());
+    }
+}
+
+void EmployeeView::handleLoadClick() {
+    qDebug() << "Menu item '/Load'/  click detected!!";
+
+    QString filepath = QFileDialog::getOpenFileName(this,
+            getQStringFromXml("dialog_load_title"), "",
+            tr("(*.cfg)"));
+
+    if (filepath.isEmpty())
+            return;
+    else {
+        m_observer->handleEventRequestViewUpdate();
+        m_observer->handleEventLoadModelStateFromFile(filepath.toStdString());
+    }
+}
+
+void EmployeeView::handleNewClick() {
+    qDebug() << "Menu item '/New'/  click detected!!";
+}
+
+void EmployeeView::handleAboutClick() {
+    qDebug() << "Menu item '/About'/  click detected!!";
 }
