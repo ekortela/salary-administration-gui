@@ -8,7 +8,7 @@
 #include "EmployeeView.h"
 #include "EmployeeControllerException.h"
 
-const string EmployeeView::MODEL_STATE_FILEPATH = "model.state";
+const string EmployeeView::MODEL_STATE_FILEPATH = "model";
 
 
 EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
@@ -35,8 +35,6 @@ EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
 
 
 EmployeeView::~EmployeeView() {
-//    saveCurrentModelStateToFile();
-//    saveCurrentConfig();
     qInfo() << ">>>>>>>>>>>>>>>>>>> EXECUTION STOPPED <<<<<<<<<<<<<<<<<<<<<<<";
 }
 
@@ -373,6 +371,7 @@ void EmployeeView::handleSaveButtonClick() {
                 popErrorBox("Invalid employee type: " + string(employeeTypetoString(typ)) );
                 break;
             }
+            saveCurrentModelStateToFile();
 
         } catch (ec::EmployeeAlreadyExistsException &e1) {
             popErrorBox("Employee already exists: " + string(e1.what()) );
@@ -422,6 +421,7 @@ void EmployeeView::handleDeleteButtonClick() {
                     }
                 }
             }
+            saveCurrentModelStateToFile();
         }
 
     } else {
@@ -565,6 +565,7 @@ void EmployeeView::saveCurrentModelStateToFile(const string filepath) {
     if (m_observer != nullptr) {
         m_observer->handleEventSaveModelStateToFile(filepath);
         configLastModelStateFilepath = filepath;
+        qDebug() << "Model state saved.";
 
     } else {
         popErrorBox("Unable to save model state: Observer is null!");
@@ -576,7 +577,6 @@ void EmployeeView::saveCurrentModelStateToFile(const string filepath) {
 void EmployeeView::loadLastModelStateFromFile(const string filepath) {
     if (m_observer != nullptr) {
         m_observer->handleEventLoadModelStateFromFile(filepath);
-
     } else{
         popErrorBox("Unable to load model state: Observer is null!");
         qCritical() << "Unable to load model state: Observer is null!";
@@ -586,7 +586,7 @@ void EmployeeView::loadLastModelStateFromFile(const string filepath) {
 bool EmployeeView::popSaveEmployeesBox() {
 
     QString filepath = QFileDialog::getSaveFileName(this,
-            getQStringFromXml("dialog_save_title"), "",
+            getQStringFromXml("menu_save"), "",
             getQStringFromXml("menu_file_extension"));
 
     if (filepath.isEmpty())
@@ -602,13 +602,15 @@ bool EmployeeView::popSaveEmployeesBox() {
 bool EmployeeView::popLoadEmployeesBox() {
 
     QString filepath = QFileDialog::getOpenFileName(this,
-            getQStringFromXml("dialog_load_title"), "",
+            getQStringFromXml("menu_load"), "",
             getQStringFromXml("menu_file_extension"));
 
     if (filepath.isEmpty())
         return false;
     else {
+        m_observer->handleEventClearEmployees();
         m_observer->handleEventLoadModelStateFromFile(filepath.toStdString());
+        saveCurrentModelStateToFile();
     }
     return true;
 }
@@ -621,13 +623,15 @@ void EmployeeView::handleSaveAsClick() {
 
 void EmployeeView::handleLoadClick() {
     qDebug() << "Menu item '/Load'/  click detected!!";
-    popLoadEmployeesBox();
+    if(popQuestionBox(getQStringFromXml("menu_load").toStdString(), "This operation will clear existing employees list. Are you sure?")) {
+        popLoadEmployeesBox();
+    }
 }
 
 void EmployeeView::handleNewClick() {
     qDebug() << "Menu item '/New'/  click detected!!";
 
-    if( popQuestionBox("Create new employee list", "Pressing 'Yes' will open a dialog to save the current list.")) {
+    if( popQuestionBox(getQStringFromXml("menu_new").toStdString(), "Pressing 'Yes' will open a dialog to save the current employee list.")) {
         if (popSaveEmployeesBox() ) {
             m_observer->handleEventClearEmployees();
             popInfoBox("Employee -list has been cleared.");

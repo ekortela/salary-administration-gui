@@ -21,9 +21,7 @@
 	<editor_hour_sal>Hourly salary (EUR)</editor_hour_sal>
 	<editor_claim>Outcome claim:</editor_claim>
 	<editor_bonus>Bonus (%)</editor_bonus>
-	<dialog_load_title>Load Employees from file</dialog_load_title>
-	<dialog_save_title>Save Employees As..</dialog_save_title>
-    <menu_about_text> This application has been developed as study project for
+    <menu_about_text>This application has been developed as study project for
 811375A User Interface Programming -course during academic year 
 2016 at the University of Oulu.
 
