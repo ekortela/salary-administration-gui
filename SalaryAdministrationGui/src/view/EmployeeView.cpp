@@ -340,7 +340,7 @@ void EmployeeView::handleSaveButtonClick() {
     qDebug() << "Save button was clicked!";
 
     if (checkIfSSNExists(m_SSNEdit->text())) {
-        if (!popQuestionBox("Rewrite employee", "Are you sure you want to rewrite the employee data?")) {
+        if (!popQuestionBox(getQStringFromXml("button_save_title").toStdString(), getQStringFromXml("button_save_text").toStdString())) {
             return;
         }
         m_observer->handleEventRemoveEmployee(m_SSNEdit->text().toStdString());
@@ -376,19 +376,19 @@ void EmployeeView::handleSaveButtonClick() {
                 break;
 
             default:
-                popErrorBox("Invalid employee type: " + string(employeeTypetoString(typ)) );
+                popErrorBox(getQStringFromXml("error_invalid_emp_type").toStdString() + string(employeeTypetoString(typ)) );
                 break;
             }
             saveCurrentModelStateToFile();
 
         } catch (ec::EmployeeAlreadyExistsException &e1) {
-            popErrorBox("Employee already exists: " + string(e1.what()) );
+            popErrorBox(getQStringFromXml("error_emp_already_exists").toStdString() + string(e1.what()) );
 
         } catch (ec::EmployeeTypeInvalidException &e2) {
-            popErrorBox("Unexpected caused by invalid employee type: " + string(e2.what()) );
+            popErrorBox(getQStringFromXml("error_unexpected_invalid_emp").toStdString() + string(e2.what()) );
 
         } catch (exception &e) {
-            popErrorBox("Unhandled error: " + string(e.what()) );
+            popErrorBox(getQStringFromXml("error_unhandled").toStdString() + string(e.what()) );
         }
     }
     else {
@@ -406,7 +406,7 @@ void EmployeeView::handleDeleteButtonClick() {
         string fname = m_treeWidget->currentItem()->text(1).toStdString();
         string ssnStr = m_treeWidget->currentItem()->text(2).toStdString();
 
-        if(popQuestionBox("Employee deletion", "Are you sure you want to delete the employee:\n   " + lname + ", " + fname + " (SSN: " + ssnStr + ") ?") ) {
+        if(popQuestionBox(getQStringFromXml("button_delete_title").toStdString(), getQStringFromXml("button_delete_text").toStdString() + lname + ", " + fname + " (SSN: " + ssnStr + ") ?") ) {
 
             for (int i = 0; i < employeeList.size(); i++) {
 
@@ -418,14 +418,15 @@ void EmployeeView::handleDeleteButtonClick() {
                     try {
 
                         m_observer->handleEventRemoveEmployee(curSsn.toStdString() );
-                        popInfoBox("Employee (SSN: " + ssn.toStdString() + ") deleted");
+                        popInfoBox(getQStringFromXml("button_delete_complete1").toStdString() + ssn.toStdString() + getQStringFromXml("button_delete_complete2").toStdString());
+                        handleClearFormButton();
                         break;
 
                     } catch( ec::SsnDoesNotExistException &e1) {
-                        popErrorBox("Unable to delete employee! " + string(e1.what()) );
+                        popErrorBox(getQStringFromXml("error_unable_to_delete_emp").toStdString() + string(e1.what()) );
 
                     } catch(exception &e) {
-                        popErrorBox("Unknown exception occurred: " + string(e.what()) );
+                        popErrorBox(getQStringFromXml("error_unknown_exception").toStdString() + string(e.what()) );
                     }
                 }
             }
@@ -433,7 +434,7 @@ void EmployeeView::handleDeleteButtonClick() {
         }
 
     } else {
-        popErrorBox("Unable to delete! No employee selected.");
+        popErrorBox(getQStringFromXml("error_unable_to_delete").toStdString());
     }
 }
 
@@ -517,7 +518,7 @@ void EmployeeView::handlePayTypeChange() {
 void EmployeeView::handleExitClick() {
     qDebug() << "Exit click detected!!";
 
-    if(popQuestionBox("Exit", "Are you sure to exit the program?")) {
+    if(popQuestionBox(getQStringFromXml("menu_quit_title").toStdString(), getQStringFromXml("menu_quit_text").toStdString())) {
         saveCurrentModelStateToFile();
         saveCurrentConfig();
         close();
@@ -555,13 +556,13 @@ void EmployeeView::loadLastSavedConfig() {
     if (ifs.good())
     {
         if( !(ifs >> (*this) )) {
-            popErrorBox("Unable to load previously saved configuration from " + CONFIGURATION_FILEPATH + "");
+            popErrorBox(getQStringFromXml("error_unable_to_load_prev_config").toStdString() + CONFIGURATION_FILEPATH + "");
         } else {
             qInfo() << "Previously saved configuration loaded from" << QString::fromStdString(CONFIGURATION_FILEPATH);
         }
 
     } else {
-        popInfoBox("No existing configuration file " + CONFIGURATION_FILEPATH + " found");
+        popInfoBox(getQStringFromXml("info_no_existing_config").toStdString() + CONFIGURATION_FILEPATH);
     }
 
    ifs.close();
@@ -576,7 +577,7 @@ void EmployeeView::saveCurrentModelStateToFile(const string filepath) {
         qDebug() << "Model state saved.";
 
     } else {
-        popErrorBox("Unable to save model state: Observer is null!");
+        popErrorBox(getQStringFromXml("error_observer_is_null").toStdString());
         qCritical() << "Unable to save model state: Observer is null!";
     }
 }
@@ -586,7 +587,7 @@ void EmployeeView::loadLastModelStateFromFile(const string filepath) {
     if (m_observer != nullptr) {
         m_observer->handleEventLoadModelStateFromFile(filepath);
     } else{
-        popErrorBox("Unable to load model state: Observer is null!");
+        popErrorBox(getQStringFromXml("error_observer_is_null").toStdString());
         qCritical() << "Unable to load model state: Observer is null!";
     }
 }
@@ -601,7 +602,7 @@ bool EmployeeView::popSaveEmployeesBox() {
             return false;
     else {
         m_observer->handleEventSaveModelStateToFile(filepath.toStdString());
-        popInfoBox("Employees saved to file " + filepath.toStdString());
+        popInfoBox(getQStringFromXml("menu_save_complete").toStdString() + filepath.toStdString());
     }
     return true;
 }
@@ -645,12 +646,12 @@ void EmployeeView::handleNewClick() {
     qDebug() << "Menu item '/New'/  click detected!!";
 
     if (employeeList.size() > 0) {
-        if (popQuestionBox("Create new employee list", "Would you like to save the current list?")) {
+        if (popQuestionBox(getQStringFromXml("menu_new_title").toStdString(), getQStringFromXml("menu_new_text").toStdString())) {
             popSaveEmployeesBox();
         }
         m_observer->handleEventClearEmployees();
         handleClearFormButton();
-        popInfoBox("Employee -list has been cleared.");
+        popInfoBox(getQStringFromXml("menu_new_complete").toStdString());
     }
 }
 

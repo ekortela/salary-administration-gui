@@ -4,14 +4,34 @@
 	<menu_main>File</menu_main>
 	<menu_new>New..</menu_new>
 	<menu_save>Save Employees As..</menu_save>
+	<menu_save_complete>Employees saved to file </menu_save_complete>
 	<menu_load>Load Emloyees..</menu_load>
     <menu_file_extension>(*.csv)</menu_file_extension>
 	<menu_about>About</menu_about>
 	<menu_help>Help</menu_help>
 	<menu_quit>Exit</menu_quit>
+	<menu_quit_title>Exit</menu_quit_title>
+	<menu_quit_text>Are you sure to exit the program?</menu_quit_text>
+	<menu_about_text>This application has been developed as study project for
+811375A User Interface Programming -course during academic year 
+2016 at the University of Oulu.
+
+Authors:
+Aapo Keskimölö   Software Design and Architecture, Test Automation
+Elisa Kortela    Graphical User Interface Design </menu_about_text>
+	<menu_new_title>Create new employee list</menu_new_title>
+	<menu_new_text>Would you like to save the current list?</menu_new_text>
+	<menu_new_complete>The employee list has been cleared.</menu_new_complete>
 	<button_clear_form>Clear form</button_clear_form>
 	<button_save_emp>Save Employee</button_save_emp>
+	<button_save_title>Rewrite employee</button_save_title>
+	<button_save_text>Are you sure you want to rewrite the employee data?</button_save_text>	
 	<button_delete_emp>Delete Employee</button_delete_emp>
+	<button_delete_title>Employee deletion</button_delete_title>
+	<button_delete_text>Are you sure you want to delete the employee:
+	</button_delete_text>
+	<button_delete_complete1>Employee (SSN: </button_delete_complete1>
+	<button_delete_complete2>) deleted</button_delete_complete2>	
 	<editor_firstname>First name(s):</editor_firstname>
 	<editor_lastname>Last name:</editor_lastname>
 	<editor_ssn>SSN:</editor_ssn>
@@ -20,12 +40,15 @@
 	<editor_mon_sal>Monthly salary (EUR)</editor_mon_sal>
 	<editor_hour_sal>Hourly salary (EUR)</editor_hour_sal>
 	<editor_claim>Outcome claim:</editor_claim>
-	<editor_bonus>Bonus (%)</editor_bonus>
-    <menu_about_text>This application has been developed as study project for
-811375A User Interface Programming -course during academic year 
-2016 at the University of Oulu.
-
-Authors:
-Aapo Keskimölö   Software Design and Architecture, Test Automation
-Elisa Kortela    Graphical User Interface Design </menu_about_text>
+	<editor_bonus>Bonus (%)</editor_bonus>    
+	<error_observer_is_null>Unable to load model state: Observer is null!</error_observer_is_null>
+	<error_unable_to_load_prev_config>Unable to load previously saved configuration from </error_unable_to_load_prev_config>
+	<error_unable_to_delete>Unable to delete! No employee selected.</error_unable_to_delete>
+	<error_unable_to_delete_emp>Unable to delete employee! </error_unable_to_delete_emp>
+	<error_unknown_exception>Unknown exception occurred: </error_unknown_exception>
+	<error_invalid_emp_type>Invalid employee type: </error_invalid_emp_type>
+	<error_emp_already_exists>Employee already exists: </error_emp_already_exists>
+	<error_unexpected_invalid_emp>Unexpected caused by invalid employee type: </error_unexpected_invalid_emp>
+	<error_unhandled>Unhandled error: </error_unhandled>	
+	<info_no_existing_config>No existing configuration file found at path: </info_no_existing_config>
 </view_strings>
