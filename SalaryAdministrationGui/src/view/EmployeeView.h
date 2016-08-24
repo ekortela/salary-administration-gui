@@ -15,7 +15,7 @@
 #include "MonthlyPaidEmployee.h"
 #include "HourlyPaidEmployee.h"
 #include "SalesmanEmployee.h"
-#include "IObserver.h"
+#include "IController.h"
 
 
 class EmployeeView: public QMainWindow {
@@ -54,7 +54,7 @@ private:
     QMenuBar *m_menuBar;
     QMenu *m_fileMenu;
     QList<QTreeWidgetItem *> employeeList;
-    QAction *m_quitAction;
+    QAction *m_saveAsAction, *m_loadAction, *m_newAction, *m_aboutAction, *m_quitAction;
 
     QFile *m_xmlFile;
     QXmlStreamReader *m_xmlReader;
@@ -101,4 +101,8 @@ private slots:
     void handlePayTypeChange();
     void handleClearFormButton();
     void handleExitClick();
+    void handleSaveAsClick();
+    void handleLoadClick();
+    void handleNewClick();
+    void handleAboutClick();
 };

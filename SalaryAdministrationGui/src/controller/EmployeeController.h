@@ -14,7 +14,7 @@
 #include "EmployeeView.h"
 #include "Employee.h"
 #include "EmployeeFactory.h"
-#include "IObserver.h"
+#include "IController.h"
 #include "EmployeeControllerException.h"
 
 
