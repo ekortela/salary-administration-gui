@@ -392,13 +392,6 @@ void EmployeeController::clearEmployees() {
     model.clear();
 }
 
-void EmployeeController::printEmployeeModel() {
-    for (unsigned int i = 0; model.size() > i; i++) {
-        model[i]->printInfo();
-        cout << "\n";
-    }
-}
-
 void EmployeeController::updateView() {
     m_view->updateEmployeeList(model);
     qDebug() << "Controller updated View";
@@ -450,8 +443,9 @@ void EmployeeController::handleEventRemoveEmployee(string ssn) {
     }
 }
 
-void EmployeeController::handleEventPrintEmployees() {
-    printEmployeeModel();
+void EmployeeController::handleEventClearEmployees() {
+    clearEmployees();
+    updateView();
 }
 
 void EmployeeController::handleEventRequestViewUpdate() {
@@ -464,13 +458,6 @@ Employee* EmployeeController::handleEventGetEmployee(string ssn) {
 
 void EmployeeController::handleEventSaveModelStateToFile(string filename) {
     // save objects
-
-//    // test
-//    clearEmployees();
-//    createEmployee(employee_types::MONTHLY_PAID_EMPLOYEE, "Tiina", "Koitaja", "1", 999.0, 0.0, 0.0, 60.0, false);
-//    createEmployee(employee_types::SALESMAN_EMPLOYEE, "First name", "Last name", "3", 2000.0, 0.0, 0.0, 30.0, true);
-//    createEmployee(employee_types::SALESMAN_EMPLOYEE, "Erro", "Makkke", "4", 20.0, 0.0, 0.0, 60.0, false);
-//    createEmployee(employee_types::HOURLY_PAID_EMPLOYEE, "Jani", "Kelpo", "4", 0.0, 19.0, 190.0, 0.0, false);
 
     // open output stream
     ofstream ofs(filename, ios::binary | ios::out);
@@ -512,7 +499,8 @@ void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
             for (unsigned int i = 0; i < es.nMonthly; i++) {
                 MonthlyPaidEmployee *m = new MonthlyPaidEmployee("", "", "", 0.0);
                 if ( ifs >> *m ) {
-                    model.push_back(m);
+                    if (getEmployeeIndex(m->getSocialSecurityNumber()) == -1)
+                        model.push_back(m);
                 } else {
                     m_view->popErrorBox("Load monthly paid employee " + to_string(i) + " failed!");
                 }
@@ -521,7 +509,8 @@ void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
             for (unsigned int i = 0; i < es.nHourly; i++) {
                 HourlyPaidEmployee *m = new HourlyPaidEmployee("", "", "", 0.0, 0.0);
                 if ( ifs >> *m ) {
-                    model.push_back(m);
+                    if (getEmployeeIndex(m->getSocialSecurityNumber()) == -1)
+                        model.push_back(m);
                 } else {
                     m_view->popErrorBox("Load hourly paid employee " + to_string(i) + " failed!");
                 }
@@ -530,7 +519,8 @@ void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
             for (unsigned int i = 0; i < es.nSalesman; i++) {
                 SalesmanEmployee *m = new SalesmanEmployee("", "", "", 0.0, 0.0, false);
                 if ( ifs >> *m ) {
-                    model.push_back(m);
+                    if (getEmployeeIndex(m->getSocialSecurityNumber()) == -1)
+                        model.push_back(m);
                 } else {
                     m_view->popErrorBox("Load salesman object " + to_string(i) + " failed!");
                 }

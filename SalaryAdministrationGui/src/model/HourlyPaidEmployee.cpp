@@ -45,17 +45,6 @@ double HourlyPaidEmployee::getSalary() {
 }
 
 
-void HourlyPaidEmployee::printInfo() {
-    cout << "Type: " << employeeTypetoString(typ) << "\n";
-    cout << "First Name: " << Employee::getFirstName() << "\n";
-    cout << "Last Name: " << Employee::getLastName() << "\n";
-	cout << "SSN: " << Employee::getSocialSecurityNumber() << "\n";
-	cout << "Salary: " << this->getSalary() << "\n";
-	cout << ">Done hours: " << this->getDoneHours() << "\n";
-	cout << ">Hourly salary: " << this->getHourlySalary() << "\n";
-}
-
-
 std::ofstream& operator<<(std::ofstream& os, const HourlyPaidEmployee& e) {
     os << e.firstName.size() << separator;
     os << e.firstName << separator;

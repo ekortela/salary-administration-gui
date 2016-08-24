@@ -22,7 +22,7 @@ EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
 
     m_mainLayout = new QHBoxLayout;
     createMenuBar();
-    createEmployeeInformationView();
+    createEmployeeEditorView();
     createTreeWidget();
     updateLabels();
 
@@ -44,8 +44,8 @@ EmployeeView::~EmployeeView() {
 QString EmployeeView::getQStringFromXml(string parameterName) {
 
     m_xmlFile = new QFile(xml_config_filename);
-
     QString value = "default";
+    bool found = false;
 
     if (m_xmlFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
 
@@ -62,6 +62,7 @@ QString EmployeeView::getQStringFromXml(string parameterName) {
                 if( tag.compare(parameterName) == 0) {
                     value = m_xmlReader->readElementText();
                     qDebug() << "Read xml parameter: " + QString::fromStdString(tag) + ": " << value;
+                    found = true;
                     break;
                 }
             }
@@ -80,36 +81,41 @@ QString EmployeeView::getQStringFromXml(string parameterName) {
     m_xmlReader->clear();
     m_xmlFile->close();
 
+    if(!found) {
+        popErrorBox("Attribute " + parameterName + " was not found in xml!");
+    }
+
     return value;
 }
 
 
 void EmployeeView::createMenuBar() {
+
     m_menuBar = new QMenuBar(this);
-        m_mainLayout->setMenuBar(m_menuBar);
+    m_mainLayout->setMenuBar(m_menuBar);
 
-        m_fileMenu = new QMenu(getQStringFromXml("menu_main"));
+    m_fileMenu = new QMenu(getQStringFromXml("menu_main"));
 
-        m_newAction = new QAction(getQStringFromXml("menu_new"), this);
-        m_saveAsAction = new QAction(getQStringFromXml("menu_save"), this);
-        m_loadAction = new QAction(getQStringFromXml("menu_load"), this);
-        m_aboutAction = new QAction(getQStringFromXml("menu_about"), this);
-        m_quitAction = new QAction(getQStringFromXml("menu_quit"), this);
+    m_newAction = new QAction(getQStringFromXml("menu_new"), this);
+    m_saveAsAction = new QAction(getQStringFromXml("menu_save"), this);
+    m_loadAction = new QAction(getQStringFromXml("menu_load"), this);
+    m_aboutAction = new QAction(getQStringFromXml("menu_about"), this);
+    m_quitAction = new QAction(getQStringFromXml("menu_quit"), this);
 
-        m_menuBar->addMenu(m_fileMenu);
-        m_fileMenu->addAction(m_newAction);
-        m_fileMenu->addAction(m_saveAsAction);
-        m_fileMenu->addAction(m_loadAction);
-        m_fileMenu->addSeparator();
-        m_fileMenu->addAction(m_aboutAction);
-        m_fileMenu->addSeparator();
-        m_fileMenu->addAction(m_quitAction);
+    m_menuBar->addMenu(m_fileMenu);
+    m_fileMenu->addAction(m_newAction);
+    m_fileMenu->addAction(m_saveAsAction);
+    m_fileMenu->addAction(m_loadAction);
+    m_fileMenu->addSeparator();
+    m_fileMenu->addAction(m_aboutAction);
+    m_fileMenu->addSeparator();
+    m_fileMenu->addAction(m_quitAction);
 
-        connect(m_newAction, &QAction::triggered, this, &EmployeeView::handleNewClick );
-        connect(m_saveAsAction, &QAction::triggered, this, &EmployeeView::handleSaveAsClick );
-        connect(m_loadAction, &QAction::triggered, this, &EmployeeView::handleLoadClick);
-        connect(m_aboutAction, &QAction::triggered, this, &EmployeeView::handleAboutClick );
-        connect(m_quitAction, &QAction::triggered, this, &EmployeeView::handleExitClick );
+    connect(m_newAction, &QAction::triggered, this, &EmployeeView::handleNewClick );
+    connect(m_saveAsAction, &QAction::triggered, this, &EmployeeView::handleSaveAsClick );
+    connect(m_loadAction, &QAction::triggered, this, &EmployeeView::handleLoadClick);
+    connect(m_aboutAction, &QAction::triggered, this, &EmployeeView::handleAboutClick );
+    connect(m_quitAction, &QAction::triggered, this, &EmployeeView::handleExitClick );
 }
 
 
@@ -137,9 +143,9 @@ void EmployeeView::createTreeWidget()
 }
 
 
-void EmployeeView::createEmployeeInformationView()
+void EmployeeView::createEmployeeEditorView()
 {
-    // Create structure
+    // Initialize layout and scroll area
     m_leftLayout = new QGridLayout;
     m_scrollArea = new QScrollArea;
 
@@ -577,39 +583,61 @@ void EmployeeView::loadLastModelStateFromFile(const string filepath) {
     }
 }
 
-void EmployeeView::handleSaveAsClick() {
-    qDebug() << "Menu item '/Save'/ click detected!!";
+bool EmployeeView::popSaveEmployeesBox() {
 
     QString filepath = QFileDialog::getSaveFileName(this,
             getQStringFromXml("dialog_save_title"), "",
-            tr("(*.cfg)"));
+            getQStringFromXml("menu_file_extension"));
 
     if (filepath.isEmpty())
-            return;
+            return false;
     else {
         m_observer->handleEventSaveModelStateToFile(filepath.toStdString());
+        popInfoBox("Employees saved to file " + filepath.toStdString());
     }
+    return true;
+}
+
+
+bool EmployeeView::popLoadEmployeesBox() {
+
+    QString filepath = QFileDialog::getOpenFileName(this,
+            getQStringFromXml("dialog_load_title"), "",
+            getQStringFromXml("menu_file_extension"));
+
+    if (filepath.isEmpty())
+        return false;
+    else {
+        m_observer->handleEventLoadModelStateFromFile(filepath.toStdString());
+    }
+    return true;
+}
+
+
+void EmployeeView::handleSaveAsClick() {
+    qDebug() << "Menu item '/Save'/ click detected!!";
+    popSaveEmployeesBox();
 }
 
 void EmployeeView::handleLoadClick() {
     qDebug() << "Menu item '/Load'/  click detected!!";
-
-    QString filepath = QFileDialog::getOpenFileName(this,
-            getQStringFromXml("dialog_load_title"), "",
-            tr("(*.cfg)"));
-
-    if (filepath.isEmpty())
-            return;
-    else {
-        m_observer->handleEventRequestViewUpdate();
-        m_observer->handleEventLoadModelStateFromFile(filepath.toStdString());
-    }
+    popLoadEmployeesBox();
 }
 
 void EmployeeView::handleNewClick() {
     qDebug() << "Menu item '/New'/  click detected!!";
+
+    if( popQuestionBox("Create new employee list", "Pressing 'Yes' will open a dialog to save the current list.")) {
+        if (popSaveEmployeesBox() ) {
+            m_observer->handleEventClearEmployees();
+            popInfoBox("Employee -list has been cleared.");
+        } else {
+            popInfoBox("Operation aborted.");
+        }
+    }
 }
 
 void EmployeeView::handleAboutClick() {
     qDebug() << "Menu item '/About'/  click detected!!";
+    popInfoBox(getQStringFromXml("menu_about_text").toStdString());
 }

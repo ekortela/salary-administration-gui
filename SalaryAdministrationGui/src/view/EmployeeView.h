@@ -63,17 +63,16 @@ private:
 
     void createMenuBar();
     void createTreeWidget();
-    void createEmployeeInformationView();
+    void createEmployeeEditorView();
     void setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus);
     void clearForm();
     QString getQStringFromXml(string parameterName);
     void updateLabels();
     bool checkIfSSNExists(QString ssn);
-
-    // Taman alla on aapon heinia
+    bool popSaveEmployeesBox();
+    bool popLoadEmployeesBox();
 
     const QString xml_config_filename = "../../res/config.xml";
-
     const string CONFIGURATION_FILEPATH = "config.cfg";
     static string const MODEL_STATE_FILEPATH;
 

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <view_strings>
     <main_window>SalaryAdmininstrationGui</main_window>
-	<menu_main>File..</menu_main>
+	<menu_main>File</menu_main>
 	<menu_new>New..</menu_new>
 	<menu_save>Save Employees As..</menu_save>
 	<menu_load>Load Emloyees..</menu_load>
+    <menu_file_extension>(*.csv)</menu_file_extension>
 	<menu_about>About</menu_about>
 	<menu_help>Help</menu_help>
 	<menu_quit>Exit</menu_quit>
@@ -22,4 +23,11 @@
 	<editor_bonus>Bonus (%)</editor_bonus>
 	<dialog_load_title>Load Employees from file</dialog_load_title>
 	<dialog_save_title>Save Employees As..</dialog_save_title>
+    <menu_about_text> This application has been developed as study project for
+811375A User Interface Programming -course during academic year 
+2016 at the University of Oulu.
+
+Authors:
+Aapo Keskimölö   Software Design and Architecture, Test Automation
+Elisa Kortela    Graphical User Interface Design </menu_about_text>
 </view_strings>

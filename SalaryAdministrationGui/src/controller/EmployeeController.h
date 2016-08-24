@@ -73,11 +73,11 @@ public:
                      double newMonthlySalary, double newHourlySalary,
                      double newDoneHours, double newBonus, bool newOutcomeClaim);
     void handleEventRemoveEmployee(string ssn);
+    void handleEventClearEmployees();
     void handleEventUpdateEmployee(string newSsn,
                              string newFirstName, string newLastName,
                              double newMonthlySalary, double newHourlySalary,
                              double newDoneHours, double newBonus, bool newOutcomeClaim);
-    void handleEventPrintEmployees();
     void handleEventRequestViewUpdate();
     Employee* handleEventGetEmployee(string ssn);
     void handleEventSaveModelStateToFile(string filename);

@@ -24,7 +24,6 @@ class MonthlyPaidEmployee: public Employee
     void setMonthlySalary(double newMonthlySalary);
     double getMonthlySalary();
     double getSalary();
-	void printInfo();
 
     friend std::ofstream& operator<<(std::ofstream& os, const MonthlyPaidEmployee& e);
     friend std::ifstream& operator>>(std::ifstream& is, MonthlyPaidEmployee& e);

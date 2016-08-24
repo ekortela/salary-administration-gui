@@ -35,7 +35,6 @@ class SalesmanEmployee: public Employee
     bool getOutcomeClaim();
     void setRealizedOutcome();
     double getSalary();
-    void printInfo();
 
     friend std::ofstream& operator<<(std::ofstream& os, const SalesmanEmployee& e);
     friend std::ifstream& operator>>(std::ifstream& is, SalesmanEmployee& e);

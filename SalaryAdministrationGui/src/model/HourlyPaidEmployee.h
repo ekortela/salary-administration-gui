@@ -28,7 +28,6 @@ class HourlyPaidEmployee: public Employee
     void setDoneHours(double newDoneHours);
     double getDoneHours();
 	double getSalary();
-	void printInfo();
 
     friend std::ofstream& operator<<(std::ofstream& os, const HourlyPaidEmployee& e);
     friend std::ifstream& operator>>(std::ifstream& is, HourlyPaidEmployee& e);

@@ -39,17 +39,6 @@ double MonthlyPaidEmployee::getSalary()
 }
 
 
-void MonthlyPaidEmployee::printInfo()
-{
-    cout << "Type: " << employeeTypetoString(typ) << "\n";
-    cout << "First Name: " << Employee::getFirstName() << "\n";
-    cout << "Last Name: " << Employee::getLastName() << "\n";
-	cout << "SSN: " << Employee::getSocialSecurityNumber() << "\n";
-	cout << "Salary: " << this->getSalary() << "\n";
-	cout << ">Monthly salary: " << this->getMonthlySalary() << "\n";
-}
-
-
 std::ofstream& operator<<(std::ofstream& os, const MonthlyPaidEmployee& e) {
     os << e.firstName.size() << separator;
     os << e.firstName << separator;

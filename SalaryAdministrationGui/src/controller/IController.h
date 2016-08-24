@@ -23,9 +23,9 @@ public:
                            string newFirstName, string newLastName,
                            double newMonthlySalary, double newHourlySalary,
                            double newDoneHours, double newBonus, bool newOutcomeClaim) = 0;
-  virtual void handleEventPrintEmployees() = 0;
   virtual void handleEventRequestViewUpdate() = 0;
   virtual void handleEventRemoveEmployee(string ssn) = 0;
+  virtual void handleEventClearEmployees() = 0;
   virtual Employee* handleEventGetEmployee(string ssn) = 0;
   virtual void handleEventSaveModelStateToFile(string filename) = 0;
   virtual void handleEventLoadModelStateFromFile(string filename) = 0;
