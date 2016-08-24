@@ -542,7 +542,7 @@ void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
 
     } else {
         m_view->popInfoBox("No previously saved employee list was found");
-        qCritical() << "No model parameters file" << QString::fromStdString(filename) << "found!";
+        qWarning() << "No model parameters file" << QString::fromStdString(filename) << "found!";
     }
 }
 
