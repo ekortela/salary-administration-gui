@@ -3,8 +3,6 @@
 Koodausta:
     (?) GUI: Jos tyontekijaa on tuplaklikattu listalla, tallennetaan View:n muuttujaan tyontekijan SSN numero
     (?) GUI: Kaytettavyys paranisi, jos delete ja save nappi olisivat GUI:n vasemmalla laidalla?
-    (80%) GUI: Paatabi, jossa on vahintaan Save As, Load, Help/About ja Exit valinnat. Save nostaa
-            kayttajalle valikon, jossa voi tallentaa tiedoston (Qt tarjoaa valmiit metodit)
     (90%) BACKEND: Unit testerit backendille QtTest frameworkilla (testerit valmis, automatisoi testrunnerit)
 	
 Infrastruktuuri:
@@ -31,6 +29,8 @@ Valmiit:
     (100%) BACKEND: Implementoi metodit tyontekijoiden parametrien asettamiseen controllerissa
     (100%) GUI: Kaikki widget kentat pitaa ladata XML tiedostosta
     (100%) GUI: Save employee kysyy kayttajalta halutaanko korvata olemassaolevan tyontekijan tiedot
+    (100%) GUI: Paatabi, jossa on vahintaan Save As, Load, Help/About ja Exit valinnat. Save nostaa
+            kayttajalle valikon, jossa voi tallentaa tiedoston (Qt tarjoaa valmiit metodit)
 
 Poistettu:
     (-) Staattinen CPPUTEST yksikkotestien ajamiseen meidan repositoryssa (kaytetaan QtTest frameworkkia)

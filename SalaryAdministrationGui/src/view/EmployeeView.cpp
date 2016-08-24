@@ -92,13 +92,13 @@ void EmployeeView::createMenuBar() {
     m_menuBar = new QMenuBar(this);
     m_mainLayout->setMenuBar(m_menuBar);
 
-    m_fileMenu = new QMenu(getQStringFromXml("menu_main"));
+    m_fileMenu = new QMenu;
 
-    m_newAction = new QAction(getQStringFromXml("menu_new"), this);
-    m_saveAsAction = new QAction(getQStringFromXml("menu_save"), this);
-    m_loadAction = new QAction(getQStringFromXml("menu_load"), this);
-    m_aboutAction = new QAction(getQStringFromXml("menu_about"), this);
-    m_quitAction = new QAction(getQStringFromXml("menu_quit"), this);
+    m_newAction = new QAction(this);
+    m_saveAsAction = new QAction(this);
+    m_loadAction = new QAction(this);
+    m_aboutAction = new QAction(this);
+    m_quitAction = new QAction(this);
 
     m_menuBar->addMenu(m_fileMenu);
     m_fileMenu->addAction(m_newAction);
@@ -265,6 +265,14 @@ void EmployeeView::updateLabels() {
     m_saveButton->setText(getQStringFromXml("button_save_emp"));
     m_deleteButton->setText(getQStringFromXml("button_delete_emp"));
     m_clearFormButton->setText(getQStringFromXml("button_clear_form"));
+
+    m_fileMenu->setTitle(getQStringFromXml("menu_main"));
+
+    m_newAction->setText(getQStringFromXml("menu_new"));
+    m_saveAsAction->setText(getQStringFromXml("menu_save"));
+    m_loadAction->setText(getQStringFromXml("menu_load"));
+    m_aboutAction->setText(getQStringFromXml("menu_about"));
+    m_quitAction->setText(getQStringFromXml("menu_quit"));
 }
 
 
@@ -623,7 +631,12 @@ void EmployeeView::handleSaveAsClick() {
 
 void EmployeeView::handleLoadClick() {
     qDebug() << "Menu item '/Load'/  click detected!!";
-    if(popQuestionBox(getQStringFromXml("menu_load").toStdString(), "This operation will clear existing employees list. Are you sure?")) {
+
+    if (employeeList.size() > 0) {
+        if(popQuestionBox(getQStringFromXml("menu_load").toStdString(), "This operation will clear existing employees list. Are you sure?")) {
+            popLoadEmployeesBox();
+        }
+    } else {
         popLoadEmployeesBox();
     }
 }
@@ -631,13 +644,13 @@ void EmployeeView::handleLoadClick() {
 void EmployeeView::handleNewClick() {
     qDebug() << "Menu item '/New'/  click detected!!";
 
-    if( popQuestionBox(getQStringFromXml("menu_new").toStdString(), "Pressing 'Yes' will open a dialog to save the current employee list.")) {
-        if (popSaveEmployeesBox() ) {
-            m_observer->handleEventClearEmployees();
-            popInfoBox("Employee -list has been cleared.");
-        } else {
-            popInfoBox("Operation aborted.");
+    if (employeeList.size() > 0) {
+        if (popQuestionBox("Create new employee list", "Would you like to save the current list?")) {
+            popSaveEmployeesBox();
         }
+        m_observer->handleEventClearEmployees();
+        handleClearFormButton();
+        popInfoBox("Employee -list has been cleared.");
     }
 }
 
