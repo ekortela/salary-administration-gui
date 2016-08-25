@@ -38,16 +38,16 @@ private:
     unsigned int *m_treeWidgetSelectedItem;
     int rowHeight;
     QLineEdit *m_lastNameEdit, *m_firstNameEdit, *m_SSNEdit, *m_hoursDoneEdit,
-                *m_hourlySalaryEdit, *m_monthlySalaryEdit, *m_bonusEdit;
+                *m_hourlySalaryEdit, *m_monthlySalaryEdit, *m_bonusEdit, *m_calculatedSalaryEdit, *m_combinedSalaryEdit;
     QLabel *m_lastNameLabel, *m_firstNameLabel, *m_SSNLabel, *m_payTypeLabel,
             *m_monthlySalaryLabel, *m_outcomeClaimLabel, *m_hoursDoneLabel,
-            *m_hourlySalaryLabel, *m_displayInfo, *m_bonusLabel;
+            *m_hourlySalaryLabel, *m_displayInfo, *m_bonusLabel, *m_calculatedSalaryLabel, *m_combinedSalaryLabel;
     QComboBox *m_payTypeMenu;
     QPushButton *m_clearFormButton, *m_saveButton, *m_deleteButton;
     QCheckBox *m_outcomeClaimCheckBox;
     QWidget *m_layoutContainer, *m_menuWidget;
-    QHBoxLayout *m_mainLayout;
-    QVBoxLayout *m_layoutFrame;
+    QHBoxLayout *m_mainLayout, *m_salaryView;
+    QVBoxLayout *m_layoutFrame, *m_rightLayout;
     QScrollArea *m_scrollArea;
     QGridLayout *m_leftLayout;
     QTreeWidget *m_treeWidget;
@@ -64,7 +64,7 @@ private:
     void createMenuBar();
     void createTreeWidget();
     void createEmployeeEditorView();
-    void setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus);
+    void setInformationFormWidgetVisibility(bool mSal, bool hDone, bool hSal, bool oClaim, bool bonus, bool calcSal);
     void clearForm();
     QString getQStringFromXml(string parameterName);
     void updateLabels();
