@@ -33,7 +33,6 @@ class SalesmanEmployee: public Employee
     double getBonus();
     void setOutcomeClaim(bool newOutcomeClaim);
     bool getOutcomeClaim();
-    void setRealizedOutcome();
     double getSalary();
 
     friend std::ofstream& operator<<(std::ofstream& os, const SalesmanEmployee& e);

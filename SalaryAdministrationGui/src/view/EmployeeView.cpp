@@ -145,6 +145,7 @@ void EmployeeView::createTreeWidget()
 
     m_combinedSalaryLabel = new QLabel;
     m_combinedSalaryEdit = new QLineEdit;
+    m_combinedSalaryLabel->setAlignment(Qt::AlignRight);
     m_combinedSalaryEdit->setDisabled(true);
     m_salaryView->addWidget(m_combinedSalaryLabel,0);
     m_salaryView->addWidget(m_combinedSalaryEdit,1);
@@ -310,6 +311,7 @@ void EmployeeView::registerObserver(IController* observer) {
 
 
 void EmployeeView::updateEmployeeList(vector<Employee *> model) {
+    double combinedSalary = 0.0;
     employeeList.clear();
     m_treeWidget->clear();
     for (vector<Employee*>::iterator it = model.begin(); it != model.end(); ++it) {
@@ -319,9 +321,11 @@ void EmployeeView::updateEmployeeList(vector<Employee *> model) {
         row->setText(2, QString::fromStdString( (*it)->getSocialSecurityNumber() ));
         row->setText(3, employeeTypetoString( (*it)->getType() ));
         employeeList.append(row);
+        combinedSalary += (*it)->getSalary();
     }
 
     // TODO: calculate combined salary
+    m_combinedSalaryEdit->setText(QString::number(combinedSalary));
 }
 
 
@@ -508,8 +512,6 @@ void EmployeeView::handleTreeWidgetDoubleClick() {
 
         m_monthlySalaryEdit->setText(QString::number(m_monthlyEmp->getSalary()));
 
-        // TODO: display calculated salary
-
     } else if (m_emp->getType() == employee_types::HOURLY_PAID_EMPLOYEE)
     {
         m_payTypeMenu->setCurrentIndex(2);
@@ -518,16 +520,18 @@ void EmployeeView::handleTreeWidgetDoubleClick() {
         m_hoursDoneEdit->setText(QString::number(m_hourlyEmp->getDoneHours()));
         m_hourlySalaryEdit->setText(QString::number(m_hourlyEmp->getHourlySalary()));
 
+        m_calculatedSalaryEdit->setText(QString::number(m_hourlyEmp->getSalary()));
+
     } else
     {
         m_payTypeMenu->setCurrentIndex(3);
-        SalesmanEmployee* m_salesEmp = dynamic_cast <SalesmanEmployee*> (m_emp);
+        SalesmanEmployee *m_salesEmp = dynamic_cast <SalesmanEmployee*> (m_emp);
 
         m_monthlySalaryEdit->setText(QString::number(m_salesEmp->getMonthlySalary()));
         m_outcomeClaimCheckBox->setChecked(m_salesEmp->getOutcomeClaim());
         m_bonusEdit->setText(QString::number(m_salesEmp->getBonus()));
 
-        // TODO: display calculated salary
+        m_calculatedSalaryEdit->setText(QString::number(m_salesEmp->getSalary()));
     }
 }
 
