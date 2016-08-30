@@ -429,6 +429,8 @@ void EmployeeView::handleSaveButtonClick() {
     else {
         popInfoBox("Please, select \"" + getQStringFromXml("editor_pay_type").toStdString() + "\"");
     }
+
+    updateEmployeeInformation(m_SSNEdit->text().toStdString());
 }
 
 
@@ -499,40 +501,7 @@ void EmployeeView::handleTreeWidgetDoubleClick() {
 
     clearForm();
 
-    Employee *m_emp = m_observer->handleEventGetEmployee(m_treeWidget->currentItem()->text(2).toStdString());
-
-    m_firstNameEdit->setText(QString::fromStdString(m_emp->getFirstName()));
-    m_lastNameEdit->setText(QString::fromStdString(m_emp->getLastName()));
-    m_SSNEdit->setText(m_treeWidget->currentItem()->text(2));
-
-    if (m_emp->getType() == employee_types::MONTHLY_PAID_EMPLOYEE)
-    {
-        m_payTypeMenu->setCurrentIndex(1);
-        MonthlyPaidEmployee *m_monthlyEmp = dynamic_cast <MonthlyPaidEmployee*> (m_emp);
-
-        m_monthlySalaryEdit->setText(QString::number(m_monthlyEmp->getSalary()));
-
-    } else if (m_emp->getType() == employee_types::HOURLY_PAID_EMPLOYEE)
-    {
-        m_payTypeMenu->setCurrentIndex(2);
-        HourlyPaidEmployee *m_hourlyEmp = dynamic_cast <HourlyPaidEmployee*> (m_emp);
-
-        m_hoursDoneEdit->setText(QString::number(m_hourlyEmp->getDoneHours()));
-        m_hourlySalaryEdit->setText(QString::number(m_hourlyEmp->getHourlySalary()));
-
-        m_calculatedSalaryEdit->setText(QString::number(m_hourlyEmp->getSalary()));
-
-    } else
-    {
-        m_payTypeMenu->setCurrentIndex(3);
-        SalesmanEmployee *m_salesEmp = dynamic_cast <SalesmanEmployee*> (m_emp);
-
-        m_monthlySalaryEdit->setText(QString::number(m_salesEmp->getMonthlySalary()));
-        m_outcomeClaimCheckBox->setChecked(m_salesEmp->getOutcomeClaim());
-        m_bonusEdit->setText(QString::number(m_salesEmp->getBonus()));
-
-        m_calculatedSalaryEdit->setText(QString::number(m_salesEmp->getSalary()));
-    }
+    updateEmployeeInformation(m_treeWidget->currentItem()->text(2).toStdString());
 }
 
 
@@ -663,6 +632,48 @@ bool EmployeeView::popLoadEmployeesBox() {
         saveCurrentModelStateToFile();
     }
     return true;
+}
+
+void EmployeeView::updateEmployeeInformation(string ssn) {
+
+    qDebug() << "Updating employee information for" << QString::fromStdString(ssn);
+
+    Employee *m_emp = m_observer->handleEventGetEmployee(ssn);
+
+    m_firstNameEdit->setText(QString::fromStdString(m_emp->getFirstName()));
+    m_lastNameEdit->setText(QString::fromStdString(m_emp->getLastName()));
+    m_SSNEdit->setText(QString::fromStdString(ssn));
+
+    if (m_emp->getType() == employee_types::MONTHLY_PAID_EMPLOYEE)
+    {
+        m_payTypeMenu->setCurrentIndex(1);
+        MonthlyPaidEmployee *m_monthlyEmp = dynamic_cast <MonthlyPaidEmployee*> (m_emp);
+
+        m_monthlySalaryEdit->setText(QString::number(m_monthlyEmp->getSalary()));
+
+        m_calculatedSalaryEdit->setText(QString::number(m_monthlyEmp->getSalary()));
+
+    } else if (m_emp->getType() == employee_types::HOURLY_PAID_EMPLOYEE)
+    {
+        m_payTypeMenu->setCurrentIndex(2);
+        HourlyPaidEmployee *m_hourlyEmp = dynamic_cast <HourlyPaidEmployee*> (m_emp);
+
+        m_hoursDoneEdit->setText(QString::number(m_hourlyEmp->getDoneHours()));
+        m_hourlySalaryEdit->setText(QString::number(m_hourlyEmp->getHourlySalary()));
+
+        m_calculatedSalaryEdit->setText(QString::number(m_hourlyEmp->getSalary()));
+
+    } else
+    {
+        m_payTypeMenu->setCurrentIndex(3);
+        SalesmanEmployee *m_salesEmp = dynamic_cast <SalesmanEmployee*> (m_emp);
+
+        m_monthlySalaryEdit->setText(QString::number(m_salesEmp->getMonthlySalary()));
+        m_outcomeClaimCheckBox->setChecked(m_salesEmp->getOutcomeClaim());
+        m_bonusEdit->setText(QString::number(m_salesEmp->getBonus()));
+
+        m_calculatedSalaryEdit->setText(QString::number(m_salesEmp->getSalary()));
+    }
 }
 
 

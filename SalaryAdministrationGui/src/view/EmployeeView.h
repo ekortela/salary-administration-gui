@@ -71,6 +71,7 @@ private:
     bool checkIfSSNExists(QString ssn);
     bool popSaveEmployeesBox();
     bool popLoadEmployeesBox();
+    void updateEmployeeInformation(string ssn);
 
     const QString xml_config_filename = "../../res/config.xml";
     const string CONFIGURATION_FILEPATH = "config.cfg";
