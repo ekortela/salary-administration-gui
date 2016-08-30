@@ -44,24 +44,19 @@ double SalesmanEmployee::getBonus() {
 
 void SalesmanEmployee::setOutcomeClaim(bool newOutcomeClaim) {
 	outcomeClaim = newOutcomeClaim;
-	setRealizedOutcome();
 }
 
 bool SalesmanEmployee::getOutcomeClaim() {
 	return outcomeClaim;
 }
 
-void SalesmanEmployee::setRealizedOutcome() {
-	if (outcomeClaim)
-		realizedOutcome = (100+bonus)/100*monthlySalary;
-	else
-		realizedOutcome = monthlySalary;
-}
-
 
 double SalesmanEmployee::getSalary()
 {
-  return realizedOutcome;
+    if (outcomeClaim)
+        return (100+bonus)/100*monthlySalary;
+    else
+        return monthlySalary;
 }
 
 
