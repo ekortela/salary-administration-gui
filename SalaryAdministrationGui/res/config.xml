@@ -41,8 +41,8 @@ Elisa Kortela    Graphical User Interface Design </menu_about_text>
 	<editor_hour_sal>Hourly salary (EUR):</editor_hour_sal>
 	<editor_claim>Outcome claim:</editor_claim>
 	<editor_bonus>Bonus (%):</editor_bonus>
-	<editor_calc_sal>Calculated salary:</editor_calc_sal>
-    <editor_combined_sal>Combined salary:</editor_combined_sal>
+	<editor_calc_sal>Calculated salary (EUR):</editor_calc_sal>
+    <editor_combined_sal>Combined salary (EUR):</editor_combined_sal>
 	<error_observer_is_null>Unable to load model state: Observer is null!</error_observer_is_null>
 	<error_unable_to_load_prev_config>Unable to load previously saved configuration from </error_unable_to_load_prev_config>
 	<error_unable_to_delete>Unable to delete! No employee selected.</error_unable_to_delete>
