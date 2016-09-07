@@ -1,29 +1,21 @@
 # TODO 
 
-Koodausta:
-    (?) GUI: Jos tyontekijaa on tuplaklikattu listalla, tallennetaan View:n muuttujaan tyontekijan SSN numero
-    (?) GUI: Kaytettavyys paranisi, jos delete ja save nappi olisivat GUI:n vasemmalla laidalla?
-    (90%) BACKEND: Unit testerit backendille QtTest frameworkilla (testerit valmis, automatisoi testrunnerit)
-	
-Infrastruktuuri:
-    () Muuta hakemiston rakenne selkeammaksi (esim. src/model/, src/controller/, src/main/, ...)
-    () QT:n staattinen buildi: Yleensa ottaen on hyva, etta liittymaa voidaan ajaa standalonena. Tama
-        vaatii allaolevan ohjeen seuraamista
-        https://wiki.qt.io/Building_a_static_Qt_for_Windows_using_MinGW
-
 Dokumentaatio:
-    () Luo Use Case diagrammi dokumenttia varten (esim. EAP)
-    (10%) GUI:n dokumentaatio
-    (10%) Backendin dokumentaatio
+
+    (70%) GUI:n dokumentaatio
+    (100%) Backendin dokumentaatio
 
 Valmiit:
+    (100%) QT:n staattinen buildi: Yleensa ottaen on hyva, etta liittymaa voidaan ajaa standalonena.
+    (100%) BACKEND: Unit testerit backendille QtTest frameworkilla (testerit valmis, automatisoi testrunnerit)
+    (100%) Muuta hakemiston rakenne selkeammaksi (esim. src/model/, src/controller/, src/main/, ...)
     (100%) Luo ohjelmistoarkkitehtuurin UML class diagrammi
     (100%) GUI: Lisaa double click napin funktionaalisuus
     (100%) GUI: kayttoliittyma nayttaa nyt vain tyontekijatyypille oleelliset syottokentat
     (100%) GUI: Add new employee -nappi tyhjentää lomakkeen
     (100%) GUI: Lisaa delete -napin funktionaalisuus
-	(100%) GUI: Syottokenttien kokorajoitukset
-	(100%) GUI: Add new employee -> Clear form + leiskaa muutettu
+    (100%) GUI: Syottokenttien kokorajoitukset
+    (100%) GUI: Add new employee -> Clear form + leiskaa muutettu
     (100%) BACKEND: Lisaa run-time lokitiedosto, johon kaikki qDebug/qCritical/qInfo viestit tallentuvat
     (100%) BACKEND+GUI: Lue kaikki configuraatio-arvot tiedostosta  
     (100%) BACKEND: Implementoi metodit tyontekijoiden parametrien asettamiseen controllerissa
@@ -35,3 +27,6 @@ Valmiit:
 Poistettu:
     (-) Staattinen CPPUTEST yksikkotestien ajamiseen meidan repositoryssa (kaytetaan QtTest frameworkkia)
     (-) GUI: Jos tyontekijaa on klikattu listalla, tallennetaan View:n muuttujaan tyontekijan SSN numero
+    (-) Luo Use Case diagrammi dokumenttia varten (esim. EAP)
+    (?) GUI: Jos tyontekijaa on tuplaklikattu listalla, tallennetaan View:n muuttujaan tyontekijan SSN numero
+    (?) GUI: Kaytettavyys paranisi, jos delete ja save nappi olisivat GUI:n vasemmalla laidalla?

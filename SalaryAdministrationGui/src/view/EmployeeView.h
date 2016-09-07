@@ -73,7 +73,7 @@ private:
     bool popLoadEmployeesBox();
     void updateEmployeeInformation(string ssn);
 
-    const QString xml_config_filename = "../../res/config.xml";
+    const QString xml_config_filename = "config.xml";
     const string CONFIGURATION_FILEPATH = "config.cfg";
     static string const MODEL_STATE_FILEPATH;
 

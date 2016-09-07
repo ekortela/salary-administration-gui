@@ -11,8 +11,6 @@ INCLUDEPATH += src/controller \
                src/view \
                src/main
 
-CONFIG += console
-
 release: DESTDIR = build/release
 debug:   DESTDIR = build/debug
 

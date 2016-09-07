@@ -39,9 +39,22 @@ EmployeeView::~EmployeeView() {
 }
 
 
+bool exists(const std::string& fname) {
+    ifstream f(fname.c_str());
+    return f.good();
+}
+
+
 QString EmployeeView::getQStringFromXml(string parameterName) {
 
-    m_xmlFile = new QFile(xml_config_filename);
+    QString fname;
+    if ( !exists(xml_config_filename.toStdString() )) {
+        fname = QString::fromStdString("../../res/") + xml_config_filename;
+    } else {
+        fname = xml_config_filename;
+    }
+
+    m_xmlFile = new QFile(fname);
     QString value = "default";
     bool found = false;
 
@@ -85,7 +98,6 @@ QString EmployeeView::getQStringFromXml(string parameterName) {
 
     return value;
 }
-
 
 void EmployeeView::createMenuBar() {
 
