@@ -11,11 +11,20 @@ INCLUDEPATH += src/controller \
                src/view \
                src/main
 
-release: DESTDIR = build/release
-debug:   DESTDIR = build/debug
-
-OBJECTS_DIR = $$DESTDIR/.obj
-MOC_DIR = $$DESTDIR/.moc
+release {
+    DESTDIR = build/release
+    MOC_DIR = $$DESTDIR/.moc
+    OBJECTS_DIR = $$DESTDIR/.obj
+}
+debug {
+    OBJECTS_DIR = $$DESTDIR/.obj
+    MOC_DIR = $$DESTDIR/.moc
+    DESTDIR = build/debug
+}
+static {
+    message("~~~ static build ~~~") # this is for information, that the static build is done
+    win32: TARGET = $$join(TARGET,,,s) #this adds an s in the end, so you can seperate static build from
+}
 
 # Input
 HEADERS += src/controller/EmployeeController.h \
