@@ -23,6 +23,11 @@ Valmiit:
     (100%) GUI: Save employee kysyy kayttajalta halutaanko korvata olemassaolevan tyontekijan tiedot
     (100%) GUI: Paatabi, jossa on vahintaan Save As, Load, Help/About ja Exit valinnat. Save nostaa
             kayttajalle valikon, jossa voi tallentaa tiedoston (Qt tarjoaa valmiit metodit)
+	GUI: Hienosäätöä:
+		 - Vahvistusikkuna ilmestyy tyontekijan tallentuessa onnistuneesti
+		 - Calculated salary -kentta tyhjennetaan tyontekijatyyppia vaihdettaessa ja lomaketta tyhjentaessa
+		 - Uutta listaa luodessa ilmestyva kysymysikkuna on nyt kolminappulainen ja toiminto on mahdollista keskeyttaa
+		 - Tyontekijaa poistettaessa toimitaan nyt lomakkeen tietojen mukaan, ei QTreeWidgetissa olevan aktiivisen tyontekijan mukaan
 
 Poistettu:
     (-) Staattinen CPPUTEST yksikkotestien ajamiseen meidan repositoryssa (kaytetaan QtTest frameworkkia)

@@ -22,14 +22,15 @@ Elisa Kortela    Graphical User Interface Design </menu_about_text>
 	<menu_new_title>Create new employee list</menu_new_title>
 	<menu_new_text>Would you like to save the current list?</menu_new_text>
 	<menu_new_complete>The employee list has been cleared.</menu_new_complete>
+	<menu_load_text>This operation will clear the existing employee list. Are you sure?</menu_load_text>
 	<button_clear_form>Clear form</button_clear_form>
 	<button_save_emp>Save Employee</button_save_emp>
 	<button_save_title>Rewrite employee</button_save_title>
-	<button_save_text>Are you sure you want to rewrite the employee data?</button_save_text>	
+	<button_save_text>Are you sure you want to rewrite the employee data?</button_save_text>
+	<button_save_confirm>Emplyee saved.</button_save_confirm>	
 	<button_delete_emp>Delete Employee</button_delete_emp>
 	<button_delete_title>Employee deletion</button_delete_title>
-	<button_delete_text>Are you sure you want to delete the employee:
-	</button_delete_text>
+	<button_delete_text>Are you sure you want to delete the employee:</button_delete_text>
 	<button_delete_complete1>Employee (SSN: </button_delete_complete1>
 	<button_delete_complete2>) deleted</button_delete_complete2>	
 	<editor_firstname>First name(s):</editor_firstname>
