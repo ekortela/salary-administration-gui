@@ -6,7 +6,14 @@ Aapo Keskimolo      aapokesk@gmail.com          Software design, Unit testing, M
 Elisa Kortela       elisa.kortela@gmail.com     Graphical User Interface, Front-end
 
 # RUN INSTRUCTIONS
-- Run SalaryAdministrationGui.exe
+Windows(32/64bit): Run static/SalaryAdministrationGui.exe
+Linux(64bit): Run static/SalaryAdministrationGui
+
+# TOOLS USER FOR DEVELOPMENT
+- MINGW GCC version 4.9.3 (C++11)
+- QT Creator 5.6.1 Desktop (MSVC2013-64bit / MinGW 32/64bit)
+- CMake 3.6.1
+- Linux / Windows 
 
 # BUILD INSTRUCTIONS
 1. Install Git, add it to environment variables and run 
@@ -16,8 +23,3 @@ Elisa Kortela       elisa.kortela@gmail.com     Graphical User Interface, Front-
 4. Goto project -> Release run configurations -> Change Build Directory: to the directory as in step 3
 5. Run Release
 * For Debug, you may repeat steps 4-5 with Debug configuration (run-time logs are saved in target build directory)
-
-# DEVELOPMENT TOOLS
-- MINGW GCC version 4.9.3 (C++11)
-- QT Creator 5.6.1 Desktop (MSVC2013-32bit / MSVC2015-64bit)
-- CMake 3.6.1

@@ -11,19 +11,23 @@ INCLUDEPATH += src/controller \
                src/view \
                src/main
 
-release {
-    DESTDIR = build/release
+CONFIG(release,release|debug) {
+    static {
+        DESTDIR = static/release
+        message("~~~ Release: static build ~~~")
+    }
+    else:       DESTDIR = SalaryAdministrationGui/build/release
     MOC_DIR = $$DESTDIR/.moc
     OBJECTS_DIR = $$DESTDIR/.obj
 }
-debug {
+else {
+    static {
+        DESTDIR = static/debug
+        message("~~~ debug: static build ~~~")
+    }
+    else:       DESTDIR = SalaryAdministrationGui/build/debug
     OBJECTS_DIR = $$DESTDIR/.obj
     MOC_DIR = $$DESTDIR/.moc
-    DESTDIR = build/debug
-}
-static {
-    message("~~~ static build ~~~") # this is for information, that the static build is done
-    win32: TARGET = $$join(TARGET,,,s) #this adds an s in the end, so you can seperate static build from
 }
 
 # Input
