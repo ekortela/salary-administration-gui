@@ -45,7 +45,7 @@ bool EmployeeController::updateEmployee(string ssn,
                                      bool newOutcomeClaim)
 {
 
-    unsigned int idx = getEmployeeIndex(ssn);
+    int idx = getEmployeeIndex(ssn);
 
     if (idx != -1) {
 
@@ -541,7 +541,7 @@ void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
         updateView();
 
     } else {
-        m_view->popInfoBox("No previously saved employee list was found");
+        m_view->popInfoBox("Unable to load file: " + filename);
         qWarning() << "No model parameters file" << QString::fromStdString(filename) << "found!";
     }
 }
