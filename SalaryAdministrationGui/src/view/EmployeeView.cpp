@@ -387,7 +387,7 @@ void EmployeeView::handleSaveButtonClick() {
     qDebug() << "Save button was clicked!";
 
     if (checkIfSSNExists(m_SSNEdit->text())) {
-        if (!popQuestionBox(getQStringFromXml("button_save_title").toStdString(), getQStringFromXml("button_save_text").toStdString())) {
+        if (!popQuestionBox(getQStringFromXml("box_rewrite_emp").toStdString(), getQStringFromXml("box_rewrite_emp_confirm").toStdString())) {
             return;
         }
         m_observer->handleEventRemoveEmployee(m_SSNEdit->text().toStdString());
@@ -412,14 +412,17 @@ void EmployeeView::handleSaveButtonClick() {
 
             case employee_types::MONTHLY_PAID_EMPLOYEE:
                 m_observer->handleEventCreateEmployee(typ, firstName, lastName, ssn, monthlySalary, 0.0, 0.0, 0.0, false);
+                updateEmployeeInformation(m_SSNEdit->text().toStdString());
                 break;
 
             case employee_types::HOURLY_PAID_EMPLOYEE:
                 m_observer->handleEventCreateEmployee(typ, firstName, lastName, ssn, 0.0, hourlySalary, hoursDone, 0.0, false);
+                updateEmployeeInformation(m_SSNEdit->text().toStdString());
                 break;
 
             case employee_types::SALESMAN_EMPLOYEE:
                 m_observer->handleEventCreateEmployee(typ, firstName, lastName, ssn, monthlySalary, 0.0, 0.0, bonus, outcomeClaim);
+                updateEmployeeInformation(m_SSNEdit->text().toStdString());
                 break;
 
             default:
@@ -427,7 +430,7 @@ void EmployeeView::handleSaveButtonClick() {
                 break;
             }
             saveCurrentModelStateToFile();
-            popInfoBox(getQStringFromXml("button_save_confirm").toStdString());
+            popInfoBox(getQStringFromXml("box_emp_saved_text").toStdString());
 
         } catch (ec::EmployeeAlreadyExistsException &e1) {
             popErrorBox(getQStringFromXml("error_emp_already_exists").toStdString() + string(e1.what()) );
@@ -440,10 +443,8 @@ void EmployeeView::handleSaveButtonClick() {
         }
     }
     else {
-        popInfoBox("Please, select \"" + getQStringFromXml("editor_pay_type").toStdString() + "\"");
+        popInfoBox(getQStringFromXml("box_select_type_prompt").toStdString() + " \"" + getQStringFromXml("editor_pay_type").toStdString() + "\"");
     }
-
-    updateEmployeeInformation(m_SSNEdit->text().toStdString());
 }
 
 
@@ -480,41 +481,6 @@ void EmployeeView::handleDeleteButtonClick() {
     if (!wasFound) {
         popErrorBox(getQStringFromXml("error_unable_to_delete").toStdString());
     }
-
-
-
-    /***
-    if (m_treeWidget->currentItem() != NULL) {
-
-        string lname = m_treeWidget->currentItem()->text(0).toStdString();
-        string fname = m_treeWidget->currentItem()->text(1).toStdString();
-        string ssnStr = m_treeWidget->currentItem()->text(2).toStdString();
-
-        if(popQuestionBox(getQStringFromXml("button_delete_title").toStdString(), getQStringFromXml("button_delete_text").toStdString() + lname + ", " + fname + " (SSN: " + ssnStr + ") ?") ) {
-            for (int i = 0; i < employeeList.size(); i++) {
-                QString ssn = employeeList[i]->text(2);
-                QString curSsn = m_treeWidget->currentItem()->text(2);
-
-                if ( ssn.compare(ssn, curSsn) == 0) {
-                    try {
-                        m_observer->handleEventRemoveEmployee(curSsn.toStdString() );
-                        popInfoBox(getQStringFromXml("button_delete_complete1").toStdString() + ssn.toStdString() + getQStringFromXml("button_delete_complete2").toStdString());
-                        handleClearFormButton();
-                        break;
-                    } catch( ec::SsnDoesNotExistException &e1) {
-                        popErrorBox(getQStringFromXml("error_unable_to_delete_emp").toStdString() + string(e1.what()) );
-                    } catch(exception &e) {
-                        popErrorBox(getQStringFromXml("error_unknown_exception").toStdString() + string(e.what()) );
-                    }
-                }
-            }
-            saveCurrentModelStateToFile();
-        }
-
-    } else {
-        popErrorBox(getQStringFromXml("error_unable_to_delete").toStdString());
-    }
-    ***/
 }
 
 

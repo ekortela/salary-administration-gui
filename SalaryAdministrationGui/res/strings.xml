@@ -30,7 +30,8 @@ Elisa Kortela    Graphical User Interface Design </menu_about_text>
     <box_save_emp_text>Do you want save employee?</box_save_emp_text>
 	<box_rewrite_emp>Employee already exists</box_rewrite_emp>
 	<box_rewrite_emp_confirm>Are you sure you want to rewrite the employee data?</box_rewrite_emp_confirm>	
-    <box_emp_saved_text>Employee information was saved.</box_emp_saved_text>	
+    <box_emp_saved_text>Employee information was saved.</box_emp_saved_text>
+	<box_select_type_prompt>Please, select</box_select_type_prompt>
 	<button_delete_emp>Delete Employee</button_delete_emp>
 	<button_delete_title>Employee deletion</button_delete_title>
 	<button_delete_text>Are you sure you want to delete the employee:
