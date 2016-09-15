@@ -13,7 +13,7 @@ INCLUDEPATH += src/controller \
 
 CONFIG(release,release|debug) {
     static {
-        DESTDIR = static/release
+        DESTDIR = static
         message("~~~ Release: static build ~~~")
     }
     else:       DESTDIR = SalaryAdministrationGui/build/release
@@ -22,7 +22,7 @@ CONFIG(release,release|debug) {
 }
 else {
     static {
-        DESTDIR = static/debug
+        DESTDIR = static
         message("~~~ debug: static build ~~~")
     }
     else:       DESTDIR = SalaryAdministrationGui/build/debug

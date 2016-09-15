@@ -20,13 +20,11 @@ Linux(64bit): Run static/SalaryAdministrationGui
 - Windows 32bit/64bit, Linux (Debian Jessie)
 
 # BUILD INSTRUCTIONS
-1. Install Git, add it to environment variables and run 
-	git clone https://github.com/ekortela/salary-administration-gui.git <destination directory>
-2. Install Qt 5.6.1 Desktop from QT-company website (offline-installer with MinGW-MSVC2015 is preferred)
-3. Run qmake in project root directory with .pro- file
-4. Goto project -> Release run configurations -> Change Build Directory: to the directory as in step 3
-5. Run Release
-* For Debug, you may repeat steps 4-5 with Debug configuration (run-time logs are saved in target build directory)
+1. Install Git and run git clone https://github.com/ekortela/salary-administration-gui.git
+2. Install Qt 5.6+ from QT-company website
+3. Start QtCreator -> Open SalaryAdministrationGui.pro
+4. Goto Projects -> Build & Run configurations -> Change "Build Directory" to root directory from Step 1
+5. Build & Run project
 
 # TROUBLESHOOTING
 - Run-time .log is generated in the target executable directory containing debug messages

@@ -672,7 +672,7 @@ bool EmployeeView::popLoadEmployeesBox() {
     if (filepath.isEmpty())
         return false;
     else {
-        m_observer->handleEventClearEmployees();
+//        m_observer->handleEventClearEmployees();
         m_observer->handleEventLoadModelStateFromFile(filepath.toStdString());
         saveCurrentModelStateToFile();
     }
