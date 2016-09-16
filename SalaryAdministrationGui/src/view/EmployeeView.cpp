@@ -470,7 +470,7 @@ void EmployeeView::handleDeleteButtonClick() {
         Employee *temp = m_observer->handleEventGetEmployee(m_treeWidget->currentItem()->text(2).toStdString());
 
         if(popQuestionBox(getQStringFromXml("button_delete_title").toStdString(),
-                          getQStringFromXml("button_delete_text").toStdString()
+                          getQStringFromXml("button_delete_text").toStdString() + "\n"
                           + temp->getLastName() + ", " + temp->getFirstName() + " (SSN: " + temp->getSocialSecurityNumber() + ") ?") ) {
 
             try {

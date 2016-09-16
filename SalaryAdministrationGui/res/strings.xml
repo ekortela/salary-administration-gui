@@ -14,9 +14,7 @@
 	<menu_quit>Exit</menu_quit>
 	<menu_quit_title>Exit</menu_quit_title>
 	<menu_quit_text>Are you sure to exit the program?</menu_quit_text>
-	<menu_about_text>This application has been developed as study project for
-811375A User Interface Programming -course during academic year 
-2016 at the University of Oulu.
+	<menu_about_text>This application has been developed as study project for 811375A User Interface Programming -course during academic year 2016 at the University of Oulu.
 
 Authors:
 Aapo Keskimölö   Software Design and Architecture, Test Automation
@@ -60,7 +58,7 @@ Elisa Kortela    Graphical User Interface Design </menu_about_text>
 	<info_no_existing_config>No existing configuration file found at path: </info_no_existing_config>
     <welcome_text>Welcome to SalaryAdministrationGui -personnel management application!
 
-On the right list, the user may use the following actions:
+The employees can be created, modified and deleted in the editor on the left side. The created employees will appear on the right side as a last where you may use the following the following actions:
 
   Single click -> Select Employee
   Double click -> Loads Employee on the left form for editing
@@ -68,8 +66,5 @@ On the right list, the user may use the following actions:
 The application will automatically save and load the employee data 
 that is displayed on the application window. 
 
-To create your own backups, you may use the File -menu. You may 
-also find examples by selecting File->Load from application menu.
-
-Good luck!</welcome_text>
+To create and load your own backups of the employees, you may use the File -menu. For examples, try selecting File->Load from application menu.</welcome_text>
 </view_strings>

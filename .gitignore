@@ -18,3 +18,7 @@ release/
 # Other files
 *.log
 *.autosave
+*.stash
+*.user.*
+modeldata
+uic_wrapper.sh

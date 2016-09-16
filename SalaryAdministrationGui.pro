@@ -41,7 +41,7 @@ win32 {
     message("~~~ Win: qmake_post_link: $$QMAKE_POST_LINK ~~~")
 }
 else {
-    QMAKE_POST_LINK += $$quote(cp $${RESOURCEDIR} $${DESTDIR}$$escape_expand(\n\t))
+    QMAKE_POST_LINK += $$quote(cp $${RESOURCEDIR}/* $${DESTDIR}$$escape_expand(\n\t))
     message("~~~ Linux: qmake_post_link: $$QMAKE_POST_LINK ~~~")
 }
 

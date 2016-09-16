@@ -9,9 +9,9 @@ Elisa Kortela       elisa.kortela@gmail.com     Graphical User Interface, Front-
 - Linux 64bit Debian/Ubuntu
 - Windows XP/7/10 32bit/64bit
 
-# RUN INSTRUCTIONS
-- Windows(32/64bit): Run static/SalaryAdministrationGui
-- Linux(64bit): Run static/SalaryAdministrationGui
+# RUN INSTRUCTIONS (Windows32bit / Windows64bit / Linux64bit)
+1. cd static 
+2. Run SalaryAdministrationGui
 
 # TOOLS USER FOR DEVELOPMENT
 - QT Creator 5.6.1 Desktop (MSVC2013-64bit / MinGW-32bit)
