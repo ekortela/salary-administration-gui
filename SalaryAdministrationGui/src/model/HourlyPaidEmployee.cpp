@@ -1,7 +1,7 @@
 //============================================================================
 // Name        : HourlyPaidEmployee.cpp
 // Author      : Aapo Keskimolo
-// Description : Declarations for hourly paid employee class methods
+// Description : Declarations for HourlyPaidEmployee.h
 //============================================================================
 
 #include "HourlyPaidEmployee.h"

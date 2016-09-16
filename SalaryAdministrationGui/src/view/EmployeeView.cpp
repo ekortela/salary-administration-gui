@@ -1,14 +1,14 @@
 //============================================================================
 // Name        : EmployeeView.cpp
 // Author      : Aapo Keskimolo, Elisa Kortela
-// Description : Declarations for employee view class methods
+// Description : Declarations for EmployeeView.h
 //============================================================================
 
 #include <QCoreApplication>
 #include "EmployeeView.h"
 #include "EmployeeControllerException.h"
 
-const string EmployeeView::MODEL_STATE_FILEPATH = "model";
+const string EmployeeView::MODEL_STATE_FILEPATH = "modeldata";
 
 
 EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
@@ -152,6 +152,7 @@ void EmployeeView::createTreeWidget()
     m_treeWidget->resizeColumnToContents(3);
 
     connect(m_treeWidget, SIGNAL (itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT (handleTreeWidgetDoubleClick()) );
+    connect(m_treeWidget, SIGNAL (itemClicked(QTreeWidgetItem*, int)), this, SLOT (handleTreeWidgetClick()) );
 
     m_salaryView = new QHBoxLayout;
 
@@ -323,9 +324,11 @@ void EmployeeView::registerObserver(IController* observer) {
 
 
 void EmployeeView::updateEmployeeList(vector<Employee *> model) {
+    qDebug() << "Updating employee list";
     double combinedSalary = 0.0;
     employeeList.clear();
     m_treeWidget->clear();
+    int i = 0;
     for (vector<Employee*>::iterator it = model.begin(); it != model.end(); ++it) {
         QTreeWidgetItem *row = new QTreeWidgetItem(m_treeWidget);
         row->setText(0, QString::fromStdString( (*it)->getLastName() ));
@@ -334,6 +337,8 @@ void EmployeeView::updateEmployeeList(vector<Employee *> model) {
         row->setText(3, employeeTypetoString( (*it)->getType() ));
         employeeList.append(row);
         combinedSalary += (*it)->getSalary();
+        qDebug() << "Employee " << i << row->text(0) << row->text(1) <<row->text(2) << row->text(3);
+        i++;
     }
 
     // TODO: calculate combined salary
@@ -371,6 +376,10 @@ bool EmployeeView::popQuestionBox(string title, string message) {
     }
 }
 
+void EmployeeView::popWelcomeScreen() {
+    popInfoBox(getQStringFromXml("welcome_text").toStdString());
+}
+
 bool EmployeeView::checkIfSSNExists(QString ssn) {
     qDebug() << "SSN:" << ssn;
 
@@ -387,7 +396,10 @@ void EmployeeView::handleSaveButtonClick() {
     qDebug() << "Save button was clicked!";
 
     if (checkIfSSNExists(m_SSNEdit->text())) {
-        if (!popQuestionBox(getQStringFromXml("box_rewrite_emp").toStdString(), getQStringFromXml("box_rewrite_emp_confirm").toStdString())) {
+        if (!popQuestionBox(getQStringFromXml("box_rewrite_emp").toStdString(),
+                            getQStringFromXml("box_rewrite_emp_confirm").toStdString()
+                            + "\n" + m_lastNameEdit->text().toStdString() + ", " + m_firstNameEdit->text().toStdString() +
+                            " (SSN: " + m_SSNEdit->text().toStdString() + ") ?")) {
             return;
         }
         m_observer->handleEventRemoveEmployee(m_SSNEdit->text().toStdString());
@@ -451,36 +463,35 @@ void EmployeeView::handleSaveButtonClick() {
 void EmployeeView::handleDeleteButtonClick() {
     qDebug() << "Delete button was clicked!";
 
-    bool wasFound = false;
+    qDebug() << "Currently selected tree widget item: " << m_treeWidget->currentIndex().row();
 
-    if (!m_SSNEdit->text().isEmpty()) {
-        for (int i = 0; i < employeeList.size(); i++) {
-            if (employeeList[i]->text(2) == m_SSNEdit->text()) {
-                wasFound = true;
-                Employee *temp = m_observer->handleEventGetEmployee(m_SSNEdit->text().toStdString());
+    if ( m_treeWidget->currentIndex().row() != -1) {
 
-                if(popQuestionBox(getQStringFromXml("button_delete_title").toStdString(), getQStringFromXml("button_delete_text").toStdString() + temp->getLastName() + ", " + temp->getFirstName() + " (SSN: " + temp->getSocialSecurityNumber() + ") ?") ) {
+        Employee *temp = m_observer->handleEventGetEmployee(m_treeWidget->currentItem()->text(2).toStdString());
 
-                    try {
-                        m_observer->handleEventRemoveEmployee(temp->getSocialSecurityNumber());
-                        popInfoBox(getQStringFromXml("button_delete_complete1").toStdString() + temp->getSocialSecurityNumber() + getQStringFromXml("button_delete_complete2").toStdString());
-                        handleClearFormButton();
-                        break;
-                    } catch( ec::SsnDoesNotExistException &e1) {
-                        popErrorBox(getQStringFromXml("error_unable_to_delete_emp").toStdString() + string(e1.what()) );
-                    } catch(exception &e) {
-                        popErrorBox(getQStringFromXml("error_unknown_exception").toStdString() + string(e.what()) );
-                    }
+        if(popQuestionBox(getQStringFromXml("button_delete_title").toStdString(),
+                          getQStringFromXml("button_delete_text").toStdString()
+                          + temp->getLastName() + ", " + temp->getFirstName() + " (SSN: " + temp->getSocialSecurityNumber() + ") ?") ) {
 
-                    saveCurrentModelStateToFile();
-                }
-                break;
+            try {
+                m_observer->handleEventRemoveEmployee(temp->getSocialSecurityNumber());
+                popInfoBox(getQStringFromXml("button_delete_complete1").toStdString()
+                           + temp->getSocialSecurityNumber() + getQStringFromXml("button_delete_complete2").toStdString());
+                handleClearFormButton();
+                m_treeWidget->clearSelection();
+            } catch( ec::SsnDoesNotExistException &e1) {
+                popErrorBox(getQStringFromXml("error_unable_to_delete_emp").toStdString() + string(e1.what()) );
+            } catch(exception &e) {
+                popErrorBox(getQStringFromXml("error_unknown_exception").toStdString() + string(e.what()) );
             }
+
+            saveCurrentModelStateToFile();
         }
+
+    } else {
+        popInfoBox("No employee has been selected");
     }
-    if (!wasFound) {
-        popErrorBox(getQStringFromXml("error_unable_to_delete").toStdString());
-    }
+
 }
 
 
@@ -507,10 +518,14 @@ void EmployeeView::clearForm() {
 void EmployeeView::handleTreeWidgetDoubleClick() {
     unsigned int rowIdx = m_treeWidget->currentIndex().row();
     qDebug() << "Item double clicked: " << QString::number(rowIdx);
-
     clearForm();
-
     updateEmployeeInformation(m_treeWidget->currentItem()->text(2).toStdString());
+}
+
+
+void EmployeeView::handleTreeWidgetClick() {
+    unsigned int rowIdx = m_treeWidget->currentIndex().row();
+    qDebug() << "Selected item: " << QString::number(rowIdx);
 }
 
 
@@ -537,12 +552,14 @@ void EmployeeView::handlePayTypeChange() {
 void EmployeeView::handleExitClick() {
     qDebug() << "Exit click detected!!";
 
-    if(popQuestionBox(getQStringFromXml("menu_quit_title").toStdString(), getQStringFromXml("menu_quit_text").toStdString())) {
-        saveCurrentModelStateToFile();
-        saveCurrentConfig();
-        close();
-        qApp->exit(0);
-    }
+//    if(popQuestionBox(getQStringFromXml("menu_quit_title").toStdString(), getQStringFromXml("menu_quit_text").toStdString())) {
+//        saveCurrentModelStateToFile();
+//        saveCurrentConfig();
+//        close();
+//        qApp->exit(0);
+//    }
+
+    qApp->exit(0);
 }
 
 
@@ -740,4 +757,10 @@ void EmployeeView::handleNewClick() {
 void EmployeeView::handleAboutClick() {
     qDebug() << "Menu item '/About'/  click detected!!";
     popInfoBox(getQStringFromXml("menu_about_text").toStdString());
+}
+
+void EmployeeView::handleAboutToQuit() {
+    qDebug() << "Application about to quit detected.";
+    saveCurrentModelStateToFile();
+    saveCurrentConfig();
 }

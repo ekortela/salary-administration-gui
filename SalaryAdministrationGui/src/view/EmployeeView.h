@@ -31,6 +31,7 @@ public:
     void popInfoBox(string message);
     void popErrorBox(string message);
     bool popQuestionBox(string title, string message);
+    void popWelcomeScreen();
     void saveCurrentModelStateToFile(const string filepath = MODEL_STATE_FILEPATH);
     void loadLastModelStateFromFile(const string filepath = MODEL_STATE_FILEPATH);
 
@@ -75,7 +76,7 @@ private:
 
     const QString xml_config_filename = "strings.xml";
     const string CONFIGURATION_FILEPATH = "setup.cfg";
-    static string const MODEL_STATE_FILEPATH;
+    static string const MODEL_STATE_FILEPATH; // declared in cpp
 
     // string configLastUsedConfigFilepath
     string configLastModelStateFilepath = MODEL_STATE_FILEPATH;
@@ -98,6 +99,7 @@ private slots:
     void handleSaveButtonClick();
     void handleDeleteButtonClick();
     void handleTreeWidgetDoubleClick();
+    void handleTreeWidgetClick();
     void handlePayTypeChange();
     void handleClearFormButton();
     void handleExitClick();
@@ -105,4 +107,5 @@ private slots:
     void handleLoadClick();
     void handleNewClick();
     void handleAboutClick();
+    void handleAboutToQuit();
 };

@@ -1,3 +1,9 @@
+//============================================================================
+// Name        : EmployeeView.cpp
+// Author      : Aapo Keskimolo, Elisa Kortela
+// Description : Contains implementation of EmployeeView.h
+//============================================================================
+
 #include "EmployeeController.h"
 #include "HourlyPaidEmployee.h"
 #include "MonthlyPaidEmployee.h"
@@ -541,7 +547,8 @@ void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
         updateView();
 
     } else {
-        m_view->popInfoBox("Unable to load file: " + filename);
+//        m_view->popInfoBox("Unable to load file: " + filename);
+        m_view->popWelcomeScreen();
         qWarning() << "No model parameters file" << QString::fromStdString(filename) << "found!";
     }
 }

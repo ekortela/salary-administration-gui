@@ -1,3 +1,9 @@
+//============================================================================
+// Name        : EmployeeFactoryException.h
+// Author      : Aapo Keskimolo
+// Description : Contains user defined exceptions for EmployeeFactory class
+//============================================================================
+
 #ifndef EMPLOYEEFACTORYEXCEPTION_H
 #define EMPLOYEEFACTORYEXCEPTION_H
 

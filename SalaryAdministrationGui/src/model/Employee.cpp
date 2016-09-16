@@ -1,7 +1,7 @@
 //============================================================================
 // Name        : Employee.cpp
 // Author      : Aapo Keskimolo
-// Description : Declarations for employee base class
+// Description : Declarations for Employee.h
 //============================================================================
 
 #include "Employee.h"

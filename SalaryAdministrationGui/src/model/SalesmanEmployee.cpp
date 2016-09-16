@@ -1,7 +1,7 @@
 //============================================================================
 // Name        : SalesmanEmployee.cpp
 // Author      : Aapo Keskimolo
-// Description : Declarations for salesman class methods
+// Description : Declarations for SalesmanEmployee.h
 //============================================================================
 
 #include "SalesmanEmployee.h"

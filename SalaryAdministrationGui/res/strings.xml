@@ -29,13 +29,12 @@ Elisa Kortela    Graphical User Interface Design </menu_about_text>
     <box_save_emp>Save Employee</box_save_emp>
     <box_save_emp_text>Do you want save employee?</box_save_emp_text>
 	<box_rewrite_emp>Employee already exists</box_rewrite_emp>
-	<box_rewrite_emp_confirm>Are you sure you want to rewrite the employee data?</box_rewrite_emp_confirm>	
+	<box_rewrite_emp_confirm>Are you sure you want to overwrite:</box_rewrite_emp_confirm>	
     <box_emp_saved_text>Employee information was saved.</box_emp_saved_text>
 	<box_select_type_prompt>Please, select</box_select_type_prompt>
 	<button_delete_emp>Delete Employee</button_delete_emp>
 	<button_delete_title>Employee deletion</button_delete_title>
-	<button_delete_text>Are you sure you want to delete the employee:
-	</button_delete_text>
+	<button_delete_text>Are you sure you want to delete:</button_delete_text>
 	<button_delete_complete1>Employee (SSN: </button_delete_complete1>
 	<button_delete_complete2>) deleted</button_delete_complete2>	
 	<editor_firstname>First name(s):</editor_firstname>
@@ -59,4 +58,18 @@ Elisa Kortela    Graphical User Interface Design </menu_about_text>
 	<error_unexpected_invalid_emp>Unexpected caused by invalid employee type: </error_unexpected_invalid_emp>
 	<error_unhandled>Unhandled error: </error_unhandled>	
 	<info_no_existing_config>No existing configuration file found at path: </info_no_existing_config>
+    <welcome_text>Welcome to SalaryAdministrationGui -personnel management application!
+
+On the right list, the user may use the following actions:
+
+  Single click -> Select Employee
+  Double click -> Loads Employee on the left form for editing
+
+The application will automatically save and load the employee data 
+that is displayed on the application window. 
+
+To create your own backups, you may use the File -menu. You may 
+also find examples by selecting File->Load from application menu.
+
+Good luck!</welcome_text>
 </view_strings>

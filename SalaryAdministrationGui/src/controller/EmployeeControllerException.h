@@ -1,3 +1,9 @@
+//============================================================================
+// Name        : EmployeeControllerException.h
+// Author      : Aapo Keskimolo
+// Description : Contains user defined exceptions for EmployeeController class
+//============================================================================
+
 #ifndef EMPLOYEECONTROLLEREXCEPTION_H
 #define EMPLOYEECONTROLLEREXCEPTION_H
 

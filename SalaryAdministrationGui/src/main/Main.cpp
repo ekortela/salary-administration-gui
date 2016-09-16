@@ -60,6 +60,7 @@ int main(int argc, char *argv[]) {
 
     EmployeeView view;
     EmployeeController controller = EmployeeController(&view);
+    QObject::connect(&app, SIGNAL(aboutToQuit()), &view, SLOT(handleAboutToQuit()));
 
     return app.exec();
 }

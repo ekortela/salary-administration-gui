@@ -1,7 +1,7 @@
 //============================================================================
 // Name        : EmployeeFactory.cpp
 // Author      : Aapo Keskimolo
-// Description : Declarations for employee factory abstract class
+// Description : Declarations for EmployeeFactory.h
 //============================================================================
 
 #include "EmployeeFactory.h"

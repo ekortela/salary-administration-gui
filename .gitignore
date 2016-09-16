@@ -3,39 +3,18 @@
 *.lo
 *.o
 *.obj
+*.Debug
+*.Release
 
-# Precompiled Headers
-*.gch
-*.pch
+# Qt auto-generated files and directories
+*_plugin_import.cpp
+.moc/
+.obj/
+build/
+Makefile*
+debug/
+release/
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-/Default
-/Debug
-/.vs/salary-administration-gui/v14
-/salary-administration-gui.vcxproj.user
-/salary-administration-gui.vcxproj.filters
-/salary-administration-gui.vcxproj
-/salary-administration-gui.VC.VC.opendb
-/salary-administration-gui.VC.db
-/salary-administration-gui.sln
-/salary-administration-gui.rc
-/salary-administration-gui.aps
-/resource.h
+# Other files
+*.log
+*.autosave

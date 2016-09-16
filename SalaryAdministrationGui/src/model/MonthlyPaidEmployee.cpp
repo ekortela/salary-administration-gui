@@ -1,7 +1,7 @@
 //============================================================================
 // Name        : MonthlyPaidEmployee.cpp
 // Author      : Aapo Keskimolo
-// Description : Declarations for monthly paid employee class methods
+// Description : Declarations for MonthlyPaidEmployee.h
 //============================================================================
 
 #include "MonthlyPaidEmployee.h"
