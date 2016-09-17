@@ -58,7 +58,7 @@ Elisa Kortela    Graphical User Interface Design </menu_about_text>
 	<info_no_existing_config>No existing configuration file found at path: </info_no_existing_config>
     <welcome_text>Welcome to SalaryAdministrationGui -personnel management application!
 
-The employees can be created, modified and deleted in the editor on the left side. The created employees will appear on the right side as a last where you may use the following the following actions:
+The employees can be created, modified and deleted in the editor on the left side. The created employees will appear on the right side as a list where you may use the following the following actions:
 
   Single click -> Select Employee
   Double click -> Loads Employee on the left form for editing
