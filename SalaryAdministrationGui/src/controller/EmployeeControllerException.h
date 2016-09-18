@@ -63,6 +63,15 @@ namespace ec {
             EmployeeControllerException(reason) { }
 
     };
+
+    class InvalidModelData : public EmployeeControllerException
+    {
+    public:
+
+        InvalidModelData(const std::string &reason) :
+            EmployeeControllerException(reason) { }
+
+    };
 }
 
 #endif // EMPLOYEECONTROLLEREXCEPTION_H

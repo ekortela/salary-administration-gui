@@ -15,14 +15,13 @@ Elisa Kortela       elisa.kortela@gmail.com     Graphical User Interface, Front-
 
 # TOOLS USER FOR DEVELOPMENT
 - QT Creator 5.6.1 Desktop (MSVC2013-64bit / MinGW-32bit)
-- Windows 32bit/64bit, Linux (Debian Jessie)
-- MINGW GCC version 4.9.3 (C++11)
+- MINGW GCC version 4.9.3 
 - CMake 3.6.1
 
 # BUILD INSTRUCTIONS
 1. Install Git and run git clone https://github.com/ekortela/salary-administration-gui.git
-2. Install Qt 5.6+ from QT-company website
-3. Start QtCreator application and open project: 
+2. Install Qt 5.6+
+3. Start QtCreator and open project: 
 File -> Open File or Project -> navigate to target directory from Step 1 and open "SalaryAdministrationGui.pro"
 4. Configure QtCreator build target directory:
 Projects -> Build & Run -> Manage Kits... > General -tab -> clear "Default Build directory:" -box

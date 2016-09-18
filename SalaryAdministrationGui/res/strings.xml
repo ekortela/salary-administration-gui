@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <view_strings>
     <main_window>SalaryAdmininstrationGui</main_window>
 	<menu_main>File</menu_main>
@@ -14,10 +14,8 @@
 	<menu_quit>Exit</menu_quit>
 	<menu_quit_title>Exit</menu_quit_title>
 	<menu_quit_text>Are you sure to exit the program?</menu_quit_text>
-	<menu_about_text>This application has been developed as study project for 811375A User Interface Programming -course during academic year 2016 at the University of Oulu.
-
-Authors:
-Aapo Keskimölö   Software Design and Architecture, Test Automation
+	<menu_about_text>Authors:
+Aapo Keskimölö   Software Design, Testing and Implementation
 Elisa Kortela    Graphical User Interface Design </menu_about_text>
 	<menu_new_title>Create new employee list</menu_new_title>
 	<menu_new_text>Would you like to save the current list?</menu_new_text>
@@ -29,7 +27,7 @@ Elisa Kortela    Graphical User Interface Design </menu_about_text>
 	<box_rewrite_emp>Employee already exists</box_rewrite_emp>
 	<box_rewrite_emp_confirm>Are you sure you want to overwrite:</box_rewrite_emp_confirm>	
     <box_emp_saved_text>Employee information was saved.</box_emp_saved_text>
-	<box_select_type_prompt>Please, select</box_select_type_prompt>
+	<box_select_type_prompt>You must select:</box_select_type_prompt>
 	<button_delete_emp>Delete Employee</button_delete_emp>
 	<button_delete_title>Employee deletion</button_delete_title>
 	<button_delete_text>Are you sure you want to delete:</button_delete_text>
@@ -63,8 +61,7 @@ The employees can be created, modified and deleted in the editor on the left sid
   Single click -> Select Employee
   Double click -> Loads Employee on the left form for editing
 
-The application will automatically save and load the employee data 
-that is displayed on the application window. 
+The application will automatically save and load the employee data displayed on the application window. 
 
-To create and load your own backups of the employees, you may use the File -menu. For examples, try selecting File->Load from application menu.</welcome_text>
+For examples, try selecting File->Load from application menu.</welcome_text>
 </view_strings>

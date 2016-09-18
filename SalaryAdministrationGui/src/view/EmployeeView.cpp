@@ -27,9 +27,7 @@ EmployeeView::EmployeeView(QWidget *parent): QMainWindow(parent) {
     updateLabels();
 
     m_layoutContainer->setLayout(m_mainLayout);
-    //window->resize(QDesktopWidget().availableGeometry().size() * 0.3);
     m_layoutContainer->resize(600,350);
-    //m_layoutContainer->setFixedSize(m_layoutContainer->size());
     m_layoutContainer->show();
 }
 
@@ -600,7 +598,10 @@ void EmployeeView::loadLastSavedConfig() {
         }
 
     } else {
-        popInfoBox(getQStringFromXml("info_no_existing_config").toStdString() + CONFIGURATION_FILEPATH);
+        qInfo() << "No previous configuration found: " + QString::fromStdString(CONFIGURATION_FILEPATH) + ". Showing welcome screen.";
+        popWelcomeScreen();
+        firstRun = true;
+//        popInfoBox(getQStringFromXml("info_no_existing_config").toStdString() + CONFIGURATION_FILEPATH);
     }
 
    ifs.close();
@@ -621,9 +622,13 @@ void EmployeeView::saveCurrentModelStateToFile(const string filepath) {
 }
 
 
-void EmployeeView::loadLastModelStateFromFile(const string filepath) {
+void EmployeeView::loadLastModelStateFromFile(string filepath) {
     if (m_observer != nullptr) {
-        m_observer->handleEventLoadModelStateFromFile(filepath);
+        try {
+            m_observer->handleEventLoadModelDataFromFile(filepath, firstRun);
+        } catch (ec::InvalidModelData &err) {
+            popErrorBox(err.what());
+        }
     } else{
         popErrorBox(getQStringFromXml("error_observer_is_null").toStdString());
         qCritical() << "Unable to load model state: Observer is null!";
@@ -656,7 +661,11 @@ bool EmployeeView::popLoadEmployeesBox() {
         return false;
     else {
 //        m_observer->handleEventClearEmployees();
-        m_observer->handleEventLoadModelStateFromFile(filepath.toStdString());
+        try {
+            m_observer->handleEventLoadModelDataFromFile(filepath.toStdString(), firstRun);
+        } catch (ec::InvalidModelData &err) {
+            popErrorBox(err.what());
+        }
         saveCurrentModelStateToFile();
     }
     return true;

@@ -13,31 +13,31 @@ message(" ~~~ Project Build directory: $$OUT_PWD ~~~")
 # build directories
 CONFIG(release,release|debug) {
     static {
-        DESTDIR = static
+        DESTDIR = $$OUT_PWD/static
         message("~~~ Release: static build ~~~")
     }
-    else:       DESTDIR = $$PWD/build/release
+    else:       DESTDIR = $$OUT_PWD/build/release
     MOC_DIR = $$DESTDIR/.moc
     OBJECTS_DIR = $$DESTDIR/.obj
 }
 else {
     static {
-        DESTDIR = static
+        DESTDIR = $$OUT_PWD/static
         message("~~~ debug: static build ~~~")
     }
-    else:       DESTDIR = $$PWD/build/debug
+    else:       DESTDIR = $$OUT_PWD/build/debug
     OBJECTS_DIR = $$DESTDIR/.obj
     MOC_DIR = $$DESTDIR/.moc
 }
 
 # Copy resource files to target directory
-RESOURCEDIR = SalaryAdministrationGui/res
+RESOURCEDIR = $$OUT_PWD/SalaryAdministrationGui/res
 win32 {
     DESTDIR_WIN = $${DESTDIR}
     DESTDIR_WIN ~= s,/,\\,g
     SOURCEDIR_WIN = $${RESOURCEDIR}
     SOURCEDIR_WIN ~= s,/,\\,g
-    QMAKE_POST_LINK += $$quote(cmd /c copy /y $${SOURCEDIR_WIN} $${DESTDIR_WIN}$$escape_expand(\n\t))
+    QMAKE_POST_LINK += $$quote(cmd /c copy /y \"$${SOURCEDIR_WIN}\" \"$${DESTDIR_WIN}$$escape_expand(\"\n\t))
     message("~~~ Win: qmake_post_link: $$QMAKE_POST_LINK ~~~")
 }
 else {

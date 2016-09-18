@@ -24,12 +24,8 @@ private:
     vector<Employee*> model;
     EmployeeView *m_view;
     ModelDataHeader createModelDataHeader();
+
     void writeEmployeeTypeToStream(ofstream &ofs, employee_types::type typ);
-
-public:
-    EmployeeController(EmployeeView *view);
-    ~EmployeeController() {};
-
     // For adding, updating, removing and inspecting the Model objects
     bool createEmployee(employee_types::type typ,
                      string newFirstName, string newLastName, string newSsn,
@@ -64,6 +60,10 @@ public:
     bool setEmployeeDoneHours(string ssn, double newDoneHours);
     double getEmployeeDoneHours(string ssn);
 
+public:
+    EmployeeController(EmployeeView *view);
+    ~EmployeeController() {};
+
     // Display the Model in the View
     void updateView();
 
@@ -81,5 +81,5 @@ public:
     void handleEventRequestViewUpdate();
     Employee* handleEventGetEmployee(string ssn);
     void handleEventSaveModelStateToFile(string filename);
-    void handleEventLoadModelStateFromFile(string filename);
+    void handleEventLoadModelDataFromFile(string filename, bool &firstRun);
 };

@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void customMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QByteArray localMsg = msg.toLocal8Bit();
 
@@ -22,7 +22,6 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
     QFile outFile("SalaryAdministrationGui.log");
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream stream(&outFile);
-
 
     switch (type) {
     case QtDebugMsg:
@@ -50,13 +49,27 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 
 int main(int argc, char *argv[]) {
 
-//    QLoggingCategory::setFilterRules("*.debug=false");
-
-    QLocale::setDefault(QLocale::c());
+//    QLocale::setDefault(QLocale::c());
 
     QApplication app(argc, argv);
+    QCoreApplication::setApplicationVersion("v1.3");
 
-    qInstallMessageHandler(myMessageOutput);
+    QCommandLineParser parser;
+    parser.setApplicationDescription(QCoreApplication::applicationName());
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    // Usage: --debug
+    //
+    // Arguments:
+    //   debug              Enable debug mode
+    QCommandLineOption debugOption("debug", QCoreApplication::translate("main", "Outputs debug messages in application .log-file.") );
+    parser.addOption(debugOption);
+    parser.process(app);
+    if (!parser.isSet(debugOption))
+        QLoggingCategory::setFilterRules("*.debug=false");
+
+    qInstallMessageHandler(customMessageHandler);
 
     EmployeeView view;
     EmployeeController controller = EmployeeController(&view);

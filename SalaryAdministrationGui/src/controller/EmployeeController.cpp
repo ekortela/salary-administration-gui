@@ -8,6 +8,7 @@
 #include "HourlyPaidEmployee.h"
 #include "MonthlyPaidEmployee.h"
 #include "SalesmanEmployee.h"
+#include <fstream>
 
 using namespace ec;
 
@@ -465,35 +466,36 @@ Employee* EmployeeController::handleEventGetEmployee(string ssn) {
 void EmployeeController::handleEventSaveModelStateToFile(string filename) {
     // save objects
 
-    // open output stream
-    ofstream ofs(filename, ios::binary | ios::out);
+    if(model.size() > 0) {
 
-    // write serialized header data
-    ModelDataHeader es = createModelDataHeader();
-    qDebug() << "Loaded employee data count: monthly: " << es.nMonthly << ", hourly: " << es.nHourly << ", salesman: " << es.nSalesman;
-    ofs << es;
+        // open output stream
+        ofstream ofs(filename, ios::binary | ios::out);
 
-    writeEmployeeTypeToStream(ofs, employee_types::MONTHLY_PAID_EMPLOYEE);
-    writeEmployeeTypeToStream(ofs, employee_types::HOURLY_PAID_EMPLOYEE);
-    writeEmployeeTypeToStream(ofs, employee_types::SALESMAN_EMPLOYEE);
+        // write serialized header data
+        ModelDataHeader es = createModelDataHeader();
+        qDebug() << "Loaded employee data count: monthly: " << es.nMonthly << ", hourly: " << es.nHourly << ", salesman: " << es.nSalesman;
+        ofs << es;
 
-    // close stream
-    ofs.close();
+        if (es.nMonthly > 0) { writeEmployeeTypeToStream(ofs, employee_types::MONTHLY_PAID_EMPLOYEE); }
+        if (es.nHourly > 0) { writeEmployeeTypeToStream(ofs, employee_types::HOURLY_PAID_EMPLOYEE); }
+        if (es.nSalesman > 0) {writeEmployeeTypeToStream(ofs, employee_types::SALESMAN_EMPLOYEE); }
 
-    qInfo() << "Model state saved in file " + QString::fromStdString(filename) + "";
+        // close stream
+        ofs.close();
+
+        qInfo() << "Model state saved in file " + QString::fromStdString(filename) + "";
+    }
 }
 
-void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
-    // load objects
+void EmployeeController::handleEventLoadModelDataFromFile(string filename, bool &firstRun) {
 
-//    m_view->popInfoBox( "Press ok to load model state from \"" + filename + "\"");
+    qDebug() << "Input file: " << QString::fromStdString(filename);
 
-    // open input stream
-    ifstream ifs(filename, ios::in | ios::binary);
+    ifstream ifs(filename, ios::binary);
 
     if (ifs.good()) {
 
-        // read serialized header data
+        // fill model data header
         ModelDataHeader es;
 
         if (ifs >> es) {
@@ -534,22 +536,25 @@ void EmployeeController::handleEventLoadModelStateFromFile(string filename) {
 
 
         } else {
-            m_view->popErrorBox("Loading header data failed!");
-            if (remove( filename.c_str()))
-                qDebug() << "File " << QString::fromStdString(filename) << " deleted";
-            else
-                qCritical() << "Removing file " << QString::fromStdString(filename) << " was unsuccessful";
+            if (remove( filename.c_str() )) {
+                qCritical() << "Loading data failed!";
+                throw InvalidModelData("Loading data failed!");
+            }
+            else {
+                qCritical() << "Loading data failed! Unable to remove file: " << QString::fromStdString(filename);
+                throw InvalidModelData("Loading data failed! Unable to remove file: " + filename);
+            }
         }
 
-        // close stream
+        // close stream and update view
         ifs.close();
-
         updateView();
 
+    } else if (!ifs.good() && firstRun ) {
+        qInfo() << "First run detected";
+        firstRun = false;
     } else {
-//        m_view->popInfoBox("Unable to load file: " + filename);
-        m_view->popWelcomeScreen();
-        qWarning() << "No model parameters file" << QString::fromStdString(filename) << "found!";
+        throw InvalidModelData("Unable to load file: " + filename);
     }
 }
 
@@ -602,6 +607,4 @@ void EmployeeController::writeEmployeeTypeToStream(ofstream &ofs, employee_types
 
         n++;
     }
-
-    qDebug() << "Wrote" << n << employeeTypetoString(typ) << "to file";
 }

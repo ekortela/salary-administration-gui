@@ -28,7 +28,7 @@ public:
   virtual void handleEventClearEmployees() = 0;
   virtual Employee* handleEventGetEmployee(string ssn) = 0;
   virtual void handleEventSaveModelStateToFile(string filename) = 0;
-  virtual void handleEventLoadModelStateFromFile(string filename) = 0;
+  virtual void handleEventLoadModelDataFromFile(string filename, bool &firstRun) = 0;
 };
 
 

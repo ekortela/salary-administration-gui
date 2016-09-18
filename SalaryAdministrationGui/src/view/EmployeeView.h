@@ -33,10 +33,11 @@ public:
     bool popQuestionBox(string title, string message);
     void popWelcomeScreen();
     void saveCurrentModelStateToFile(const string filepath = MODEL_STATE_FILEPATH);
-    void loadLastModelStateFromFile(const string filepath = MODEL_STATE_FILEPATH);
+    void loadLastModelStateFromFile(string filepath = MODEL_STATE_FILEPATH);
 
 private:
     unsigned int *m_treeWidgetSelectedItem;
+    bool firstRun = false;
     int rowHeight;
     QLineEdit *m_lastNameEdit, *m_firstNameEdit, *m_SSNEdit, *m_hoursDoneEdit,
                 *m_hourlySalaryEdit, *m_monthlySalaryEdit, *m_bonusEdit, *m_calculatedSalaryEdit, *m_combinedSalaryEdit;
